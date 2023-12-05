@@ -111,7 +111,7 @@ main:
 	<figcaption>Charge les deux premiers octets de <strong>%rax</strong> dans <strong>%rbx</strong>.</figcaption>
 </figure></center>
 
-- Pour les autres registres hérités **(SI,DI,SP,BP)** ne permettent pas d'accéder leur deuxième octet. 
+- Les autres registres hérités **(SI,DI,SP,BP)** ne permettent pas d'accéder leur deuxième octet. 
 
 <center><figure>
 	<img src="./images/register-sp.png" style="width=100%">
