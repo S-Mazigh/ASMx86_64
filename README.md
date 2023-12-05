@@ -1,28 +1,5 @@
 # ASMx86_64
 
-<head>
-  <!-- <meta charset="UTF-8"> -->
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-  <style>
-    table.colorful-theme {
-      align: center;
-      width: 100%; /* Adjust the width as needed */
-      margin: 5px auto; /* Center the table */
-      border: none;
-    }
-    table.colorful-theme th, table.colorful-theme td {
-      border: 2px solid rgb(134, 202, 227);
-      padding: 7px;
-      text-align: left;
-    }
-    table.colorful-theme th {
-      background-color: rgb(134, 202, 227);
-    }
-    table.colorful-theme tbody tr:hover {
-      background-color: rgb(134, 202, 227); 
-    }
-  </style>
-</head>
 
 ## Notes importantes
 
