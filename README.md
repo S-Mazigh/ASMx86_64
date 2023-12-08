@@ -1,3 +1,7 @@
+<head>
+<link rel="stylesheet" href="./styles/main.css"></link>
+</head>
+
 # 1. Les bases
 
 ## 1.1. Notes importantes
@@ -144,8 +148,8 @@ main:
 Based on:
 - https://wiki.osdev.org/Calling_Conventions
 - https://math.hws.edu/eck/cs220/f22/registers.html
-<table class="colorful-theme" align="center" cellpadding="7px" cellspacing="0" border="2">
-<tbody><tr>
+<table align="center" cellpadding="7px" cellspacing="0" border="2">
+<tbody><tr class="header-row">
    <th>64-bit</th>
    <th>32-bit</th>
    <th>16-bit</th>
@@ -153,94 +157,94 @@ Based on:
    <th>Utilisation dans l'ABI Linux AMD64</th>
    <th>Appel de fonction</th>
 </tr>
-<tr>
+<tr class="green-row">
    <td>rax</td><td>eax</td><td>ax</td><td>ah,al</td>
       <td>Valeur de retour</td>
       <td>Peut être modifier par la fonction appelée</td>
 </tr>   
-<tr>
+<tr class="red-row">
    <td>rbx</td><td>ebx</td><td>bx</td><td>bh,bl</td>
       <td>&nbsp;</td>
       <td>Doit être sauvegardé par la fonction appelée</td>
       
 </tr>   
-<tr>
+<tr class="green-row">
    <td>rcx</td><td>ecx</td><td>cx</td><td>ch,cl</td>
       <td>4<sup>th</sup> argument entier</td>
       <td>Peut être modifier par la fonction appelée</td>
       
 </tr>   
-<tr>
+<tr class="green-row">
    <td>rdx</td><td>edx</td><td>dx</td><td>dh,dl</td>
       <td>3<sup>rd</sup> argument entier</td>
       <td>Peut être modifier par la fonction appelée</td>
       
 </tr>   
-<tr>
+<tr class="green-row">
    <td>rsi</td><td>esi</td><td>si</td><td>sil</td>
       <td>2<sup>e</sup> argument entier</td>
       <td>Peut être modifier par la fonction appelée</td>
       
 </tr>   
-<tr>
+<tr class="green-row">
    <td>rdi</td><td>edi</td><td>di</td><td>sil</td>
       <td>1<sup>er</sup>argument entier</td>
       <td>Peut être modifier par la fonction appelée</td>
       
 </tr>   
-<tr>
+<tr class="red-row">
    <td>rbp</td><td>ebp</td><td>bp</td><td>bpl</td>
       <td>Début d'une stack frame</td>
       <td>Bien faire attention à son utilisation et à sa sauvegarde</td>
 </tr>   
-<tr>
+<tr class="red-row">
    <td>rsp</td><td>esp</td><td>sp</td><td>spl</td>
       <td>La fin de la pile (top of stack)</td>
       <td>Extrêmement faire attention à son utilisation et à sa sauvegarde</td>
 </tr>
-<tr>
+<tr class="green-row">
    <td>r8</td><td>r8d</td><td>r8w</td><td>r8b</td>
       <td>5<sup>e</sup> argument entier</td>
       <td>Peut être modifier par la fonction appelée</td>
       
 </tr>
-<tr>
+<tr class="green-row">
    <td>r9</td><td>r9d</td><td>r9w</td><td>r9b</td>
       <td>6<sup>e</sup> argument entier</td>
       <td>Peut être modifier par la fonction appelée</td>
       
 </tr>
-<tr>
+<tr class="green-row">
    <td>r10</td><td>r10d</td><td>r10w</td><td>r10b</td>
       <td>&nbsp;</td>
       <td>Peut être modifier par la fonction appelée</td>
       
 </tr>
-<tr>
+<tr class="green-row">
    <td>r11</td><td>r11d</td><td>r11w</td><td>r11b</td>
       <td>&nbsp;</td>
       <td>Peut être modifier par la fonction appelée</td>
       
 </tr>
-<tr>
+<tr class="red-row">
    <td>r12</td><td>r12d</td><td>r12w</td><td>r12b</td>
       <td>&nbsp;</td>
       <td>Doit être sauvegardé par la fonction appelée</td>
       
 </tr>
-<tr>
+<tr class="red-row">
    <td>r13</td><td>r13d</td><td>r13w</td><td>r13b</td>
       <td>&nbsp;</td>
       <td>Doit être sauvegardé par la fonction appelée</td>
       
 </tr>
-<tr>
+<tr class="red-row">
    <td>r14</td><td>r14d</td><td>r14w</td><td>r14b</td>
       <td>&nbsp;</td>
       <td>Doit être sauvegardé par la fonction appelée</td>
       
 </tr>
-<tr>
+<tr class="red-row">
    <td>r15</td><td>r15d</td><td>r15w</td><td>r15b</td>
       <td>&nbsp;</td>
       <td>Doit être sauvegardé par la fonction appelée</td>
@@ -266,6 +270,7 @@ Based on:
 
 ### 1.5.2. variadics functions
 > printf
+> sinces variadics takes any type of arguments, it is hard to know how much registers to save when calling it, saving XMM registers is too expensive to do it each time, thus %al is used to store the number of vector registers
 
 ## 1.6. Syscalls en assembleur
 (based on page 124 of the linux amd64 ABI : https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf)
