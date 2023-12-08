@@ -1,17 +1,12 @@
-# ASMx86_64
+# 1. Les bases
 
-
-## Notes importantes
+## 1.1. Notes importantes
 
 > `movabs` est un `mov` qui ne peut utiliser que des immédiats et des registers (pas d'adresse mémoire), par contre il peut utiliser des immédiats de 64 bits.
 
-### Rex prefix
-based on :
-- https://wiki.osdev.org/X86-64_Instruction_Encoding
 
 
-
-## Registres en x86_64
+## 1.2. Registres en x86_64
 
 based on:
 - https://wiki.osdev.org/CPU_Registers_x86-64
@@ -26,7 +21,7 @@ based on:
   - Float registers (en pratique XMM registers les ont remplacés)
 - On va principalement parler des deux premieres familles de registres.
 
-### General Purpose Registers
+### 1.2.1. General Purpose Registers
 
 - En x86_64 les registres généralistes ont une taille maximale de 64-bits (8 octets). Il existe 16 registres dans cette famille, dont certain ont une utilisation spécifique.
 - Les registres sont : 
@@ -131,7 +126,7 @@ main:
 > - Pour des raisons de performances de calculs en 32-bits (comme expliqué [ici](https://stackoverflow.com/questions/11177137/why-do-x86-64-instructions-on-32-bit-registers-zero-the-upper-part-of-the-full-6)) amd a fait en sorte de forcer les 32-bits de poids fort à zéro.
 > - **Retenez juste que les instructions 32-bits forcent les 32-bits de poids fort à zéro.**
 
-### Pointer Register (RIP)
+### 1.2.2. Pointer Register (RIP)
 
 - Le pointer register contient l'**adresse** mémoire ou la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d'exécuter l'instruction `movabs` qui est à l'adresse `0x5129` la valeur de **rip** est l'adresse de l'instruction suivante `mov %eax, %ebx` à l'adresse `0x5133`.
 
@@ -145,7 +140,7 @@ main:
 
 - Les instructions d'appel et de branchement `jmp, call, ret, ...` ne font que modifier la valeur de ce fameux registre **%rip**, en d'autre termes elles changent l'adresse de la prochaine instruction.
 
-### Résumé sur les registres
+### 1.2.3. Résumé sur les registres
 Based on:
 - https://wiki.osdev.org/Calling_Conventions
 - https://math.hws.edu/eck/cs220/f22/registers.html
@@ -253,23 +248,26 @@ Based on:
 </tr>
 </tbody></table>
 
-## Les flags en x86_64
+## 1.3. Les flags en x86_64
 
 - Les instructions `mov` ne modifie pas les flags.
 - L'instruction test est ... , permet de ...
 - L'instruction cmp est tout simplement une soustraction sans sauvegarde du résultat. Elle permet de ...
 
 
-## Stack frame
+
+## 1.4. Stack frame
 
 > parler d'enter et de leave
 
-## L'ordre d'exécution
+## 1.5. Calling functions of the libc from assembly
 
-> Les accès mémoire sont fait de façon asynchrone -> registres doit être independant.
-> https://www.wikiwand.com/en/Register_renaming
+### 1.5.1. simple functions
 
-## Syscalls en assembleur
+### 1.5.2. variadics functions
+> printf
+
+## 1.6. Syscalls en assembleur
 (based on page 124 of the linux amd64 ABI : https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf)
 - Dans les instructions du programme **safe** vous avez découvert l'instruction `syscall`. Si vous lisez la description de l'instruction dans le manuel d'intel, vous trouverez la phrase *"Fast call to privilege level 0 system procedures."*. Ils la décrivent comment étant rapide, cela est en rapport à l'ancienne impementation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l'interruption à chaque fois.
 - Sinon pour faire court, c'est l'instruction assembleur utilisée pour faire appel à un syscall défini par l'OS qui va s'exécuter en mode Kernel (d'ou le privilege level 0).
@@ -281,6 +279,18 @@ Based on:
 </center>
 </figure>
 
-- Le syscall retrounera sa valeur dans %rax comme le font toutes les autres fonctions. Avec les valeurs dans l'interval **[-4095,-1]** représente un code d'erreur de type errno.
+- Le syscall retrounera sa valeur dans `%rax` comme le font toutes les autres fonctions. Avec les valeurs dans l'interval **[-4095,-1]** représente un code d'erreur de type errno.
 
 - Pour voir les différents syscalls disponible sur le kernel linux pour l'architecture x86-64, regardez [cette page github](https://github.com/torvalds/linux/blob/master/arch/x86/entry/syscalls/syscall_64.tbl). Et pour avoir une idée sur les arguments de chaque syscall il existe [cette page de blog](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/) très bien écrite, mais malheuresement elle n'est plus à jour.
+
+
+# 2. Svartalfheim
+
+## 2.1. Rex prefix
+based on :
+- https://wiki.osdev.org/X86-64_Instruction_Encoding
+
+## 2.2. L'ordre d'exécution
+
+> Les accès mémoire sont fait de façon asynchrone -> registres doit être independant.
+> https://www.wikiwand.com/en/Register_renaming
