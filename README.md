@@ -91,29 +91,29 @@ main:
 
 <center><figure>
 	<img src="./images/register-a-3.png" class="figure">
-	<figcaption>modifié que le deuxième octet de <strong>%rax</strong>.</figcaption>
+	<figcaption>Modifier que le deuxième octet de <strong>%rax</strong>.</figcaption>
 </figure></center>
 
 <center><figure>
 	<img src="./images/register-a-4.png" class="figure">
-	<figcaption>modifié que le premier octet de <strong>%rax</strong>.</figcaption>
+	<figcaption>Modifier que le premier octet de <strong>%rax</strong>.</figcaption>
 </figure></center>
 
 <center><figure>
 	<img src="./images/register-a-5.png" class="figure">
-	<figcaption>modifié que les deux premiers octets (16-bits) de <strong>%rax</strong>.</figcaption>
+	<figcaption>Modifier que les deux premiers octets (16-bits) de <strong>%rax</strong>.</figcaption>
 </figure></center>
 
 
 <center><figure>
 	<img src="./images/register-a-6.png" class="figure">
-	<figcaption>modifié les quatre premiers octets (32-bits) de <strong>%rax</strong> tout en rajoutant des **zéros** jusqu'au 64ème bit.</figcaption>
+	<figcaption>Modifier les quatre premiers octets (32-bits) de <strong>%rax</strong> tout en rajoutant des **zéros** jusqu'au 64ème bit.</figcaption>
 </figure></center>
 
 
 <center><figure>
 	<img src="./images/register-a-7.png" class="figure">
-	<figcaption>modifié tous les huit octets (64-bits) de <strong>%rax</strong> en rajoutant des zéros s'il le faut.</figcaption>
+	<figcaption>Modifier tous les huit octets (64-bits) de <strong>%rax</strong> en rajoutant des zéros s'il le faut.</figcaption>
 </figure></center>
 
 
@@ -166,7 +166,7 @@ Références:
 
 ### 1.2.3. Résumé sur les registres
 
-<center><table align="center" cellpadding="7px" cellspacing="0" border="2">
+<center class="table-wrapper"><table align="center" cellpadding="7px" cellspacing="0" border="2">
 <tbody><tr class="header-row">
    <th>64-bits</th>
    <th>32-bits</th>

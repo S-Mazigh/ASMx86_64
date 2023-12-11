@@ -18,13 +18,17 @@
 // }
 
 .figure {
-    width : 70%;
-}
-
-.inner {
-    max-width: 80%;
+    width : 100%;
 }
 
 .small-text {
     font-size: small;
+}
+
+.table-wrapper {
+    overflow-x:scroll;
+}
+
+.inner {
+    max-width: 70%;
 }
