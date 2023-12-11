@@ -263,6 +263,7 @@ Based on:
 ## 1.4. Stack frame
 
 > parler d'enter et de leave
+> https://stackoverflow.com/questions/72649142/difference-between-amd64-and-intel-x86-64-stack-frame
 
 ## 1.5. Calling functions of the libc from assembly
 
