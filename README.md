@@ -346,9 +346,31 @@ Références:
 <figcaption>Illustration expliquant l'utilisation d'un syscall</figcaption>
 </figure></center>
 
-- Le syscall retournera une valeur de retour dans `%rax` comme le font toutes les autres fonctions. En cas d'erreur, la valeur de retour est comprise dans l'intervalle **[-4095,-1]**, chacune pouvant être traduite en un code d'erreur de type **errno**.
+- Le syscall retournera une valeur de retour dans `%rax` comme le font toutes les autres fonctions. En cas d'erreur, la valeur de retour est comprise dans l'intervalle **[-4095,-1]**, chacune pouvant être traduite en un code d'erreur de type **errno**. Pour vérifier si le syscall retourne une erreur en assembleur on utilise les deux instructions suivantes:
 
+```nasm
+   cmp $-4095, %rax
+   jae errorSyscall
+```
+
+- L'instruction `jae` vérifie si la valeur **non signée** dans `%rax` est supérieur à la valeur **non-signée** de `-4095`.
+- En 64-bits (**0b** veut dire nombre binaire):
+  -  **-4095**  = 0b**1**111111111111111111111111111111111111111111111111111**00000000000**1 = 184467440737095**47521**
+  -  **-1**     = 0b**1**111111111111111111111111111111111111111111111111111**11111111111**1 = 184467440737095**51615**
+  -  **0**      = 0b**0**000000000000000000000000000000000000000000000000000000000000000 = **0**
+- Les nombres négatifs commencent tous par **1** les rendant supérieurs aux nombre positifs quand on les compare en utilisant leurs valeurs **non signées**. Ajoutant à cela le fait que les representations négatives ont leur valeur **non signée** croître quand on se rapproche de **0**. 
+- Avec ces deux notions, il devient clair que l'instruction `jae` ne saute que si la valeur de `%rax` est en dehors de l'intervale **[-4095,-1]**.
+  - Si `%rax` a une valeur non signée **inférieure** à celle de **-4095**, cela voudra dire qu'il est soit **positif**, **0**, ou bien, **négatif** avec une valeur **signée** **inférieur** à **-4095**.
+  - Autrement, sa valeur non signée sera **égale** ou **supérieure** à celle de **-4095**, avec comme maximum celle de **-1** (que des 1).
 - Pour voir les différents syscalls disponible sur le kernel linux pour l'architecture x86-64, regardez [cette page github](https://github.com/torvalds/linux/blob/master/arch/x86/entry/syscalls/syscall_64.tbl). Et pour avoir une idée sur les arguments de chaque syscall il existe [cette page de blog](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/) très bien écrite, mais malheureusement elle n'est plus à jour.
+
+
+<blockquote class="small-text">
+Références:
+<ul>
+<li><a href="https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly">https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly</a></li>
+</ul>
+</blockquote>
 
 
 # 2. Svartalfheim
