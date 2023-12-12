@@ -337,7 +337,6 @@ Références:
 > sinces variadics takes any type of arguments, it is hard to know how much registers to save when calling it, saving XMM registers is too expensive to do it each time, thus %al is used to store the number of vector registers
 
 ## 1.6. Syscalls en assembleur
-(based on page 124 of the linux amd64 ABI : https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf)
 - Dans les instructions du programme **safe** vous avez découvert l'instruction `syscall`. Si vous lisez la description de l'instruction dans le manuel d'intel, vous trouverez la phrase *"Fast call to privilege level 0 system procedures."*. Ils la décrivent comment étant rapide, cela est en rapport à l'ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l'interruption à chaque fois.
 - Sinon pour faire court, c'est l'instruction assembleur utilisée pour faire appel à un syscall défini par l'OS qui va s'exécuter en mode Kernel (d'où le privilege level 0).
 - Vous remarquerez que plusieurs registres sont initialisés avant d'instruction syscall.
@@ -369,6 +368,7 @@ Références:
 Références:
 <ul>
 <li><a href="https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly">https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly</a></li>
+<li><a href="https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf">https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf [page:124]</a></li>
 </ul>
 </blockquote>
 
