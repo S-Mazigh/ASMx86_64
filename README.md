@@ -353,7 +353,7 @@ Références:
    jae errorSyscall
 ```
 
-- L'instruction `jae` vérifie si la valeur **non signée** dans `%rax` est supérieur ou égale à la valeur **non-signée** de `-4095`.
+- L'instruction `jae` vérifie si la valeur **non signée** dans `%rax` est supérieure ou égale à la valeur **non-signée** de `-4095`.
 - En 64-bits (**0b** veut dire nombre binaire):
   -  **-4095**  = 0b**1**111111111111111111111111111111111111111111111111111**00000000000**1 = 184467440737095**47521**
   -  **-1**     = 0b**1**111111111111111111111111111111111111111111111111111**11111111111**1 = 184467440737095**51615**
