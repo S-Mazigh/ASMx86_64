@@ -346,7 +346,7 @@ Références:
 <figcaption>Illustration expliquant l'utilisation d'un syscall</figcaption>
 </figure></center>
 
-- Le syscall retournera sa valeur dans `%rax` comme le font toutes les autres fonctions. La valeur de retour est comprise dans l'intervalle **[-4095,-1]**, chacune représentant un code d'erreur de type **errno**.
+- Le syscall retournera une valeur de retour dans `%rax` comme le font toutes les autres fonctions. En cas d'erreur, la valeur de retour est comprise dans l'intervalle **[-4095,-1]**, chacune représentant un code d'erreur de type **errno**.
 
 - Pour voir les différents syscalls disponible sur le kernel linux pour l'architecture x86-64, regardez [cette page github](https://github.com/torvalds/linux/blob/master/arch/x86/entry/syscalls/syscall_64.tbl). Et pour avoir une idée sur les arguments de chaque syscall il existe [cette page de blog](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/) très bien écrite, mais malheureusement elle n'est plus à jour.
 
