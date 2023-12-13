@@ -30,6 +30,7 @@
 - Il existe plusieurs types de registres dans l'architecture x86_64:
   - **General Purpose Registers**
   - **The pointer register**
+  - **Flag Register**
   - *Control Registers*
   - Debug Registers
   - Model-Specific Register
@@ -205,7 +206,7 @@ Références:
       
 </tr>   
 <tr class="green-row">
-   <td>rdi</td><td>edi</td><td>di</td><td>sil</td>
+   <td>rdi</td><td>edi</td><td>di</td><td>dil</td>
       <td>1<sup>er</sup>argument entier</td>
       <td>Peut être modifié par la fonction appelée</td>
       
@@ -317,6 +318,7 @@ Références:
 
 ## 1.3. Les flags en x86_64
 
+- Dans le registre **RFLAGS**
 - Les instructions `mov` ne modifient pas les flags.
 - L'instruction test est ... , permet de ...
 - L'instruction cmp est tout simplement une soustraction sans sauvegarde du résultat. Elle permet de ...
