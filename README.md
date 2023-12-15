@@ -270,7 +270,7 @@ Références:
       <td>Doit être sauvegardé par la fonction appelée</td>
       
 </tr>
-</tbody></table></div></center>
+</tbody></table></center>
 
 
 :pencil: **Remarques:**
