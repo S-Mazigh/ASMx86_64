@@ -80,64 +80,65 @@ main:
     114c:	c3                   	ret   
 ```
 
-<center><figure>
+<center><div  class="figure-container"><figure>
 	<img src="./images/register-a-1.png" class="figure">
 	<figcaption>Charger le registre <strong>%rax</strong> avec une valeur immédiate de 64-bits.</figcaption>
-</figure></center>
+</figure></div></center>
 
-<center><figure>
+<center><div  class="figure-container"><figure>
 	<img src="./images/register-a-2.png" class="figure">
 	<figcaption>Charger que les 32-bits de poids faibles de <strong>%rax</strong> dans <strong>%rbx</strong> qui remplira le reste avec des <em>zéros</em>.</figcaption>
-</figure></center>
+</figure></div></center>
 
-<center><figure>
+<center><div  class="figure-container"><figure>
 	<img src="./images/register-a-3.png" class="figure">
 	<figcaption>Modifier que le deuxième octet de <strong>%rax</strong>.</figcaption>
-</figure></center>
+</figure></div></center>
 
-<center><figure>
+<center><div  class="figure-container"><figure>
 	<img src="./images/register-a-4.png" class="figure">
 	<figcaption>Modifier que le premier octet de <strong>%rax</strong>.</figcaption>
-</figure></center>
+</figure></div></center>
 
-<center><figure>
+<center><div  class="figure-container"><figure>
 	<img src="./images/register-a-5.png" class="figure">
 	<figcaption>Modifier que les deux premiers octets (16-bits) de <strong>%rax</strong>.</figcaption>
-</figure></center>
+</figure></div></center>
 
 
-<center><figure>
+<center><div  class="figure-container"><figure>
 	<img src="./images/register-a-6.png" class="figure">
 	<figcaption>Modifier les quatre premiers octets (32-bits) de <strong>%rax</strong> tout en rajoutant des **zéros** jusqu'au 64ème bit.</figcaption>
-</figure></center>
+</figure></div></center>
 
 
-<center><figure>
+<center><div  class="figure-container"><figure>
 	<img src="./images/register-a-7.png" class="figure">
 	<figcaption>Modifier tous les huit octets (64-bits) de <strong>%rax</strong> en rajoutant des zéros s'il le faut.</figcaption>
-</figure></center>
+</figure></div></center>
 
 
-<center><figure>
+<center><div  class="figure-container"><figure>
 	<img src="./images/register-a-8.png" class="figure">
 	<figcaption>Charger les deux premiers octets de <strong>%rax</strong> dans <strong>%rbx</strong>.</figcaption>
-</figure></center>
+</figure></div></center>
 
 - Les autres registres hérités **(SI,DI,SP,BP)** ne permettent pas d'accéder leur deuxième octet. 
 
-<center><figure>
+<center><div  class="figure-container"><figure>
 	<img src="./images/register-sp.png" class="figure">
 	<figcaption>Les différentes manières d'accéder au registre <strong>%rsp</strong>.</figcaption>
-</figure></center>
+</figure></div></center>
 
 - Pour les nouveaux registres de l'architecture x86_64 **(r8,r9,r10,r11,r12,r13,r14,r15)** on utilise plutôt des suffixes pour spécifier la taille à lire ou à écrire.
 
+
+<center><div  class="figure-container">
 <figure>
-<center>
 	<img src="./images/register-8.png" alt="Register 8 calling convention" class="figure">
 	<figcaption>Registre 8 de l'architecture x86_64.</figcaption>
-</center>
 </figure>
+</div></center>
 
 > - On remarque que les deux instructions `movl $0x41, %eax` et `movq $0x51, %rax` se comportent exactement de la même maniére dans ce cas de figure, tout en ayant des tailles différentes: la version avec `%eax` utilisant 2 octets de moins.
 > - Pour des raisons de performances de calculs en 32-bits (comme expliqué [ici](https://stackoverflow.com/questions/11177137/why-do-x86-64-instructions-on-32-bit-registers-zero-the-upper-part-of-the-full-6)) amd a fait en sorte de forcer les 32-bits de poids fort à zéro.
@@ -155,11 +156,11 @@ Références:
 
 - Le pointer register contient l'**adresse** mémoire ou la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d'exécuter l'instruction `movabs` qui est à l'adresse `0x5129` la valeur de **rip** est l'adresse de l'instruction suivante `mov %eax, %ebx` à l'adresse `0x5133`.
 
-<center><figure>
-	<img src="./images/rip-1.png" class="figure">
-  <img src="./images/rip-2.png" class="figure">
+<center><div  class="figure-container"><figure>
+	<img src="./images/rip-1.png" class="figure2">
+  <img src="./images/rip-2.png" class="figure2">
 	<figcaption>La valeur du <strong>%rip</strong> est calculée lors de l'exécution d'une instruction.</figcaption>
-</figure></center>
+</figure></div></center>
 
 - Il faut que vous sachiez que les instructions ont des tailles différentes. elles varient de `1 octets` jusqu'à `15 octets`. Vu qu'en mémoire les données sont stockés par octets, durant la lecture d'un octet de l'instruction le CPU sait s'il doit interpréter les prochains octets comme faisant partie de cette même instruction grâce aux octets qu'il a déja décodés.
 
@@ -269,7 +270,7 @@ Références:
       <td>Doit être sauvegardé par la fonction appelée</td>
       
 </tr>
-</tbody></table></center>
+</tbody></table></div></center>
 
 
 :pencil: **Remarques:**
@@ -344,10 +345,10 @@ Références:
 - Dans les instructions du programme **safe** vous avez découvert l'instruction `syscall`. Si vous lisez la description de l'instruction dans le manuel d'intel, vous trouverez la phrase *"Fast call to privilege level 0 system procedures."*. Ils la décrivent comment étant rapide, cela est en rapport à l'ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l'interruption à chaque fois.
 - Sinon pour faire court, c'est l'instruction assembleur utilisée pour faire appel à un syscall défini par l'OS qui va s'exécuter en mode Kernel (d'où le privilege level 0).
 - Vous remarquerez que plusieurs registres sont initialisés avant d'instruction syscall.
-<center><figure>
-<img src="./images/syscalls.png"/>
+<center><div  class="figure-container"><figure>
+<img src="./images/syscalls.png" class="figure2">
 <figcaption>Illustration expliquant l'utilisation d'un syscall</figcaption>
-</figure></center>
+</figure></div></center>
 
 - Le syscall retournera une valeur de retour dans `%rax` comme le font toutes les autres fonctions. En cas d'erreur, la valeur de retour est comprise dans l'intervalle **[-4095,-1]**, chacune pouvant être traduite en un code d'erreur de type **errno**. Pour vérifier si le syscall retourne une erreur en assembleur on utilise les deux instructions suivantes:
 

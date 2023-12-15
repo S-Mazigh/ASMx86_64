@@ -1,8 +1,6 @@
 ---
 ---
 
-// $base-font-size:   14px !default;
-
 @import "{{site.theme}}";
 
 
@@ -14,24 +12,45 @@
     background-color: rgba(10, 255, 17, 0.432);
 }
 
-h1 {
-    font-size: 38px;
-}
+// h1 {
+//     font-size: 38px;
+// }
 
-h2 {
-    font-size: 34px;
-}
+// h2 {
+//     font-size: 34px;
+// }
 
 
-ul, li, p, table, figcaption, span {
-    font-size: 18px;
-}
+// ul, li, p, table, figcaption, span {
+//     font-size: 18px;
+// }
+
 // .header-row {
 //     background-color: rgba(255, 255, 255, 0.432);
 // }
+code.language-plaintext.highlighter-rouge {
+    background-color: rgba(10, 8, 2, 0.397);
+    border-radius: 5px;
+}
+
+#header {
+    display: none;
+}
+
+.figure-container{
+    border: 1px solid rgba(255, 255, 255, 0.514);
+    margin: 2em 0em;
+    max-width: 50em;
+    // padding: 3em;
+}
+
+figcaption {
+    border-top: 1px solid rgba(255, 255, 255, 0.514);
+    font-size:18 px;
+}
 
 .figure {
-    width : 100%;
+    filter: invert(1);
 }
 
 .small-text {
@@ -41,7 +60,17 @@ ul, li, p, table, figcaption, span {
 .table-wrapper {
     overflow-x:scroll;
 }
+section{
+    max-width: 100%;
+}
+/* .inner */
+.wrapper {
+    max-width: 90%;
+}
 
-.inner {
-    max-width: 70%;
+blockquote {
+    padding: 10px;
+}
+ul {
+    padding-left: 25px;
 }
