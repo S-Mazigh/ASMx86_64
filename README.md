@@ -329,6 +329,8 @@ Références:
 
 > parler d'enter et de leave
 > https://stackoverflow.com/questions/72649142/difference-between-amd64-and-intel-x86-64-stack-frame
+> https://stackoverflow.com/questions/26323215/do-any-languages-compilers-utilize-the-x86-enter-instruction-with-a-nonzero-ne
+> https://stackoverflow.com/questions/5959890/enter-vs-push-ebp-mov-ebp-esp-sub-esp-imm-and-leave-vs-mov-esp-ebp
 
 ## 1.5. Appeler les fonctions de la libc
 
@@ -336,7 +338,7 @@ Références:
 
 ### 1.5.2. Fonction variadic (nombre d'arguments dynamique)
 > printf
-> sinces variadics takes any type of arguments, it is hard to know how much registers to save when calling it, saving XMM registers is too expensive to do it each time, thus %al is used to store the number of vector registers
+> sinces variadics takes any type of arguments, it is hard to know how much registers to save when using it, saving XMM registers is too expensive to do it each time, thus %al is used to store the number of vector registers
 
 ## 1.6. Syscalls en assembleur
 - Dans les instructions du programme **safe** vous avez découvert l'instruction `syscall`. Si vous lisez la description de l'instruction dans le manuel d'intel, vous trouverez la phrase *"Fast call to privilege level 0 system procedures."*. Ils la décrivent comment étant rapide, cela est en rapport à l'ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l'interruption à chaque fois.
