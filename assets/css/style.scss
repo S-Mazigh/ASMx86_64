@@ -69,8 +69,12 @@ section{
 }
 
 blockquote {
-    padding: 10px;
+    background-color: #ffcc0007;
+    border-left: 3px solid #ffcc0077;
+    padding: 0px 10px;
+    margin: 5px 0px;
 }
 ul {
     padding-left: 25px;
+    list-style-image: none;
 }

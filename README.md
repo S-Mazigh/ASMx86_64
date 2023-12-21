@@ -319,12 +319,57 @@ Références:
 
 ## 1.3. Les flags en x86_64
 
-- Dans le registre **RFLAGS**
-- Les instructions `mov` ne modifient pas les flags.
-- L'instruction test est ... , permet de ...
-- L'instruction cmp est tout simplement une soustraction sans sauvegarde du résultat. Elle permet de ...
+- Lors de l'exécution de certaines instructions, il est intéressant de garder certaines informations sur le résultat de ces dernières, pour ainsi pouvoir rendre certaines instructions inter-dépendantes. Par exemple, si on veut additionner des nombres de taille supérieure à 64-bits, disons 128-bits il est primordiale de savoir si l'addition des 64-bits de poids faible a générée une retenue pour le 65-bits ou pas pour avoir un résultat correct ([`ADC`](https://www.felixcloutier.com/x86/adc)). Il existe plein d'autres cas autre que les jump, où l'on veut avoir des informations sur le résultat de l'instruction précédente.
+- En x86_64, on a à notre disposition le registre **RFLAGS** pour stocker et accéder aux informations décrivant la nature du résultat d'une instruction. En x86(32 bits), le registre se dénommait **EFLAGS** et à l'âge de l'architecture 16-bits **FLAGS**. Vous pouvez voir comment ce registre fut étendue avec le changements d'architecture dans la figure ci-dessous.
+  - En pratique, le registre RFLAGS décrit aussi les restrictions appliquées actuellement, ainsi une instruction va changer son comportement, voir lever une exception dépendant des restrictions actives.
 
+<center><div  class="figure-container"><figure>
+	<img src="./images/RFLAGS.png" alt="RFLAGS" class="figure">
+	<figcaption>Registres RFLAGS avec tous les FLAGS connus.</figcaption>
+</figure></div></center>
 
+- Lors du développement de l'architecture, les ingénieurs ont dû choisir quelles informations garder sur le résultat d'une instruction. Pour optimiser un maximum tout en gardant l'utilisation simple, ils se sont limiter à un seul registre, où chaque **bit** annonce la présence ou l'absence d'un flag décrivant un état. Les bits vides sont réservés et intel ou amd les utilisent comme ils veulent.
+
+- Les flags sont divisés en **3** groupes:
+  - <span style="color: rgba(233, 163, 91,255);">Status Flags:</span> 
+    - **CF**(Carry Flag): **1** s'il y a eu une retenue au-delà du bit de poids fort du résultat, sinon **0**.
+    - **PF**(Parity Flag): **1** si le nombre de bits à 1 dans les 8-bits de poids faible est pair, **0** si impair.
+    - **AF**(Auxiliary Carry Flag): **1** s'il y a eu une retenue depuis le bit 3 vers le bit 4, sinon **0**.
+    - **ZF**(Zero Flag): **1** si le résultat est nul, sinon **0**.
+    - **SF**(Sign Flag): **1** si le résultat est négatif, sinon **0**.
+    - **OF**(Overflow Flag): **1** si le résultat en signé a débordé (changement de signe inattendu) au-delà de la taille du registre destination, sinon **0**.
+  - <span style="color: #7dad4e;">Control Flags:</span>
+    - **IF**(Interrupt Flag): **1** si les interruptions sont actives, **0** si désactivées.
+    - **DF**(Direction Flag): **1** pour que les adresses soient décrementées lors des instructions iteratives (`rep`), **0** pour incrémenter les adresses.
+    - **TF**(Trap Flag): **1**  pour appeler une fonction après chaque instruction permettant d'avoir une exécution pas à pas (debug), **0** pour une exécution classique.
+    - **MD**(Mode Flag).
+  - <span style="color: #559393;">System Flags:</span>
+    - **IOPL**(I/O privilege level).
+    - ...
+
+- La mise à jour des flags nécessite des tests et des écritures, cela prend du temps, pour ne pas en perdre inutilement, ils ont fait en sorte que certaines instructions ne touchent pas aux flags (le `mov` par exemple), et même que les instructions mettant à jour les flags, ne touchent pas à tous les flags, seulement ceux nécessaires, entre autres l'instruction `add` ne met à jour que les **status flags**.
+   - En général, on dit que les instructions qui ne font **que** **déplacer** des données ne modifient pas les flags. Par contre, celles qui **effectuent** des **calculs** mettent à jour les flags nécessaires.
+   - Il existe certaines exceptions d'instructions qui calculent mais ne mettent pas à jour les flags, parmi elles : `not` et `lea`.
+
+- Il est possible d'accéder au registre **RFLAGS** via des instructions spéciales : 
+  - `LAHF` enregistre les 8-bits de poids faibles de **FLAGS** dans **AH**. `SAHF` récupère les valeurs de **SF**, **ZF**, **AF**, **PF**, et **CF** (les 8-bits de poids faible) depuis **AH**.
+  - `CLC` (mettre CF à 0), `STC` (mettre CF à 1), `CMC` (inverser CF), `CLI` (mettre IF à 0), `STI` (mettre IF à 1), `CLD` (mettre DF à 0), `STD` (mettre DF à 1).
+  - `PUSHF`/`POPF` empile/dépile le registre **FLAGS**, `PUSHFD`/`POPFD` empile/dépile le registre **EFLAGS**, `PUSHFQ`/`POPFQ` empile/dépile le registre **RFLAGS**.
+    - Les instructions ont le même opcode, tout dépend du mode dans lequel le CPU est.
+
+- L'instruction `cmp i1, i2` fait une soustraction `i2 - i1` sans sauvegarder le résultat dans l'opérant destination et met à jour les flags **CF**, **OF**, **SF**, **ZF**, **AF**, et **PF**.
+- L'instruction `test i1, i2` fait un bit-wise AND `i2 & i1` et met à jour les flags **PF**, **SF**, **ZF**. Elle permet de tester si un registre est nul `testq %rax, %rax`, elle est plus compacte que `cmp $0, %rax`.
+- Les instructions de la famille [`Jcc`](https://www.felixcloutier.com/x86/jcc) vérifient les flags pour charger l'adresse spécifiée dans le registre **RIP** ou pas (**RIP** pointe vers l'instruction suivante).
+
+<blockquote class="small-text">
+Références:
+<ul>
+<li><a href="https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags">https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags</a></li>
+<li><a href="https://www.wikiwand.com/en/FLAGS_register">https://www.wikiwand.com/en/FLAGS_register</a></li>
+</ul>
+</blockquote>
+
+<!-- http://ref.x86asm.net/coder64.html -->
 
 ## 1.4. Stack frame
 
@@ -391,11 +436,11 @@ Références:
 
 ## 2.2. L'ordre d'exécution
 
-> Les accès mémoire sont faits de façon asynchrone -> registres doivent être independant.
+> Les accès mémoire sont faits de façon asynchrone -> registres doivent être indépendant.
 
 <blockquote class="small-text">
 Références:
 <ul>
-<li><a href="https://www.wikipedia.com/en/Register_renaming">https://www.wikiwand.com/en/Register_renaming</a></li>
+<li><a href="https://www.wikiwand.com/en/Register_renaming">https://www.wikiwand.com/en/Register_renaming</a></li>
 </ul>
 </blockquote>
