@@ -1,21 +1,4 @@
-# Table des matières
-- [Table des matières](#table-des-matières)
-- [1. Les bases](#1-les-bases)
-  - [1.1. Notes importantes](#11-notes-importantes)
-  - [1.2. Registres en x86\_64](#12-registres-en-x86_64)
-    - [1.2.1. General Purpose Registers](#121-general-purpose-registers)
-    - [1.2.2. Pointer Register (RIP)](#122-pointer-register-rip)
-    - [1.2.3. Résumé sur les registres](#123-résumé-sur-les-registres)
-  - [1.3. Les flags en x86\_64](#13-les-flags-en-x86_64)
-  - [1.4. Stack frame](#14-stack-frame)
-  - [1.5. Appeler les fonctions de la libc](#15-appeler-les-fonctions-de-la-libc)
-    - [1.5.1. Fonction simple](#151-fonction-simple)
-    - [1.5.2. Fonction variadic (nombre d'arguments dynamique)](#152-fonction-variadic-nombre-darguments-dynamique)
-  - [1.6. Syscalls en assembleur](#16-syscalls-en-assembleur)
-- [2. Svartalfheim](#2-svartalfheim)
-  - [2.1. Rex prefix](#21-rex-prefix)
-  - [2.2. L'ordre d'exécution](#22-lordre-dexécution)
-
+<!-- regex for links: [-a-zA-Z0-9@:%._\+~#= "/<>]+ -->
 
 # 1. Les bases
 
@@ -141,7 +124,7 @@ main:
 </div></center>
 
 > - On remarque que les deux instructions `movl $0x41, %eax` et `movq $0x51, %rax` se comportent exactement de la même maniére dans ce cas de figure, tout en ayant des tailles différentes: la version avec `%eax` utilisant 2 octets de moins.
-> - Pour des raisons de performances de calculs en 32-bits (comme expliqué [ici](https://stackoverflow.com/questions/11177137/why-do-x86-64-instructions-on-32-bit-registers-zero-the-upper-part-of-the-full-6)) amd a fait en sorte de forcer les 32-bits de poids fort à zéro.
+> - Pour des raisons de performances de calculs en 32-bits (comme expliqué <a href="https://stackoverflow.com/questions/11177137/why-do-x86-64-instructions-on-32-bit-registers-zero-the-upper-part-of-the-full-6" target="_blank">ici</a>) amd a fait en sorte de forcer les 32-bits de poids fort à zéro.
 > - **Retenez juste que les instructions 32-bits forcent les 32-bits de poids fort à zéro.**
 
 <blockquote class="small-text">
@@ -154,7 +137,7 @@ Références:
 
 ### 1.2.2. Pointer Register (RIP)
 
-- Le pointer register contient l'**adresse** mémoire ou la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d'exécuter l'instruction `movabs` qui est à l'adresse `0x5129` la valeur de **rip** est l'adresse de l'instruction suivante `mov %eax, %ebx` à l'adresse `0x5133`.
+- Le pointer register contient l'**adresse** mémoire ou la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d'exécuter l'instruction <a href="https://sourceware.org/binutils/docs/as/i386_002dVariations.html" target="_blank"><code class=" clickable">movabs</code></a> qui est à l'adresse `0x5129` la valeur de `%rip` est l'adresse de l'instruction suivante `mov %eax, %ebx` à l'adresse `0x5133`.
 
 <center><div  class="figure-container"><figure>
 	<img src="./images/rip-1.png" class="figure2">
@@ -164,7 +147,7 @@ Références:
 
 - Il faut que vous sachiez que les instructions ont des tailles différentes. elles varient de `1 octets` jusqu'à `15 octets`. Vu qu'en mémoire les données sont stockés par octets, durant la lecture d'un octet de l'instruction le CPU sait s'il doit interpréter les prochains octets comme faisant partie de cette même instruction grâce aux octets qu'il a déja décodés.
 
-- Les instructions d'appel et de branchement `jmp, call, ret, ...` ne font que modifier la valeur de ce fameux registre **%rip**, en d'autres termes elles changent l'adresse de la prochaine instruction.
+- Les instructions d'appel et de branchement `jmp`, `call`, `ret`, ... ne font que modifier la valeur de ce fameux registre `%rip`, en d'autres termes elles changent l'adresse de la prochaine instruction.
 
 ### 1.2.3. Résumé sur les registres
 
@@ -312,14 +295,14 @@ main:
 <blockquote class="small-text">
 Références:
 <ul>
-<li><a href="https://wiki.osdev.org/Calling_Conventions">https://wiki.osdev.org/Calling_Conventions</a></li>
-<li><a href="https://math.hws.edu/eck/cs220/f22/registers.html">https://math.hws.edu/eck/cs220/f22/registers.html</a></li>
+<li><a href="https://wiki.osdev.org/Calling_Conventions" target="_blank">https://wiki.osdev.org/Calling_Conventions</a></li>
+<li><a href="https://math.hws.edu/eck/cs220/f22/registers.html" target="_blank">https://math.hws.edu/eck/cs220/f22/registers.html</a></li>
 </ul>
 </blockquote>
 
 ## 1.3. Les flags en x86_64
 
-- Lors de l'exécution de certaines instructions, il est intéressant de garder certaines informations sur le résultat de ces dernières, pour ainsi pouvoir rendre certaines instructions inter-dépendantes. Par exemple, si on veut additionner des nombres de taille supérieure à 64-bits, disons 128-bits il est primordiale de savoir si l'addition des 64-bits de poids faible a générée une retenue pour le 65-bits ou pas pour avoir un résultat correct ([`ADC`](https://www.felixcloutier.com/x86/adc)). Il existe plein d'autres cas autre que les jump, où l'on veut avoir des informations sur le résultat de l'instruction précédente.
+- Lors de l'exécution de certaines instructions, il est intéressant de garder certaines informations sur le résultat de ces dernières, pour ainsi pouvoir rendre certaines instructions inter-dépendantes. Par exemple, si on veut additionner des nombres de taille supérieure à 64-bits, disons 128-bits il est primordiale de savoir si l'addition des 64-bits de poids faible a générée une retenue pour le 65-bits ou pas pour avoir un résultat correct (<a href="https://www.felixcloutier.com/x86/adc" target="_blank"><code class=" clickable">adc</code></a>). Il existe plein d'autres cas autre que les jump, où l'on veut avoir des informations sur le résultat de l'instruction précédente.
 - En x86_64, on a à notre disposition le registre **RFLAGS** pour stocker et accéder aux informations décrivant la nature du résultat d'une instruction. En x86(32 bits), le registre se dénommait **EFLAGS** et à l'âge de l'architecture 16-bits **FLAGS**. Vous pouvez voir comment ce registre fut étendue avec le changements d'architecture dans la figure ci-dessous.
   - En pratique, le registre RFLAGS décrit aussi les restrictions appliquées actuellement, ainsi une instruction va changer son comportement, voir lever une exception dépendant des restrictions actives.
 
@@ -340,7 +323,7 @@ Références:
     - **OF**(Overflow Flag): **1** si le résultat en signé a débordé (changement de signe inattendu) au-delà de la taille du registre destination, sinon **0**.
   - <span style="color: #7dad4e;">Control Flags:</span>
     - **IF**(Interrupt Flag): **1** si les interruptions sont actives, **0** si désactivées.
-    - **DF**(Direction Flag): **1** pour que les adresses soient décrementées lors des instructions iteratives (`rep`), **0** pour incrémenter les adresses.
+    - **DF**(Direction Flag): **1** pour que les adresses soient décrementées lors des instructions iteratives (<a href="https://www.felixcloutier.com/x86/rep:repe:repz:repne:repnz" target="_blank"><code class=" clickable">rep</code></a>), **0** pour incrémenter les adresses.
     - **TF**(Trap Flag): **1**  pour appeler une fonction après chaque instruction permettant d'avoir une exécution pas à pas (debug), **0** pour une exécution classique.
     - **MD**(Mode Flag).
   - <span style="color: #559393;">System Flags:</span>
@@ -349,23 +332,23 @@ Références:
 
 - La mise à jour des flags nécessite des tests et des écritures, cela prend du temps, pour ne pas en perdre inutilement, ils ont fait en sorte que certaines instructions ne touchent pas aux flags (le `mov` par exemple), et même que les instructions mettant à jour les flags, ne touchent pas à tous les flags, seulement ceux nécessaires, entre autres l'instruction `add` ne met à jour que les **status flags**.
    - En général, on dit que les instructions qui ne font **que** **déplacer** des données ne modifient pas les flags. Par contre, celles qui **effectuent** des **calculs** mettent à jour les flags nécessaires.
-   - Il existe certaines exceptions d'instructions qui calculent mais ne mettent pas à jour les flags, parmi elles : `not` et `lea`.
+   - Il existe certaines exceptions d'instructions qui calculent mais ne mettent pas à jour les flags, parmi elles : <a href="https://www.felixcloutier.com/x86/not" target="_blank"><code class=" clickable">not</code></a> et <a href="https://www.felixcloutier.com/x86/lea" target="_blank"><code class=" clickable">lea</code></a>.
 
 - Il est possible d'accéder au registre **RFLAGS** via des instructions spéciales : 
-  - `LAHF` enregistre les 8-bits de poids faibles de **FLAGS** dans **AH**. `SAHF` récupère les valeurs de **SF**, **ZF**, **AF**, **PF**, et **CF** (les 8-bits de poids faible) depuis **AH**.
-  - `CLC` (mettre CF à 0), `STC` (mettre CF à 1), `CMC` (inverser CF), `CLI` (mettre IF à 0), `STI` (mettre IF à 1), `CLD` (mettre DF à 0), `STD` (mettre DF à 1).
-  - `PUSHF`/`POPF` empile/dépile le registre **FLAGS**, `PUSHFD`/`POPFD` empile/dépile le registre **EFLAGS**, `PUSHFQ`/`POPFQ` empile/dépile le registre **RFLAGS**.
+  - <a href="https://www.felixcloutier.com/x86/lahf" target="_blank"><code class=" clickable">lahf</code></a> enregistre les 8-bits de poids faibles de **FLAGS** dans **ah**. <a href="https://www.felixcloutier.com/x86/sahf" target="_blank"><code class=" clickable">sahf</code></a> récupère les valeurs de **SF**, **ZF**, **AF**, **PF**, et **CF** (les 8-bits de poids faible) depuis **ah**.
+  - <a href="https://www.felixcloutier.com/x86/clc" target="_blank"><code class=" clickable">clc</code></a> (mettre CF à 0), <a href="https://www.felixcloutier.com/x86/stc" target="_blank"><code class=" clickable">stc</code></a> (mettre CF à 1), <a href="https://www.felixcloutier.com/x86/cmc" target="_blank"><code class=" clickable">cmc</code></a> (inverser CF), <a href="https://www.felixcloutier.com/x86/cli" target="_blank"><code class=" clickable">cli</code></a> (mettre IF à 0), <a href="https://www.felixcloutier.com/x86/sti" target="_blank"><code class=" clickable">sti</code></a> (mettre IF à 1), <a href="https://www.felixcloutier.com/x86/cld" target="_blank"><code class=" clickable">cld</code></a> (mettre DF à 0), <a href="https://www.felixcloutier.com/x86/std" target="_blank"><code class=" clickable">std</code></a> (mettre DF à 1).
+  - <a href="https://www.felixcloutier.com/x86/pushf:pushfd:pushfq" target="_blank"><code class=" clickable">pushf</code></a>/<a href="https://www.felixcloutier.com/x86/popf:popfd:popfq" target="_blank"><code class=" clickable">popf</code></a> empile/dépile le registre **FLAGS**, `pushfd`/`popfd` empile/dépile le registre **EFLAGS**, `pushfq`/`popfq` empile/dépile le registre **RFLAGS**.
     - Les instructions ont le même opcode, tout dépend du mode dans lequel le CPU est.
 
 - L'instruction `cmp i1, i2` fait une soustraction `i2 - i1` sans sauvegarder le résultat dans l'opérant destination et met à jour les flags **CF**, **OF**, **SF**, **ZF**, **AF**, et **PF**.
 - L'instruction `test i1, i2` fait un bit-wise AND `i2 & i1` et met à jour les flags **PF**, **SF**, **ZF**. Elle permet de tester si un registre est nul `testq %rax, %rax`, elle est plus compacte que `cmp $0, %rax`.
-- Les instructions de la famille [`Jcc`](https://www.felixcloutier.com/x86/jcc) vérifient les flags pour charger l'adresse spécifiée dans le registre **RIP** ou pas (**RIP** pointe vers l'instruction suivante).
+- Les instructions de la famille <a href="https://www.felixcloutier.com/x86/jcc" target="_blank"><code class=" clickable">jcc</code></a> vérifient les flags pour charger l'adresse spécifiée dans le registre **RIP** ou pas (**RIP** pointe vers l'instruction suivante).
 
 <blockquote class="small-text">
 Références:
 <ul>
-<li><a href="https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags">https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags</a></li>
-<li><a href="https://www.wikiwand.com/en/FLAGS_register">https://www.wikiwand.com/en/FLAGS_register</a></li>
+<li><a href="https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags" target="_blank">https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags</a></li>
+<li><a href="https://www.wikiwand.com/en/FLAGS_register" target="_blank">https://www.wikiwand.com/en/FLAGS_register</a></li>
 </ul>
 </blockquote>
 
@@ -384,10 +367,10 @@ Références:
 
 ### 1.5.2. Fonction variadic (nombre d'arguments dynamique)
 > printf
-> sinces variadics takes any type of arguments, it is hard to know how much registers to save when using it, saving XMM registers is too expensive to do it each time, thus %al is used to store the number of vector registers
+> since variadics takes any type of arguments, it is hard to know how much registers to save when using it, saving XMM registers is too expensive to do it each time, thus %al is used to store the number of vector registers
 
 ## 1.6. Syscalls en assembleur
-- Dans les instructions du programme **safe** vous avez découvert l'instruction `syscall`. Si vous lisez la description de l'instruction dans le manuel d'intel, vous trouverez la phrase *"Fast call to privilege level 0 system procedures."*. Ils la décrivent comment étant rapide, cela est en rapport à l'ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l'interruption à chaque fois.
+- Dans les instructions du programme **safe** vous avez découvert l'instruction <a href="https://www.felixcloutier.com/x86/syscall" target="_blank"><code class=" clickable">syscall</code></a>. Si vous lisez la description de l'instruction dans le manuel d'intel, vous trouverez la phrase *"Fast call to privilege level 0 system procedures."*. Ils la décrivent comment étant rapide, cela est en rapport à l'ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l'interruption à chaque fois.
 - Sinon pour faire court, c'est l'instruction assembleur utilisée pour faire appel à un syscall défini par l'OS qui va s'exécuter en mode Kernel (d'où le privilege level 0).
 - Vous remarquerez que plusieurs registres sont initialisés avant d'instruction syscall.
 <center><div  class="figure-container"><figure>
@@ -402,7 +385,7 @@ Références:
    jae errorSyscall
 ```
 
-- L'instruction `jae` vérifie si la valeur **non signée** dans `%rax` est supérieure ou égale à la valeur **non-signée** de `-4095`.
+- L'instruction <a href="https://www.felixcloutier.com/x86/jcc" target="_blank"><code class=" clickable">jae</code></a> vérifie si la valeur **non signée** dans `%rax` est supérieure ou égale à la valeur **non-signée** de `-4095`.
 - En 64-bits (**0b** veut dire nombre binaire):
   -  **-4095**  = 0b**1**111111111111111111111111111111111111111111111111111**00000000000**1 = 184467440737095**47521**
   -  **-1**     = 0b**1**111111111111111111111111111111111111111111111111111**11111111111**1 = 184467440737095**51615**
@@ -411,14 +394,14 @@ Références:
 - Avec ces deux notions, il devient clair que l'instruction `jae` ne saute que si la valeur de `%rax` est en dehors de l'intervale **[-4095,-1]**.
   - Si `%rax` a une valeur non signée **inférieure** à celle de **-4095**, cela voudra dire qu'il est soit **positif**, **0**, ou bien, **négatif** avec une valeur **signée** **inférieur** à **-4095**.
   - Autrement, sa valeur non signée sera **égale** ou **supérieure** à celle de **-4095**, avec comme maximum celle de **-1** (que des 1).
-- Pour voir les différents syscalls disponible sur le kernel linux pour l'architecture x86-64, regardez [cette page github](https://github.com/torvalds/linux/blob/master/arch/x86/entry/syscalls/syscall_64.tbl). Et pour avoir une idée sur les arguments de chaque syscall il existe [cette page de blog](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/) très bien écrite, mais malheureusement elle n'est plus à jour.
+- Pour voir les différents syscalls disponible sur le kernel linux pour l'architecture x86-64, regardez <a href="https://github.com/torvalds/linux/blob/master/arch/x86/entry/syscalls/syscall_64.tbl" target="_blank">cette page github</a>. Et pour avoir une idée sur les arguments de chaque syscall il existe <a href="https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/" target="_blank">cette page de blog</a> très bien écrite, mais malheureusement elle n'est plus à jour.
 
 
 <blockquote class="small-text">
 Références:
 <ul>
-<li><a href="https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly">https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly</a></li>
-<li><a href="https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf">https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf [page:124]</a></li>
+<li><a href="https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly" target="_blank">https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly</a></li>
+<li><a href="https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf" target="_blank">https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf [page:124]</a></li>
 </ul>
 </blockquote>
 
@@ -430,7 +413,7 @@ Références:
 <blockquote class="small-text">
 Références:
 <ul>
-<li><a href="https://wiki.osdev.org/X86-64_Instruction_Encoding">https://wiki.osdev.org/X86-64_Instruction_Encoding</a></li>
+<li><a href="https://wiki.osdev.org/X86-64_Instruction_Encoding" target="_blank">https://wiki.osdev.org/X86-64_Instruction_Encoding</a></li>
 </ul>
 </blockquote>
 
@@ -441,6 +424,6 @@ Références:
 <blockquote class="small-text">
 Références:
 <ul>
-<li><a href="https://www.wikiwand.com/en/Register_renaming">https://www.wikiwand.com/en/Register_renaming</a></li>
+<li><a href="https://www.wikiwand.com/en/Register_renaming" target="_blank">https://www.wikiwand.com/en/Register_renaming</a></li>
 </ul>
 </blockquote>
