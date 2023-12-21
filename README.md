@@ -1,5 +1,23 @@
 <!-- regex for links: [-a-zA-Z0-9@:%._\+~#= "/<>]+ -->
 
+- [1. Les bases](#1-les-bases)
+  - [1.1. Notes importantes](#11-notes-importantes)
+  - [1.2. Registres en x86\_64](#12-registres-en-x86_64)
+    - [1.2.1. General Purpose Registers](#121-general-purpose-registers)
+    - [1.2.2. Pointer Register (RIP)](#122-pointer-register-rip)
+    - [1.2.3. Résumé sur les registres](#123-résumé-sur-les-registres)
+  - [1.3. Les flags en x86\_64](#13-les-flags-en-x86_64)
+  - [1.4. Stack frame](#14-stack-frame)
+  - [1.5. Appeler les fonctions de la libc](#15-appeler-les-fonctions-de-la-libc)
+    - [1.5.1. Fonction simple](#151-fonction-simple)
+    - [1.5.2. Fonction variadic (nombre d'arguments dynamique)](#152-fonction-variadic-nombre-darguments-dynamique)
+  - [1.6. Syscalls en assembleur](#16-syscalls-en-assembleur)
+- [2. Svartalfheim](#2-svartalfheim)
+  - [2.1. Rex prefix](#21-rex-prefix)
+  - [2.2. L'ordre d'exécution](#22-lordre-dexécution)
+
+
+
 # 1. Les bases
 
 ## 1.1. Notes importantes
