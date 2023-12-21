@@ -16,7 +16,7 @@
   - [2.1. Rex prefix](#21-rex-prefix)
   - [2.2. L'ordre d'exécution](#22-lordre-dexécution)
 
-
+____
 
 # 1. Les bases
 
