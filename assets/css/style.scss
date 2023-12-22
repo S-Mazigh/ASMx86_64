@@ -57,20 +57,37 @@ code.clickable:hover{
     display: none;
 }
 
-.figure-container{
+.figure-container, .figure-container-small{
     border: 1px solid rgba(255, 255, 255, 0.514);
     margin: 2em 0em;
-    max-width: 45em;
+    max-width: 80%;
     // padding: 3em;
+}
+
+.figure-container-small{
+    max-width: 40%;
 }
 
 figcaption {
     border-top: 1px solid rgba(255, 255, 255, 0.514);
     font-size:18 px;
+    text-align: center;
 }
 
-.figure {
+.figure{
     filter: invert(1);
+}
+
+.figure-container-small{
+    max-width: 40%;
+    min-width: 40%;
+}
+
+.execution-sequence{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .table-wrapper {

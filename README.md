@@ -80,61 +80,60 @@ main:
     1149:	66 89 c3             	mov    %ax,%bx
     114c:	c3                   	ret   
 ```
-
-<center><div  class="figure-container"><figure>
+<div class="execution-sequence">
+<div  class="figure-container-small"><figure>
 	<img src="./images/register-a-1.png" class="figure">
 	<figcaption>Charger le registre <strong>%rax</strong> avec une valeur immédiate de 64-bits.</figcaption>
-</figure></div></center>
+</figure></div>
 
-<center><div  class="figure-container"><figure>
+<div  class="figure-container-small"><figure>
 	<img src="./images/register-a-2.png" class="figure">
 	<figcaption>Charger que les 32-bits de poids faibles de <strong>%rax</strong> dans <strong>%rbx</strong> qui remplira le reste avec des <em>zéros</em>.</figcaption>
-</figure></div></center>
+</figure></div>
 
-<center><div  class="figure-container"><figure>
+<div  class="figure-container-small"><figure>
 	<img src="./images/register-a-3.png" class="figure">
 	<figcaption>Modifier que le deuxième octet de <strong>%rax</strong>.</figcaption>
-</figure></div></center>
-
-<center><div  class="figure-container"><figure>
+</figure></div>
+<div  class="figure-container-small"><figure>
 	<img src="./images/register-a-4.png" class="figure">
 	<figcaption>Modifier que le premier octet de <strong>%rax</strong>.</figcaption>
-</figure></div></center>
+</figure></div>
 
-<center><div  class="figure-container"><figure>
+<div  class="figure-container-small"><figure>
 	<img src="./images/register-a-5.png" class="figure">
 	<figcaption>Modifier que les deux premiers octets (16-bits) de <strong>%rax</strong>.</figcaption>
-</figure></div></center>
+</figure></div>
 
 
-<center><div  class="figure-container"><figure>
+<div  class="figure-container-small"><figure>
 	<img src="./images/register-a-6.png" class="figure">
 	<figcaption>Modifier les quatre premiers octets (32-bits) de <strong>%rax</strong> tout en rajoutant des **zéros** jusqu'au 64ème bit.</figcaption>
-</figure></div></center>
+</figure></div>
 
 
-<center><div  class="figure-container"><figure>
+<div  class="figure-container-small"><figure>
 	<img src="./images/register-a-7.png" class="figure">
 	<figcaption>Modifier tous les huit octets (64-bits) de <strong>%rax</strong> en rajoutant des zéros s'il le faut.</figcaption>
-</figure></div></center>
+</figure></div>
 
 
-<center><div  class="figure-container"><figure>
+<div  class="figure-container-small"><figure>
 	<img src="./images/register-a-8.png" class="figure">
 	<figcaption>Charger les deux premiers octets de <strong>%rax</strong> dans <strong>%rbx</strong>.</figcaption>
-</figure></div></center>
+</figure></div>
+</div>
 
 - Les autres registres hérités **(SI,DI,SP,BP)** ne permettent pas d'accéder leur deuxième octet. 
 
-<center><div  class="figure-container"><figure>
+<center><div  class="figure-container-small"><figure>
 	<img src="./images/register-sp.png" class="figure">
 	<figcaption>Les différentes manières d'accéder au registre <strong>%rsp</strong>.</figcaption>
 </figure></div></center>
-
 - Pour les nouveaux registres de l'architecture x86_64 **(r8,r9,r10,r11,r12,r13,r14,r15)** on utilise plutôt des suffixes pour spécifier la taille à lire ou à écrire.
 
 
-<center><div  class="figure-container">
+<center><div  class="figure-container-small">
 <figure>
 	<img src="./images/register-8.png" alt="Register 8 calling convention" class="figure">
 	<figcaption>Registre 8 de l'architecture x86_64.</figcaption>
