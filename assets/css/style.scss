@@ -60,13 +60,10 @@ code.clickable:hover{
 .figure-container, .figure-container-small{
     border: 1px solid rgba(255, 255, 255, 0.514);
     margin: 2em 0em;
-    max-width: 80%;
+    max-width: 70em;
     // padding: 3em;
 }
 
-.figure-container-small{
-    max-width: 40%;
-}
 
 figcaption {
     border-top: 1px solid rgba(255, 255, 255, 0.514);
@@ -79,8 +76,7 @@ figcaption {
 }
 
 .figure-container-small{
-    max-width: 40%;
-    min-width: 40%;
+    max-width: 40em;
 }
 
 .execution-sequence{
@@ -98,7 +94,7 @@ section{
 }
 /* .inner */
 .wrapper {
-    max-width: 70%;
+    max-width: 80%;
 }
 
 blockquote {
