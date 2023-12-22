@@ -25,8 +25,8 @@ h2 {
 }
 
 
-ul, li, p, table, figcaption, span {
-    font-size: 18px;
+ul, li, p, table, figcaption, span, code {
+    font-size: 16px;
 }
 
 // .header-row {
@@ -60,7 +60,7 @@ code.clickable:hover{
 .figure-container{
     border: 1px solid rgba(255, 255, 255, 0.514);
     margin: 2em 0em;
-    max-width: 50em;
+    max-width: 45em;
     // padding: 3em;
 }
 
@@ -81,7 +81,7 @@ section{
 }
 /* .inner */
 .wrapper {
-    max-width: 90%;
+    max-width: 70%;
 }
 
 blockquote {
