@@ -148,8 +148,8 @@ main:
 <blockquote class="small-text">
 Références:
 <ul>
-<li><a href="https://wiki.osdev.org/CPU_Registers_x86-64">https://wiki.osdev.org/CPU_Registers_x86-64</a></li>
-<li><a href="https://stackoverflow.com/questions/26280229/is-x87-fp-stack-still-relevant">https://stackoverflow.com/questions/26280229/is-x87-fp-stack-still-relevant</a></li>
+<li class="small-text"><a href="https://wiki.osdev.org/CPU_Registers_x86-64">https://wiki.osdev.org/CPU_Registers_x86-64</a></li>
+<li class="small-text"><a href="https://stackoverflow.com/questions/26280229/is-x87-fp-stack-still-relevant">https://stackoverflow.com/questions/26280229/is-x87-fp-stack-still-relevant</a></li>
 </ul>
 </blockquote>
 
@@ -313,8 +313,8 @@ main:
 <blockquote class="small-text">
 Références:
 <ul>
-<li><a href="https://wiki.osdev.org/Calling_Conventions" target="_blank">https://wiki.osdev.org/Calling_Conventions</a></li>
-<li><a href="https://math.hws.edu/eck/cs220/f22/registers.html" target="_blank">https://math.hws.edu/eck/cs220/f22/registers.html</a></li>
+<li class="small-text"><a href="https://wiki.osdev.org/Calling_Conventions" target="_blank">https://wiki.osdev.org/Calling_Conventions</a></li>
+<li class="small-text"><a href="https://math.hws.edu/eck/cs220/f22/registers.html" target="_blank">https://math.hws.edu/eck/cs220/f22/registers.html</a></li>
 </ul>
 </blockquote>
 
@@ -365,8 +365,8 @@ Références:
 <blockquote class="small-text">
 Références:
 <ul>
-<li><a href="https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags" target="_blank">https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags</a></li>
-<li><a href="https://www.wikiwand.com/en/FLAGS_register" target="_blank">https://www.wikiwand.com/en/FLAGS_register</a></li>
+<li class="small-text"><a href="https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags" target="_blank">https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags</a></li>
+<li class="small-text"><a href="https://www.wikiwand.com/en/FLAGS_register" target="_blank">https://www.wikiwand.com/en/FLAGS_register</a></li>
 </ul>
 </blockquote>
 
@@ -418,8 +418,8 @@ Références:
 <blockquote class="small-text">
 Références:
 <ul>
-<li><a href="https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly" target="_blank">https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly</a></li>
-<li><a href="https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf" target="_blank">https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf [page:124]</a></li>
+<li class="small-text"><a href="https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly" target="_blank">https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly</a></li>
+<li class="small-text"><a href="https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf" target="_blank">https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf [page:124]</a></li>
 </ul>
 </blockquote>
 
@@ -431,7 +431,7 @@ Références:
 <blockquote class="small-text">
 Références:
 <ul>
-<li><a href="https://wiki.osdev.org/X86-64_Instruction_Encoding" target="_blank">https://wiki.osdev.org/X86-64_Instruction_Encoding</a></li>
+<li class="small-text"><a href="https://wiki.osdev.org/X86-64_Instruction_Encoding" target="_blank">https://wiki.osdev.org/X86-64_Instruction_Encoding</a></li>
 </ul>
 </blockquote>
 
@@ -442,6 +442,6 @@ Références:
 <blockquote class="small-text">
 Références:
 <ul>
-<li><a href="https://www.wikiwand.com/en/Register_renaming" target="_blank">https://www.wikiwand.com/en/Register_renaming</a></li>
+<li class="small-text"><a href="https://www.wikiwand.com/en/Register_renaming" target="_blank">https://www.wikiwand.com/en/Register_renaming</a></li>
 </ul>
 </blockquote>
