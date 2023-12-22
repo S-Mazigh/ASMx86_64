@@ -73,10 +73,6 @@ figcaption {
     filter: invert(1);
 }
 
-.small-text {
-    font-size: small;
-}
-
 .table-wrapper {
     overflow-x:scroll;
 }
@@ -97,4 +93,8 @@ blockquote {
 ul {
     padding-left: 25px;
     list-style-image: none;
+}
+
+.small-text * {
+    font-size: small;
 }
