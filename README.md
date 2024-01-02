@@ -8,6 +8,8 @@
     - [1.2.3. Résumé sur les registres](#123-résumé-sur-les-registres)
   - [1.3. Les flags en x86\_64](#13-les-flags-en-x86_64)
   - [1.4. Stack frame](#14-stack-frame)
+    - [1.4.1. La red zone:](#141-la-red-zone)
+    - [1.4.2. enter et leave](#142-enter-et-leave)
   - [1.5. Appeler les fonctions de la libc](#15-appeler-les-fonctions-de-la-libc)
     - [1.5.1. Fonction simple](#151-fonction-simple)
     - [1.5.2. Fonction variadic (nombre d'arguments dynamique)](#152-fonction-variadic-nombre-darguments-dynamique)
@@ -373,10 +375,68 @@ Références:
 
 ## 1.4. Stack frame
 
-> parler d'enter et de leave
-> https://stackoverflow.com/questions/72649142/difference-between-amd64-and-intel-x86-64-stack-frame
-> https://stackoverflow.com/questions/26323215/do-any-languages-compilers-utilize-the-x86-enter-instruction-with-a-nonzero-ne
-> https://stackoverflow.com/questions/5959890/enter-vs-push-ebp-mov-ebp-esp-sub-esp-imm-and-leave-vs-mov-esp-ebp
+- Il se peut que vous ayez entendu ou lu la phrase *“chaque fonction possède une pile (stack) où elle stocke (alloue) ses variables locales”*. En vrai, quand on parle de fonction, on fait surtout allusion à une *“stack frame”*. Une stack frame représente une **partie** bien définie de la pile(stack) *complète* d’une tâche (un thread).
+
+- On a vu que l’architecture x86_64 contient deux registres utilisés pour la gestion de la pile **rbp(base pointer)** et **rsp(stack pointer)**. On pourrait se demander pourquoi avoir deux registres pour gérer une pile, alors qu’un seul suffirait. Effectivement, le registre **rsp** suffit largement pour accéder aux données présentes dans la pile. Par contre, la pile pouvant croitre et décroitre, on se doit de faire extrêmement attention au calcul des décalages par rapport à l’adresse présente dans le registre **rsp**. Un compilateur peut gérer cela, mais cela complexifie le débogage et introduit des cassements de têtes au programmeur qui veut toucher au code assembleur.
+  
+- Comme vous le savez déjà, la pile sert aussi à stocker l’adresse de retour d’une fonction et aussi *certains* de ses arguments (à partir du 7ᵉ argument). Alors, pour simplifier l’accès à ces arguments, on utilise le registre **rbp** pour spécifier la *base* d’une stack frame (où elle commence). Et le registre **rsp** va être décrémenté et incrémenté comme bon nous semble, indiquant le *sommet* de la pile. En utilisant le registre **rbp**, on pourra accéder aux arguments ou aux variables locales **sans avoir à recalculer les décalages (offsets)** à chaque fois que **rsp** change.
+
+- Comme le montre la figure ci-dessous, lors de l'exécution d'une fonction, le **rbp** contient l’**adresse** où l’**ancien** **rbp** est **stocké**, une **incrémentation** de **8** permet toujours d’avoir l'**adresse** **où** **est** **l’adresse de retour**, et de **16** pour avoir l'**adresse** du **7ᵉ argument** (s'il existe)(les arguments sont empilés de droite à gauche). Une **décrémentation** d’un certain nombre d’octets permet d’accéder aux registres sauvegardés ou aux variables locales allouées par la décrémentation du **rsp**.
+
+<center><div  class="figure-container"><figure>
+	<img src="./images/stack-frame-dark.png" alt="RFLAGS" class="figure2">
+	<figcaption>Illustration d'un exemple de stack frame de l'abi linux amd64.</figcaption>
+</figure></div></center>
+
+- Pour résumer, lors d'un appel de fonction, les arguments à partir du 7ᵉ sont empilés par la fonction appelante. Ce 7ᵉ argument s'il existe marquera la fin de la stack frame de la fonction appelante avec son octet de poids faible. L'adresse de retour est empilée par l'instruction `call` et son octet de poids fort marque le début de la stack frame de la fonction appelée.
+  - **Le Prologue:** Après le `call`, c'est le code de la fonction appelée qui s'exécute, ainsi, il est responsable de la sauvegarde de **rbp** et de sa mise à jour.
+   ```nasm
+   my_func:
+      pushq %rbp ; %rsp pointe vers la sauvegarde de %rbp
+      movq %rsp, %rbp ; %rbp pointe vers son ancienne valeur
+   ```
+  - **L'Épilogue:** À la sortie de la fonction, les variables locales doivent être **désallouées** et les registres **sauvegardés** (dont **rbp**) doivent être **restaurés**. Une fois arrivé à l'instruction `ret` le registre **rsp** **doit pointer vers l'adresse de retour**.
+   ```nasm
+      ; ...
+      movq %rbp, %rsp ; %rsp pointe vers l'ancienne valeur de %rbp
+      popq %rbp ; le précédent %rbp est restauré, %rsp pointe vers l'adresse de retour
+      ret
+   ```
+
+### 1.4.1. La red zone:
+
+- L'abi linux amd64 fait en sorte de garder intacte les **128 octets** juste après le sommet de la pile (**rsp**) en cas d'*interruption* de *réception de signal*. Cela permet d'avoir à notre disposition **128 octets** pré-alloués pour des données **temporaires** qui seront inchangées même *après la gestion d'une interruption ou signal*.
+- Il est **important** que ces données temporaires **ne soient pas utilisées entre des appels de fonctions**, vu que la stack frame d'une fonction appelée va **utiliser** ces 128 octets précédemment intitulés red zone pour sa stack frame. Il faut aussi garder en tête que **la red zone bouge avec le rsp**.
+- Dans le cas d'une fonction dite **leaf** (ne fait pas d'appel de fonction) elle pourra utiliser la red zone de la fonction appelante pour toute sa stack frame en n'utilisant que le **rsp** comme point de référence, vu qu'il ne changera pas (sauf si besoin de plus de 128 octets). Ainsi, on n'a pas à gérer le **rbp**, et cela nous *économise* quelques instructions.
+   > Sachez que le déréférencement d'adresse sous le rsp peut causer pas mal de bugs, s'il est mal fait ou est inatendu; ne le faite pas !! La red zone est juste une gimmick de linux voulant proposer certaines optimisations.
+
+> **Notes Pratiques:**
+>- Quand gcc compile du C, il essaie d'introduire des optimisations en n'utilisant les stack frames que quand nécessaire. 
+>  - Le flags `-fno-omit-frame-pointer`, permet de suggérer à gcc de définir une stack frame pour chaque appel de fonction. Par contre, il peut juger inutile sa définition dans certains cas(les leaf functions par exemple).
+>- Le flag `-fomit-frame-pointer` de gcc, permet d'avoir un code avec une utilisation minimale du stack frame (sauf si obligatoire), autrement dit, il pourra utiliser le registre `rbp` pour autre chose que la gestion des stack frame. 
+>  - Néanmoins, il ne peut être utilisé qu'avec certains langages comme le C, d'autres langages nécessitent la stack frame par design. Par exemple, le concept du unwinding (en C++ par exemple) permet de gérer les exceptions et de toujours appeler les destructeurs des variables locales à la sortie d'une fonction(ou fin d'un contexte) qui a levé une exception ou pas.
+>- Le flag `-mno-red-zone` permet de désactiver les red zone.
+
+### 1.4.2. enter et leave
+
+- L'architecture x86_64 propose deux instructions <a href="https://www.felixcloutier.com/x86/enter" target="_blank"><code class=" clickable">enter</code></a> et <a href="https://www.felixcloutier.com/x86/leave" target="_blank"><code class=" clickable">leave</code></a> pour gérer le prologue et l'épilogue d'une fonction.
+- L'instruction `enter` prend deux immédiats comme opérant, le premier (de 16-bits) spécifiant la taille à allouer dans la pile pour les registres à sauvegarder et les variables locales. Le deuxième est utilisé pour les fonctions imbriquées (une fonction définie à l'intérieur d'une autre) qui doivent avoir accès aux variables locales de leur fonction mére. 
+- En utilisation simple, `enter` tente de remplacer la suite de trois instructions: `push %rbp`, `movq  %rsp, %rbp`, `sub  imm16, %rsp`. Mais, comme l'explique si bien <a href="https://stackoverflow.com/questions/5959890/enter-vs-push-ebp-mov-ebp-esp-sub-esp-imm-and-leave-vs-mov-esp-ebp" target="_blank">ce post sur stackoverflow</a>, `enter` est qu'un vestige du passé maintenue uniquement pour pour la rétrocompatibilité et est en réalité moins performant en temps d'exécution que les trois instructions qu'il tente de remplacer.
+- Pour ce qui de l'instruction `leave` elle est l'équivalent à la suite d'instruction `movq %rbp, %rsp`, `popq %rbp`. Elle est toujours valable, mais les compilateurs l'utilisent de moins en moins. Elle reste une instruction vieillissante, qui n'est pas aussi optimisée que `mov` et `pop` réunies. La différence reste négligeable mais les developpeurs ont fait le choix de ne plus trop l'utiliser, même si elle permet d'avoir une plus petite empreinte mémoire.
+
+> **À garder en tête:** Avoir moins d'instructions permet d'avoir une meilleure empreinte mémoire (code moins volumineux), par contre ce ne dit rien quant à la vitesse d'exécution du code. Du coup, avoir moins d'instructions ne veut pas toujours dire avoir un meilleur code.
+
+<blockquote class="small-text">
+Références:
+<ul>
+<li><a href="https://cs61.seas.harvard.edu/site/pdf/x86-64-abi-20210928.pdf">https://cs61.seas.harvard.edu/site/pdf/x86-64-abi-20210928.pdf</a></li>
+<li><a href="https://softwareengineering.stackexchange.com/questions/230089/what-is-the-purpose-of-red-zone">https://softwareengineering.stackexchange.com/questions/230089/what-is-the-purpose-of-red-zone</a></li>
+<li><a href="https://stackoverflow.com/questions/26323215/do-any-languages-compilers-utilize-the-x86-enter-instruction-with-a-nonzero-ne">https://stackoverflow.com/questions/26323215/do-any-languages-compilers-utilize-the-x86-enter-instruction-with-a-nonzero-ne</a></li>
+<li><a href="https://stackoverflow.com/questions/5959890/enter-vs-push-ebp-mov-ebp-esp-sub-esp-imm-and-leave-vs-mov-esp-ebp">https://stackoverflow.com/questions/5959890/enter-vs-push-ebp-mov-ebp-esp-sub-esp-imm-and-leave-vs-mov-esp-ebp</a></li>
+<li><a href="https://stackoverflow.com/questions/2331316/what-is-stack-unwinding">https://stackoverflow.com/questions/2331316/what-is-stack-unwinding</a></li>
+<li><a href="https://www.bogotobogo.com/cplusplus/stackunwinding.php">https://www.bogotobogo.com/cplusplus/stackunwinding.php</a></li>
+</ul>
+</blockquote>
 
 ## 1.5. Appeler les fonctions de la libc
 

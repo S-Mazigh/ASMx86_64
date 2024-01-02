@@ -75,6 +75,10 @@ figcaption {
     filter: invert(1);
 }
 
+.figure, .figure2 {
+    max-height: 70em;
+}
+
 .figure-container-small{
     max-width: 40em;
 }
@@ -108,6 +112,14 @@ ul {
     list-style-image: none;
 }
 
+.small-text {
+    opacity: 30%;
+    transition: 0.5s;
+}
+
+.small-text:hover {
+    opacity: 100%;
+}
 .small-text * {
     font-size: small;
 }

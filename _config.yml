@@ -9,6 +9,7 @@ plugins:
   - jemoji
 
 title: Assembleur x86_64 (En travaux)
-description: Quelques notes à propos de l'architecture x86_64.
-  Notez que les instructions des exemples suivent la syntaxe AT&T.,
+description:
+  Quelques notes à propos de l'architecture x86_64 sous l'ABI amd64 linux.
+  Notez que les instructions des exemples suivent la syntaxe AT&T.
 # show_downloads: [true]
