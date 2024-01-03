@@ -469,7 +469,7 @@ int main(int argc, const char *argv)
 }
 ```
 
-- En le compilant en `-O0` pour avoir le code assembleur sans optimisation, on obtient le code et exécution <a href="./images/execution-slides.html" target="_blank" suivants>suivants</a>.
+- En le compilant en `-O0` pour avoir le code assembleur sans optimisation, on obtient le code et exécution <a href="./images/execution-slides.md" target="_blank" suivants>suivants</a>.
 
 ### 1.5.2. Fonction variadic (nombre d'arguments dynamique)
 
