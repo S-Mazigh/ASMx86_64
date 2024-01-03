@@ -10,7 +10,7 @@
   - [1.4. Stack frame](#14-stack-frame)
     - [1.4.1. La red zone:](#141-la-red-zone)
     - [1.4.2. enter et leave](#142-enter-et-leave)
-  - [1.5. Appeler les fonctions de la libc](#15-appeler-les-fonctions-de-la-libc)
+  - [1.5. Appeler les fonctions écrite en C compilée sous Linux](#15-appeler-les-fonctions-écrite-en-c-compilée-sous-linux)
     - [1.5.1. Fonction simple](#151-fonction-simple)
     - [1.5.2. Fonction variadic (nombre d'arguments dynamique)](#152-fonction-variadic-nombre-darguments-dynamique)
   - [1.6. Syscalls en assembleur](#16-syscalls-en-assembleur)
@@ -23,9 +23,12 @@ ____
 # 1. Les bases
 
 ## 1.1. Notes importantes
-
-> `movabs` est un `mov` qui ne peut utiliser que des immédiats et des registers (pas d'adresse mémoire), par contre il peut utiliser des immédiats de 64 bits.
-
+<blockquote>
+<ul>
+<li> <code>movabs</code> est un <code>mov</code> qui ne peut utiliser que des immédiats et des registers (pas d'adresse mémoire), par contre il peut utiliser des immédiats de 64 bits.</li>
+<li><a href="https://www.felixcloutier.com/x86/movs:movsb:movsw:movsd:movsq" target="_blank"> <code class=" clickable">movsb/movsw/movsd/movsq</code> </a> permet de copier une donnée d'une taille donnée (b:1 octet, w: 2 octets, d: 4 octets, q: 8 octets) depuis l'adresse spécifiée par le registre <strong>rdi</strong> vers l'adresse spécifiée par le registre <strong>rsi</strong>.</li>
+</ul>
+</blockquote>
 
 
 ## 1.2. Registres en x86_64
@@ -69,18 +72,18 @@ main:
     movw %ax, %bx
     ret
 
-; compilé:
-main:
-    1129:	48 b8 8a 25 4e 5c 00 	movabs $0x71ff9b005c4e258a,%rax
-    1130:	9b ff 71 
-    1133:	89 c3                	mov    %eax,%ebx
-    1135:	b4 41                	mov    $0x41,%ah
-    1137:	b0 41                	mov    $0x41,%al
-    1139:	66 b8 51 00          	mov    $0x51,%ax
-    113d:	b8 41 00 00 00       	mov    $0x41,%eax
-    1142:	48 c7 c0 51 00 00 00 	mov    $0x51,%rax
-    1149:	66 89 c3             	mov    %ax,%bx
-    114c:	c3                   	ret   
+; compilé (objdump):
+;main:
+;    1129:	48 b8 8a 25 4e 5c 00 	movabs $0x71ff9b005c4e258a,%rax
+;    1130:	9b ff 71 
+;    1133:	89 c3                	mov    %eax,%ebx
+;    1135:	b4 41                	mov    $0x41,%ah
+;    1137:	b0 41                	mov    $0x41,%al
+;    1139:	66 b8 51 00          	mov    $0x51,%ax
+;    113d:	b8 41 00 00 00       	mov    $0x41,%eax
+;    1142:	48 c7 c0 51 00 00 00 	mov    $0x51,%rax
+;    1149:	66 89 c3             	mov    %ax,%bx
+;    114c:	c3                   	ret   
 ```
 <div class="execution-sequence">
 <div  class="figure-container-small"><figure>
@@ -438,13 +441,104 @@ Références:
 </ul>
 </blockquote>
 
-## 1.5. Appeler les fonctions de la libc
+## 1.5. Appeler les fonctions écrite en C compilée sous Linux
+
+- Pour appeler des fonctions écrites en C de librairies comme la **libc** ou autres respectant l’ABI linux amd64, il suffit de suivre cette dernière.
 
 ### 1.5.1. Fonction simple
 
+- Mettre les arguments 1 à 6 dans les registres **rdi**, **rsi**, **rdx**, **rcx**, **r8** et **r9**, puis empiler le reste dans la pile du dernier au  **7ᵉ**.
+- Faire un `call` avec le nom de la fonction voulue.
+- Cette dernière va générer sa stack frame et devra retourner sa valeur de retour dans les registres **rax** et **rdx**, si c'est un entier.
+  - Le registre **rdx** est utilisé si la valeur de retour fait *plus de 8 octets*. 
+  - **xmm0** et **xmm1** pour les float et double, il existe d'autres registres de retour, mais il nous importent peu.
+- Etant donné le code suivant:
+
+```c
+#include <stdio.h>
+
+int binAdd(int a, int b){
+    return a+b;
+}
+
+int main(int argc, const char *argv)
+{
+    int res = binAdd(1,2);
+    printf("%d\n",res);
+    return 0;
+}
+```
+
+- En le compilant en `-O0` pour avoir le code assembleur sans optimisation, on obtient le code et exécution <a href="./images/execution-slides.html" target="_blank" suivants>suivants</a>.
+
 ### 1.5.2. Fonction variadic (nombre d'arguments dynamique)
-> printf
-> since variadics takes any type of arguments, it is hard to know how much registers to save when using it, saving XMM registers is too expensive to do it each time, thus %al is used to store the number of vector registers
+
+- Les fonctions ayant un nombre d'arguments non défini (comme *printf*), requirent l'utilisation du registre **al** (**rax**) pour spécifier le **nombre maximum** de registres de type vecteur que l'appel utilise. 
+  - Le nombre doit être entre** 0 et 8 inclus**, vu qu'on s'arrête au **xmm7**(commencant depuis **xmm0**) pour les arguments float avant de commencer à empiler les arguments en mémoire.
+- Les registres de types vecteurs sont énormes (de 128 à 512 bits) et ne sont pas préservés entre les appels de fonctions. Donc, pour éviter de les sauvegarder inutilement quand la fonctions variadic ne les utilisent pas, on spécifie le nombre maximum de registres vecteurs (utilisés pour les arguments) que la fonction variadic doit sauvegarder, afin de garder ses arguments entre les appels de fonctions qu'elle lancera.
+- Tout cela parce que le code de la fonction variadic est statique après la compilation (le même code pour tous les appels possibles) et donc pour **palier** à tous les cas de figures elle doit enregistrer tous les registres susciptible d'avoir des arguments (vu qu'elle ne connait le nombre qu'à l'appel) d'où l'interêt d'utiliser **al** pour optimiser son empreinte mémoire.
+
+- Etant donné le code suivant:
+
+```c
+#include <stdio.h>
+
+
+int main(int argc, const char *argv)
+{
+    printf("%d+%d=%d\n",45,40,45+40);
+    printf("%f*%f=%f", 3.1,2.0,3.1*2.0);
+    return 0;
+}
+
+```
+
+- On obtient l'assembleur:
+
+```nasm
+.LC0:
+        .string "%d+%d=%d\n"
+.LC4:
+        .string "%f*%f=%f"
+main:
+        subq    $8, %rsp
+        movl    $85, %ecx
+        movl    $40, %edx
+        movl    $45, %esi
+        movl    $.LC0, %edi
+        movl    $0, %eax ; mettre 0 dans al vu qu'on n'utilise aucun float
+        call    printf
+
+        movsd   .LC1(%rip), %xmm2
+        movsd   .LC2(%rip), %xmm1
+        movsd   .LC3(%rip), %xmm0
+        movl    $.LC4, %edi
+        movl    $3, %eax; 3 étant le nombre de registre xmm utilisés par l'appel
+        call    printf
+
+        movl    $0, %eax
+        addq    $8, %rsp
+        ret
+.LC1:
+        .long   -858993459
+        .long   1075367116
+.LC2:
+        .long   0
+        .long   1073741824
+.LC3:
+        .long   -858993459
+        .long   1074318540
+```
+
+- Vous remarquerez que le compilateur a fait lui même les calculs et le code finale ne fait qu'afficher des immédiats (les floats sont stockés avec la directive .long). Normalement un float fait 4 octets, mais là le compilateur remplie le registre **xmm** de 16 octets (la gestion des floats sera rajoutée plus tard, pour ceux et celles qui sont curieux).
+- Pour ce qui est des appel `.LC1(%rip)`, ... ceux sont des accès mémoire relatifs au **rip** pour avoir un code indépendant de son adresse de début.
+
+<blockquote class="small-text">
+Références:
+<ul>
+<li><a href="https://stackoverflow.com/questions/30412676/returning-function-arguments-from-assembly">https://stackoverflow.com/questions/30412676/returning-function-arguments-from-assembly</a></li>
+</ul>
+</blockquote>
 
 ## 1.6. Syscalls en assembleur
 - Dans les instructions du programme **safe** vous avez découvert l'instruction <a href="https://www.felixcloutier.com/x86/syscall" target="_blank"><code class=" clickable">syscall</code></a>. Si vous lisez la description de l'instruction dans le manuel d'intel, vous trouverez la phrase *"Fast call to privilege level 0 system procedures."*. Ils la décrivent comment étant rapide, cela est en rapport à l'ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l'interruption à chaque fois.

@@ -90,7 +90,7 @@ figcaption {
     flex-wrap: wrap;
 }
 
-.table-wrapper {
+.table-wrapper:focus,.table-wrapper:hover,.table-wrapper:active {
     overflow-x:scroll;
 }
 section{
