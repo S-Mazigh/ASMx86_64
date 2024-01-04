@@ -474,7 +474,7 @@ int main(int argc, const char *argv)
 ### 1.5.2. Fonction variadic (nombre d'arguments dynamique)
 
 - Les fonctions ayant un nombre d'arguments non défini (comme *printf*), requirent l'utilisation du registre **al** (**rax**) pour spécifier le **nombre maximum** de registres de type vecteur que l'appel utilise. 
-  - Le nombre doit être entre** 0 et 8 inclus**, vu qu'on s'arrête au **xmm7**(commencant depuis **xmm0**) pour les arguments float avant de commencer à empiler les arguments en mémoire.
+  - Le nombre doit être entre **0 et 8 inclus**, vu qu'on s'arrête au **xmm7**(commencant depuis **xmm0**) pour les arguments float avant de commencer à empiler les arguments en mémoire.
 - Les registres de types vecteurs sont énormes (de 128 à 512 bits) et ne sont pas préservés entre les appels de fonctions. Donc, pour éviter de les sauvegarder inutilement quand la fonctions variadic ne les utilisent pas, on spécifie le nombre maximum de registres vecteurs (utilisés pour les arguments) que la fonction variadic doit sauvegarder, afin de garder ses arguments entre les appels de fonctions qu'elle lancera.
 - Tout cela parce que le code de la fonction variadic est statique après la compilation (le même code pour tous les appels possibles) et donc pour **palier** à tous les cas de figures elle doit enregistrer tous les registres susciptible d'avoir des arguments (vu qu'elle ne connait le nombre qu'à l'appel) d'où l'interêt d'utiliser **al** pour optimiser son empreinte mémoire.
 
