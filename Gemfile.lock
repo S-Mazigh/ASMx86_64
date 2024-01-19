@@ -1,6 +1,5 @@
-GIT
-  remote: https://github.com/jekyll/minima
-  revision: 10124515953527c8990a2de99ae4ddb2a81ffee3
+PATH
+  remote: .
   specs:
     minima (3.0.0.dev)
       jekyll (>= 3.5, < 5.0)
@@ -112,14 +111,10 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  http_parser.rb (~> 0.6.0)
-  jekyll (~> 4.3.2)
+  bundler
   jekyll-katex
   jemoji
   minima!
-  tzinfo (>= 1, < 3)
-  tzinfo-data
-  wdm (~> 0.1.1)
 
 BUNDLED WITH
    2.4.22
