@@ -1,0 +1,115 @@
+---
+layout: slides
+title: "Execution Sequence"
+---
+
+
+<div class="crossnote markdown-preview  " data-presentation-mode="">
+
+    <div style="display:none;">
+        <style>
+            .figure-container,
+            .figure-container-small {
+                border: 1px solid $fig-border-color;
+                margin: 2em 0em;
+                max-width: 70em;
+                // padding: 3em;
+            }
+
+
+            figcaption {
+                border-top: 1px solid $fig-border-color;
+                font-size: 18 px;
+                text-align: center;
+            }
+
+            figure {
+                margin: 0px;
+            }
+
+            .figure {
+                filter: invert(1);
+            }
+        </style>
+    </div>
+    <div class="reveal">
+        <div class="slides">
+            <section lineno="34" class="slide " data-source-line="34" data-h="0" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="/assets/images/register-a-1.png" class="figure">
+                        <figcaption>Charger le registre <strong>%rax</strong> avec une valeur immédiate de 64-bits.
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section lineno="41" class="slide " data-source-line="41" data-h="1" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="/assets/images/register-a-2.png" class="figure">
+                        <figcaption>Charger que les 32-bits de poids faibles de <strong>%rax</strong> dans
+                            <strong>%rbx</strong>
+                            qui remplira le reste avec des <em>zéros</em>.
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section lineno="48" class="slide " data-source-line="48" data-h="2" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="/assets/images/register-a-3.png" class="figure">
+                        <figcaption>Modifier que le deuxième octet de <strong>%rax</strong>.</figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section lineno="55" class="slide " data-source-line="55" data-h="3" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="/assets/images/register-a-4.png" class="figure">
+                        <figcaption>Modifier que le premier octet de <strong>%rax</strong>.</figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section lineno="63" class="slide " data-source-line="63" data-h="4" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="/assets/images/register-a-5.png" class="figure">
+                        <figcaption>Modifier que les deux premiers octets (16-bits) de <strong>%rax</strong>.
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section lineno="71" class="slide " data-source-line="71" data-h="5" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="/assets/images/register-a-6.png" class="figure">
+                        <figcaption>Modifier les quatre premiers octets (32-bits) de <strong>%rax</strong> tout en
+                            rajoutant des
+                            **zéros** jusqu'au 64ème bit.</figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section lineno="79" class="slide " data-source-line="79" data-h="6" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="/assets/images/register-a-7.png" class="figure">
+                        <figcaption>Modifier tous les huit octets (64-bits) de <strong>%rax</strong> en rajoutant des
+                            zéros s'il
+                            le faut.</figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section lineno="87" class="slide " data-source-line="87" data-h="7" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="/assets/images/register-a-8.png" class="figure">
+                        <figcaption>Charger les deux premiers octets de <strong>%rax</strong> dans
+                            <strong>%rbx</strong>.
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</div>
