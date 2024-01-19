@@ -75,12 +75,14 @@ code.clickable:hover{
 //     display: none;
 // }
 
-.slideshow-iframe{
-    width: 70%
+#execution-registers{
+    width: 70%;
+    height: 120vh;
 }
 
-#execution-registers{
-    height: 100vh;
+#execution-function{
+    width: 100%;
+    height: 200vh;
 }
 
 .figure-container, .figure-container-small{
@@ -137,7 +139,7 @@ ul.toc{
     list-style: none;
     padding: 0px;
     margin: 0px;
-    border: 2px solid $blockquote-border-color;
+    background-color:  $blockquote-background-color;
 }
 
 li.title-2 {
