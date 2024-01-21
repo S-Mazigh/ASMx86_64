@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  </script><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Rappels OS | Assembleur x86_64 (En travaux)</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="Rappels OS" />
+<meta name="author" content="S-Mazigh" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Quelques notes sur le cours de système d’exploitation" />
+<meta property="og:description" content="Quelques notes sur le cours de système d’exploitation" />
+<meta property="og:site_name" content="Assembleur x86_64 (En travaux)" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-11-27T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Rappels OS" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"S-Mazigh"},"dateModified":"2023-11-27T00:00:00+01:00","datePublished":"2023-11-27T00:00:00+01:00","description":"Quelques notes sur le cours de système d’exploitation","headline":"Rappels OS","mainEntityOfPage":{"@type":"WebPage","@id":"/2023/11/27/sys.html"},"url":"/2023/11/27/sys.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Assembleur x86_64 (En travaux)" />
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Assembleur x86_64 (En travaux)</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <header class="post-header">
+        <h1 class="post-title p-name" itemprop="name headline">Rappels OS</h1>
+        <p class="post-meta"><time class="dt-published" datetime="2023-11-27T00:00:00+01:00" itemprop="datePublished">
+                Nov 27, 2023
+            </time></p>
+    </header>
+    <div class="post-container">
+        <div class="side-bar">
+            <ul class="toc"><li class="title-2"><a href="#quest-ce-quun-processus">Qu’est-ce qu’un processus</a></li><li class="title-2"><a href="#le-changement-de-contexte-changement-de-tâche">Le changement de contexte (changement de tâche)</a></li><li class="title-2"><a href="#quelques-exemples-dalgorithmes-dordonnancement">Quelques exemples d’algorithmes d’ordonnancement</a><ul><li class="title-3"><a href="#types-de-tâches">Types de tâches</a></li><li class="title-3"><a href="#types-dordonnancement">Types d’ordonnancement</a></li></ul></li></ul>
+        </div>
+        <div class="post-content e-content" itemprop="articleBody">
+            <h2 id="quest-ce-quun-processus">Qu’est-ce qu’un processus</h2>
+
+<ul>
+  <li>On peut distinguer deux types de systèmes d’exploitation (OS) :
+    <ul>
+      <li>Monotâche : Une seule tâche est en cours d’exécution et monopolise toutes les ressources (Même si vous possédez un EPYC avec 96 cœurs). Ce genre d’OS est principalement utilisé dans des systèmes embarqués</li>
+      <li>Multitâches : Plusieurs tâches sont en concurrence sur les ressources. Autrement dit, soit elle s’alterne en suivant une certaine logique, ou elles s’exécutent en parallèle.</li>
+    </ul>
+  </li>
+  <li>Maintenant, un OS classique que l’on va utiliser dans nos machines de tous les jours doit pouvoir gérer plusieurs tâches en même temps, sinon il est tout bonnement impossible d’avoir un système interactif. Riens que votre interface utilisateur représente plusieurs tâches qui doivent cohabiter et s’échanger des données. Et ce pauvre OS doit faire vivre tout ce joli monde tout en faisant attention à ne pas les laisser mourrir de fin (<em>starvation</em>) en leur n’accordant pas les ressources nécessaires.</li>
+  <li>Dans un OS, on parle principalement de processus. On peut voir un processus comme un espace mémoire contenant du code et des données. Quand l’OS veut faire exécuter un certain processus, il aiguille le CPU vers le bon code (espace mémoire) pour faire le travail qui impliquera surement des lectures et des écritures dans cette espace mémoire qu’on nomme processus.</li>
+</ul>
+
+<center><div class="figure-container">
+<figure class="figure-2"> 
+<image src="/assets/images/Virtual-Memory-Dark.png" />
+<figcaption>Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bit sont reellement utilisés.<a href="https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout"> [Kernel Docs]</a></figcaption>
+</figure>
+</div></center>
+
+<ul>
+  <li>
+    <p>La figure simplifie les différents blocs du Kernel en un seul pour ne pas complexifier encore plus la figure. Retenez juste que dans le le bloc kernel existe une pile pour ce processus utilisée lors de l’exécution de code  kernel pour ce même processus.</p>
+  </li>
+  <li>Dans ce qui suit je vais utiliser le terme tâche pour mieux définir les threads plus tard.</li>
+  <li>La structure qu’on appelle le PCB (process control block) est là pour que l’OS ne fasse pas n’importe quoi lors de la gestion des tâches existantes, notamment avec toute l’histoire de mémoire virtuelle.</li>
+  <li>Cette structure est immense, puisque pour satisfaire tout ce beau monde, il faut un maximum d’informations. À la fois pour optimiser l’ordonnancement (qui exécuter) et aussi pour toujours garder la stabilité de tout le système lors des réponses aux demandes (les syscalls) des tâches. Ainsi, un processus mal attentionné ne va pas pouvoir contrôler tout le système, par exemple.
+    <ul>
+      <li>Prenez comme exemple la <code class="language-plaintext highlighter-rouge">task_struct</code>` de Linux que vous pouvez voir <a href="https://elixir.bootlin.com/linux/latest/source/include/linux/sched.h#L743">ici</a>, la structure ne se termine qu’à la ligne 1554. Le kernel faisant le lien matériel-logiciel, doit réussir à abstraire les différentes architectures supportées au logiciel.</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p><strong>Question :</strong></p>
+  <ul>
+    <li><em>Si c’est le code du processus qui est exécuté par le CPU, quand est-ce que le code du kernel est exécuté ? Y a-t-il un processus kernel ?</em></li>
+  </ul>
+
+  <p><strong>Réponse:</strong></p>
+  <ul>
+    <li>Ce qu’on appelle le kernel est une partie du système d’exploitation. C’est tout le code de l’OS qui est exécuté en mode privilégié qui permet de gérer les interruptions du CPU et d’accéder au matériel des systèmes. Ce code est présent chez tous les processus d’un système, à la manière des bibliothèques partagées, où la pagination et son concept de monde virtuel fait en sorte qu’il existe une seule copie du kernel dans la mémoire physique.</li>
+    <li>Pour faire simple, quand une interruption est levée par le CPU ou que le processus fait un syscall, ce dernier se retrouve à devoir exécuter le code du kernel pour gérer cette interruption ou ce syscall. Le kernel est omniprésent dans son système, il intervient quand il faut pour répondre à une demande et veille toujours à son bon fonctionnement.</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p>Pour ceux qui veulent savoir comment les adresses kernel sont traduites alors qu’elles sont au delà des 48-bits. Comprennez que les adresses utilisateurs ne mettent jamais à 1 le 48éme bit (d’où le 7 dans l’adresse finale et non F). Ce dernier par contre est toujours à 1 dans les adresses kernel, et avec cette unique changement on explorera un tout autre bloc de 128 TebiBytes différent de celui du UserSpace (Les 4 FFFF supérieurs ne sont jamais lus par le matériel).</p>
+</blockquote>
+
+<h2 id="le-changement-de-contexte-changement-de-tâche">Le changement de contexte (changement de tâche)</h2>
+
+<ul>
+  <li>Quand le CPU exécute du code (une suite d’instructions) il interagit avec la mémoire principale (cache et RAM) mais avant tout avec ses registres. La lecture et écriture en mémoire est lentes par rapport au CPU, le temps d’un <strong>simple</strong> accès RAM est l’équivalent du temps de 100 instructions <strong>simples</strong> utilisant que les registres. C’est pour cela qu’on veut que l’accès en mémoire principale ne soit fait que si obligatoire.</li>
+</ul>
+
+<blockquote>
+  <p>Le cache existe pour accélérer les accès mémoire, le cache est plus de 10x plus rapide que la RAM classique.</p>
+</blockquote>
+
+<blockquote>
+  <p>Un accès en mémoire peut plus lent, ça dépend de la taille des données lues. Plus la taille des données est grande, plus le temps d’accès croît. En vérité, le burst mode (mode rafale) et d’autres optimisations matérielles et logicielles permettent d’avoir des temps d’accès acceptables pour les données lourdes.</p>
+</blockquote>
+
+<ul>
+  <li>Comme décrit précédemment, un OS multitâche doit gérer plusieurs tâches et faire en sorte de donner du temps d’exécution à ses dernières de façon équitable ou <strong>pas</strong>. Quand une nouvelle tâche (<strong>N</strong>) est en cours d’exécution, celle d’avant (<strong>P</strong>) n’est pas nécessairement fini et elle doit être rechargée dans le futur pour qu’elle puisse se finir correctement.</li>
+  <li>Vu que la nouvelle tâche (<strong>N</strong>) a le CPU à elle toute seule, elle va pouvoir utiliser ses registres comme elle le souhaite, après tout, c’est ce que promet l’OS pour la tâche qu’il a choisie à être exécutée.
+    <ul>
+      <li>Grâce à la virtualisation et toute la gestion de la pagination, les modifications en mémoire des tâches précédentes sont en sécurités. Par contre, les valeurs qu’elles avaient dans les registres du CPU sont très probablement perdues à jamais.</li>
+      <li>Pour n’avoir pas à refaire tout le travail déjà fait par la tâche (<strong>P</strong>) qui a perdu le CPU, une sauvegarde en mémoire principale et crée avant le changement de tâche. La sauvegarde contient les valeurs des registres juste avant le changement de tâches. Ainsi, au retour de la tâche (<strong>P</strong>) elle pourra reprendre son exécution comme si elle ne s’est jamais arrêtée.</li>
+    </ul>
+  </li>
+  <li>Lors d’un changement de tâches, l’OS doit mettre à jour les structures de données qui lui permettent de gérer <strong>N</strong> et <strong>P</strong>, maintenant <strong>N</strong> est en état d’<strong>exécution</strong> alors que <strong>P</strong> repasse en mode <strong>“je suis prête”</strong>. Naturellement, pour ne pas causer de conflits entre le monde virtuel de <strong>N</strong> et celui <strong>P</strong>, l’OS doit changer l’adresse de la table des pages présente dans le registre qui doit la contenir (<strong>CR3</strong> pour l’architecture x86).</li>
+  <li>Si vous regardez bien la <strong>task_struct</strong> vous  verrez qu’il ne y a pas d’attribut pour enregistrer les valeurs des registres. En vrai, il existe ce qu’on appelle une pile de kernel que le kernel utilise lors de l’exécution de son code et enregistre dessus des données supplementaires necessaires à la gestion d’une tâche.
+    <ul>
+      <li>Du coup, une tâche possède à la fois une pile classique(accessible en mode utilisateur) et une pile kernel (accessible qu’en mode kernel).</li>
+      <li>La taille de cette pile kernel est fixée à la compilation du kernel, et elle est generalement égale à 2 pages (8184 octets = 8Kib).</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="quelques-exemples-dalgorithmes-dordonnancement">Quelques exemples d’algorithmes d’ordonnancement</h2>
+<ul>
+  <li>Il existe plusieurs algorithmes d’ordonnancement, chacun avec ses avantages et incovenients. Mais avant on doit parler des deux catégories de tâches et les deux types d’ordonnancement.</li>
+</ul>
+
+<h3 id="types-de-tâches">Types de tâches</h3>
+<ul>
+  <li>Durant l’exécution d’une tâche, elle peut faire appelle aux périphériques connectés. Soit, elle leur envoie des données, par exemple une image à afficher sur le périphérique écran ou un son à jouer pour un périphérique audio, sinon elle doit recevoir une donnée de la part d’un périphérique.</li>
+  <li>Voyez-vous, les périphériques sont très lents par rapport au CPU, ainsi une écriture ou une lecture depuis un périphérique peut être l’équivalent de millions d’instructions CPU simples. Pour ne pas gâcher autant de temps à ne rien faire, dans les OS modernes, une tâche attendant la fin d’une écriture ou d’une lecture perd le CPU et est mise en état d’<em>attente</em> jusqu’à la réception de la réponse du périphérique (fin d’écriture ou les données lues). Une fois la réponse reçue, la tâche est remise en état “je suis prête” et pourra poursuivre son exécution très prochainement.
+    <blockquote>
+      <p>La fameuse mesure IOPS représente le nombre d’opérations d’entrées et de sorties possibles dans la seconde par un périphérique. Maintenant avec les SSD (pouvant atteindre le million d’IOPS), on arrive à avoir des périphériques de stockage permettant une meilleure interactivité qu’un CPU classique, alors que les disques durs (HDD) sont très lents en comparaison (<a href="https://www.wikiwand.com/en/IOPS">HDD vs SSD</a>).</p>
+    </blockquote>
+  </li>
+  <li>On aime catégorie les tâches en deux grandes familles :
+    <ul>
+      <li>Les tâches <strong>I/O bound</strong>: les tâches qui passent la majorité de leur temps à attendre les réponses de périphériques (exemples : un éditeur de texte, l’interface graphique).</li>
+      <li>Les tâches <strong>CPU bound</strong>: elles n’en nullement besoin de périphériques (très rares) ou très rarement, autrement dit, elle passe la majorité de leur temps à exécuter du code CPU (exemple : votre programme Fibonacci).</li>
+      <li>Par contre, il existe des tâches qui utilisent les deux de manière équilibrée, par exemple un jeu vidéo effectue plein de calcul pour dessiner une scène, mais il interagit aussi avec vos périphériques pour lire vos commandes et émettre la scène calculée à partir de votre écran. Mais pour la suite de l’histoire, disant qu’il n’existe que les deux extrémités (I/O bound et CPU bound).</li>
+    </ul>
+  </li>
+  <li>Les périphériques étant le matériel utilisé par l’utilisateur pour interagir avec son système, les tâches I/O bound doivent rapidement poursuivre avec leur exécution pour qu’utilisateur puisse avoir une meilleure expérience <em>(pour que le système soit interactif)</em>.</li>
+</ul>
+
+<h3 id="types-dordonnancement">Types d’ordonnancement</h3>
+<ul>
+  <li>Il existe deux types d’ordonnancement :
+    <ul>
+      <li><strong>Non-préemptif</strong> : L’ordonnanceur ne peut choisir une nouvelle tâche que si la tâche précédente à d’elle-même choisie de lâcher le CPU (soit attend une I/O ou s’est terminée).</li>
+      <li><strong>Préemptif</strong> : L’ordonnanceur peut faire arrêter une tâche (en cours d’exécution) et en choisir une nouvelle à n’importe quel moment. Si la tâche lâche d’elle-même le CPU, l’ordonnanceur en choisie une nouvelle.</li>
+    </ul>
+  </li>
+</ul>
+
+<!-- 
+## Algorithmes d'ordonnancement
+> Prochainement
+
+
+## Processus dans linux
+
+Chaque process a un pére.
+
+## Deadlock
+- Même ordre -> pas de deadlock
+
+## Inode
+Toujours même taille.
+L'indirection : un bloc contenant une liste de numéro bloc. -->
+
+        </div>
+    </div><a class="u-url" href="/2023/11/27/sys.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/%20/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <!-- <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p> -->
+        <ul class="contact-list">
+          <li class="p-name">S-Mazigh</li>
+          <li><a class="u-email" href="mailto:mazigh.o.saoudi@gmail.com">mazigh.o.saoudi@gmail.com</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p>Quelques notes à propos de l&#39;architecture x86_64 sous l&#39;ABI amd64 linux. Notez que les instructions des exemples suivent la syntaxe AT&amp;T.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"></ul>
+</div>
+
+  </div>
+
+</footer></body>
+
+</html>
