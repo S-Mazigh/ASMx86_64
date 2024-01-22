@@ -43,6 +43,24 @@
       <div class="wrapper">
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
+    <script>
+        let tocShown = false;
+        /* Set the width of the side navigation to 250px */
+        function toggleToc() {
+            if (!tocShown) {
+                document.getElementById("side-bar").style.width = "240px";
+                document.getElementById("post-content").style.marginLeft = "250px";
+                // document.getElementById("togglebtn").innerHTML = "&lt";
+            } else {
+                document.getElementById("side-bar").style.width = "0";
+                document.getElementById("post-content").style.marginLeft = "0px";
+                // document.getElementById("togglebtn").innerHTML = "&gt";
+            }
+            tocShown = !tocShown;
+        }
+
+    </script>
+
     <header class="post-header">
         <h1 class="post-title p-name" itemprop="name headline">Notions x86_64</h1>
         <p class="post-meta"><time class="dt-published" datetime="2024-01-09T00:00:00+01:00" itemprop="datePublished">
@@ -50,7 +68,8 @@
             </time></p>
     </header>
     <div class="post-container">
-        <div class="side-bar">
+        <div class="side-bar" id="side-bar">
+            <a id="togglebtn" onclick="toggleToc()">TOC</a>
             <ul class="toc">
 <li class="title-2"><a href="#notes-importantes">Notes importantes</a></li>
 <li class="title-2">
@@ -78,7 +97,8 @@
 <li class="title-2"><a href="#lordre-dex%C3%A9cution">L’ordre d’exécution</a></li>
 </ul>
         </div>
-        <div class="post-content e-content" itemprop="articleBody">
+
+        <div class="post-content e-content" id="post-content" itemprop="articleBody">
             <!-- regex for links: [-a-zA-Z0-9@:%._\+~#= "/<>]+ -->
 <h2 id="notes-importantes">Notes importantes</h2>
 <blockquote>
@@ -158,7 +178,7 @@
 </code></pre></div></div>
 
 <center>
-<iframe class="slideshow-iframe" id="execution-registers" src="https://s-mazigh.github.io/ASMx86_64/assets/html/register-sequence.html" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+<iframe class="slideshow-iframe" id="execution-registers" src="https://s-mazigh.github.io/ASMx86_64/assets/html/register-sequence.html" frameborder="0" scrolling="no"></iframe>
 </center>
 
 <ul>
@@ -649,7 +669,7 @@ Références:
 </ul>
 
 <center>
-<iframe class="slideshow-iframe" id="execution-function" src="https://s-mazigh.github.io/ASMx86_64/assets/html/function-sequence.html" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+<iframe class="slideshow-iframe" id="execution-function" src="https://s-mazigh.github.io/ASMx86_64/assets/html/function-sequence.html" frameborder="0" scrolling="no"></iframe>
 </center>
 
 <h3 id="fonction-variadic-nombre-darguments-dynamique">Fonction variadic (nombre d’arguments dynamique)</h3>

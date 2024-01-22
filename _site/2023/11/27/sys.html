@@ -42,6 +42,24 @@
       <div class="wrapper">
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
+    <script>
+        let tocShown = false;
+        /* Set the width of the side navigation to 250px */
+        function toggleToc() {
+            if (!tocShown) {
+                document.getElementById("side-bar").style.width = "240px";
+                document.getElementById("post-content").style.marginLeft = "250px";
+                // document.getElementById("togglebtn").innerHTML = "&lt";
+            } else {
+                document.getElementById("side-bar").style.width = "0";
+                document.getElementById("post-content").style.marginLeft = "0px";
+                // document.getElementById("togglebtn").innerHTML = "&gt";
+            }
+            tocShown = !tocShown;
+        }
+
+    </script>
+
     <header class="post-header">
         <h1 class="post-title p-name" itemprop="name headline">Rappels OS</h1>
         <p class="post-meta"><time class="dt-published" datetime="2023-11-27T00:00:00+01:00" itemprop="datePublished">
@@ -49,10 +67,12 @@
             </time></p>
     </header>
     <div class="post-container">
-        <div class="side-bar">
+        <div class="side-bar" id="side-bar">
+            <a id="togglebtn" onclick="toggleToc()">TOC</a>
             <ul class="toc"><li class="title-2"><a href="#quest-ce-quun-processus">Qu’est-ce qu’un processus</a></li><li class="title-2"><a href="#le-changement-de-contexte-changement-de-tâche">Le changement de contexte (changement de tâche)</a></li><li class="title-2"><a href="#quelques-exemples-dalgorithmes-dordonnancement">Quelques exemples d’algorithmes d’ordonnancement</a><ul><li class="title-3"><a href="#types-de-tâches">Types de tâches</a></li><li class="title-3"><a href="#types-dordonnancement">Types d’ordonnancement</a></li></ul></li></ul>
         </div>
-        <div class="post-content e-content" itemprop="articleBody">
+
+        <div class="post-content e-content" id="post-content" itemprop="articleBody">
             <h2 id="quest-ce-quun-processus">Qu’est-ce qu’un processus</h2>
 
 <ul>

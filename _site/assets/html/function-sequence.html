@@ -2667,9 +2667,32 @@
       // your code here
     });
   </script>
+
+  <script type="application/javascript">
+
+    function resizeIFrameToFitContent(iFrame) {
+      iFrame.width = iFrame.contentWindow.document.body.scrollWidth;
+      iFrame.height = iFrame.contentWindow.document.body.scrollHeight;
+    }
+
+    window.addEventListener('DOMContentLoaded', function (e) {
+
+      document.querySelectorAll('figcaption').forEach((figcapt) => { figcapt.style.fontSize = "0.5em"; })
+
+      // var iFrame = document.getElementById('iFrame1');
+      // resizeIFrameToFitContent(iFrame);
+
+      // or, to resize all iframes:
+      // var iframes = document.querySelectorAll("iframe");
+      // for (var i = 0; i < iframes.length; i++) {
+      //   // resizeIFrameToFitContent(iframes[i]);
+      // }
+    });
+
+  </script>
 </head>
 
-<body for="html-export" data-presentation-mode="">
+<body>
 
 
 
@@ -2876,7 +2899,7 @@
 
 
   <script>
-    Reveal.initialize({ "margin": 0.05, "theme": "night.css", "minScale": 0.5, "maxScale": 1.1, "dependencies": [] })
+    Reveal.initialize({ "margin": 0, "theme": "night.css", "minScale": 0.8, disableLayout: false, "maxScale": 1.1, "dependencies": [] })
   </script>
 
 

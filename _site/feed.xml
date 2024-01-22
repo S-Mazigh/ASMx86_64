@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://s-mazigh.github.io/ASMx86_64/feed.xml" rel="self" type="application/atom+xml" /><link href="https://s-mazigh.github.io/ASMx86_64/" rel="alternate" type="text/html" /><updated>2024-01-22T01:42:49+01:00</updated><id>https://s-mazigh.github.io/ASMx86_64/feed.xml</id><title type="html">Assembleur x86_64 (En travaux)</title><subtitle>Quelques notes à propos de l&apos;architecture x86_64 sous l&apos;ABI amd64 linux. Notez que les instructions des exemples suivent la syntaxe AT&amp;T.</subtitle><author><name>S-Mazigh</name><email>mazigh.o.saoudi@gmail.com</email></author><entry><title type="html">Notions x86_64</title><link href="https://s-mazigh.github.io/ASMx86_64/2024/01/09/first.html" rel="alternate" type="text/html" title="Notions x86_64" /><published>2024-01-09T00:00:00+01:00</published><updated>2024-01-09T00:00:00+01:00</updated><id>https://s-mazigh.github.io/ASMx86_64/2024/01/09/first</id><content type="html" xml:base="https://s-mazigh.github.io/ASMx86_64/2024/01/09/first.html"><![CDATA[<!-- regex for links: [-a-zA-Z0-9@:%._\+~#= "/<>]+ -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://s-mazigh.github.io/ASMx86_64/feed.xml" rel="self" type="application/atom+xml" /><link href="https://s-mazigh.github.io/ASMx86_64/" rel="alternate" type="text/html" /><updated>2024-01-22T17:56:31+01:00</updated><id>https://s-mazigh.github.io/ASMx86_64/feed.xml</id><title type="html">Assembleur x86_64 (En travaux)</title><subtitle>Quelques notes à propos de l&apos;architecture x86_64 sous l&apos;ABI amd64 linux. Notez que les instructions des exemples suivent la syntaxe AT&amp;T.</subtitle><author><name>S-Mazigh</name><email>mazigh.o.saoudi@gmail.com</email></author><entry><title type="html">Notions x86_64</title><link href="https://s-mazigh.github.io/ASMx86_64/2024/01/09/first.html" rel="alternate" type="text/html" title="Notions x86_64" /><published>2024-01-09T00:00:00+01:00</published><updated>2024-01-09T00:00:00+01:00</updated><id>https://s-mazigh.github.io/ASMx86_64/2024/01/09/first</id><content type="html" xml:base="https://s-mazigh.github.io/ASMx86_64/2024/01/09/first.html"><![CDATA[<!-- regex for links: [-a-zA-Z0-9@:%._\+~#= "/<>]+ -->
 <h2 id="notes-importantes">Notes importantes</h2>
 <blockquote>
 <ul>
@@ -72,7 +72,7 @@
 </code></pre></div></div>
 
 <center>
-<iframe class="slideshow-iframe" id="execution-registers" src="https://s-mazigh.github.io/ASMx86_64/assets/html/register-sequence.html" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+<iframe class="slideshow-iframe" id="execution-registers" src="https://s-mazigh.github.io/ASMx86_64/assets/html/register-sequence.html" frameborder="0" scrolling="no"></iframe>
 </center>
 
 <ul>
@@ -491,7 +491,7 @@ Références:
 </ul>
 
 <center>
-<iframe class="slideshow-iframe" id="execution-function" src="https://s-mazigh.github.io/ASMx86_64/assets/html/function-sequence.html" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+<iframe class="slideshow-iframe" id="execution-function" src="https://s-mazigh.github.io/ASMx86_64/assets/html/function-sequence.html" frameborder="0" scrolling="no"></iframe>
 </center>
 
 <h3 id="fonction-variadic-nombre-darguments-dynamique">Fonction variadic (nombre d’arguments dynamique)</h3>
