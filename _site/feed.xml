@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://s-mazigh.github.io/ASMx86_64/feed.xml" rel="self" type="application/atom+xml" /><link href="https://s-mazigh.github.io/ASMx86_64/" rel="alternate" type="text/html" /><updated>2024-01-22T01:32:43+01:00</updated><id>https://s-mazigh.github.io/ASMx86_64/feed.xml</id><title type="html">Assembleur x86_64 (En travaux)</title><subtitle>Quelques notes à propos de l&apos;architecture x86_64 sous l&apos;ABI amd64 linux. Notez que les instructions des exemples suivent la syntaxe AT&amp;T.</subtitle><author><name>S-Mazigh</name><email>mazigh.o.saoudi@gmail.com</email></author><entry><title type="html">Notions x86_64</title><link href="https://s-mazigh.github.io/ASMx86_64/2024/01/09/first.html" rel="alternate" type="text/html" title="Notions x86_64" /><published>2024-01-09T00:00:00+01:00</published><updated>2024-01-09T00:00:00+01:00</updated><id>https://s-mazigh.github.io/ASMx86_64/2024/01/09/first</id><content type="html" xml:base="https://s-mazigh.github.io/ASMx86_64/2024/01/09/first.html"><![CDATA[<!-- regex for links: [-a-zA-Z0-9@:%._\+~#= "/<>]+ -->
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://s-mazigh.github.io/ASMx86_64/feed.xml" rel="self" type="application/atom+xml" /><link href="https://s-mazigh.github.io/ASMx86_64/" rel="alternate" type="text/html" /><updated>2024-01-22T01:40:06+01:00</updated><id>https://s-mazigh.github.io/ASMx86_64/feed.xml</id><title type="html">Assembleur x86_64 (En travaux)</title><subtitle>Quelques notes à propos de l&apos;architecture x86_64 sous l&apos;ABI amd64 linux. Notez que les instructions des exemples suivent la syntaxe AT&amp;T.</subtitle><author><name>S-Mazigh</name><email>mazigh.o.saoudi@gmail.com</email></author><entry><title type="html">Notions x86_64</title><link href="https://s-mazigh.github.io/ASMx86_64/2024/01/09/first.html" rel="alternate" type="text/html" title="Notions x86_64" /><published>2024-01-09T00:00:00+01:00</published><updated>2024-01-09T00:00:00+01:00</updated><id>https://s-mazigh.github.io/ASMx86_64/2024/01/09/first</id><content type="html" xml:base="https://s-mazigh.github.io/ASMx86_64/2024/01/09/first.html"><![CDATA[<!-- regex for links: [-a-zA-Z0-9@:%._\+~#= "/<>]+ -->
 <h2 id="notes-importantes">Notes importantes</h2>
 <blockquote>
 <ul>
@@ -72,8 +72,7 @@
 </code></pre></div></div>
 
 <center>
-&lt;iframe class="slideshow-iframe" id="execution-registers" src=https://s-mazigh.github.io/ASMx86_64/assets/html/register-sequence.html
-frameborder="0" scrolling="no" onload="resizeIframe(this)"&gt;&lt;/iframe&gt;
+<iframe class="slideshow-iframe" id="execution-registers" src="https://s-mazigh.github.io/ASMx86_64/assets/html/register-sequence.html" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 </center>
 
 <ul>
@@ -81,7 +80,7 @@ frameborder="0" scrolling="no" onload="resizeIframe(this)"&gt;&lt;/iframe&gt;
 </ul>
 
 <center><div class="figure-container-small"><figure>
-	&lt;img src=https://s-mazigh.github.io/ASMx86_64/assets/images/register-sp.png class="figure"&gt;
+	<img src="https://s-mazigh.github.io/ASMx86_64/assets/images/register-sp.png" class="figure" />
 	<figcaption>Les différentes manières d'accéder au registre <strong>%rsp</strong>.</figcaption>
 </figure></div></center>
 <ul>
@@ -90,7 +89,7 @@ frameborder="0" scrolling="no" onload="resizeIframe(this)"&gt;&lt;/iframe&gt;
 
 <center><div class="figure-container-small">
 <figure>
-	&lt;img src=https://s-mazigh.github.io/ASMx86_64/assets/images/register-8.png alt="Register 8 calling convention" class="figure"&gt;
+	<img src="https://s-mazigh.github.io/ASMx86_64/assets/images/register-8.png" alt="Register 8 calling convention" class="figure" />
 	<figcaption>Registre 8 de l'architecture x86_64.</figcaption>
 </figure>
 </div></center>
@@ -118,8 +117,8 @@ Références:
 </ul>
 
 <center><div class="figure-container"><figure>
-	&lt;img src=https://s-mazigh.github.io/ASMx86_64/assets/images/rip-1.png class="figure2"&gt;
-  &lt;img src=https://s-mazigh.github.io/ASMx86_64/assets/images/rip-2.png class="figure2"&gt;
+	<img src="https://s-mazigh.github.io/ASMx86_64/assets/images/rip-1.png" class="figure2" />
+  <img src="https://s-mazigh.github.io/ASMx86_64/assets/images/rip-2.png" class="figure2" />
 	<figcaption>La valeur du <strong>%rip</strong> est calculée lors de l'exécution d'une instruction.</figcaption>
 </figure></div></center>
 
@@ -295,7 +294,7 @@ Références:
 </ul>
 
 <center><div class="figure-container"><figure>
-	&lt;img src=https://s-mazigh.github.io/ASMx86_64/assets/images/RFLAGS.png alt="RFLAGS" class="figure"&gt;
+	<img src="https://s-mazigh.github.io/ASMx86_64/assets/images/RFLAGS.png" alt="RFLAGS" class="figure" />
 	<figcaption>Registres RFLAGS avec tous les FLAGS connus.</figcaption>
 </figure></div></center>
 
@@ -381,7 +380,7 @@ Références:
 </ul>
 
 <center><div class="figure-container"><figure>
-	&lt;img src=https://s-mazigh.github.io/ASMx86_64/assets/images/stack-frame-dark.png alt="RFLAGS" class="figure2"&gt;
+	<img src="https://s-mazigh.github.io/ASMx86_64/assets/images/stack-frame-dark.png" alt="RFLAGS" class="figure2" />
 	<figcaption>Illustration d'un exemple de stack frame de l'abi linux amd64.</figcaption>
 </figure></div></center>
 
@@ -492,8 +491,7 @@ Références:
 </ul>
 
 <center>
-&lt;iframe class="slideshow-iframe" id="execution-function" src=https://s-mazigh.github.io/ASMx86_64/assets/html/function-sequence.html
-frameborder="0" scrolling="no" onload="resizeIframe(this)"&gt;&lt;/iframe&gt;
+<iframe class="slideshow-iframe" id="execution-function" src="https://s-mazigh.github.io/ASMx86_64/assets/html/function-sequence.html" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
 </center>
 
 <h3 id="fonction-variadic-nombre-darguments-dynamique">Fonction variadic (nombre d’arguments dynamique)</h3>
@@ -580,7 +578,7 @@ Références:
   <li>Vous remarquerez que plusieurs registres sont initialisés avant d’instruction syscall.</li>
 </ul>
 <center><div class="figure-container"><figure>
-&lt;img src=https://s-mazigh.github.io/ASMx86_64/assets/images/syscalls.png class="figure2"&gt;
+<img src="https://s-mazigh.github.io/ASMx86_64/assets/images/syscalls.png" class="figure2" />
 <figcaption>Illustration expliquant l'utilisation d'un syscall</figcaption>
 </figure></div></center>
 
@@ -656,7 +654,7 @@ Références:
 
 <center><div class="figure-container">
 <figure class="figure-2"> 
-&lt;image src=https://s-mazigh.github.io/ASMx86_64/assets/images/Virtual-Memory-Dark.png/&gt;
+<image src="https://s-mazigh.github.io/ASMx86_64/assets/images/Virtual-Memory-Dark.png" />
 <figcaption>Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bit sont reellement utilisés.<a href="https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout"> [Kernel Docs]</a></figcaption>
 </figure>
 </div></center>
