@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://s-mazigh.github.io/ASMx86_64/feed.xml" rel="self" type="application/atom+xml" /><link href="https://s-mazigh.github.io/ASMx86_64/" rel="alternate" type="text/html" /><updated>2024-01-24T17:26:05+01:00</updated><id>https://s-mazigh.github.io/ASMx86_64/feed.xml</id><title type="html">Assembleur x86_64 (En travaux)</title><subtitle>Quelques notes à propos de l&apos;architecture x86_64 sous l&apos;ABI amd64 linux. Notez que les instructions des exemples suivent la syntaxe AT&amp;T.</subtitle><author><name>S-Mazigh</name><email>mazigh.o.saoudi@gmail.com</email></author><entry><title type="html">Tape3</title><link href="https://s-mazigh.github.io/ASMx86_64/2024/01/23/phoenix.html" rel="alternate" type="text/html" title="Tape3" /><published>2024-01-23T00:00:00+01:00</published><updated>2024-01-23T00:00:00+01:00</updated><id>https://s-mazigh.github.io/ASMx86_64/2024/01/23/phoenix</id><content type="html" xml:base="https://s-mazigh.github.io/ASMx86_64/2024/01/23/phoenix.html"><![CDATA[<h2 id="mise-en-route">Mise en route</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://s-mazigh.github.io/ASMx86_64/feed.xml" rel="self" type="application/atom+xml" /><link href="https://s-mazigh.github.io/ASMx86_64/" rel="alternate" type="text/html" /><updated>2024-01-24T17:38:07+01:00</updated><id>https://s-mazigh.github.io/ASMx86_64/feed.xml</id><title type="html">Assembleur x86_64 (En travaux)</title><subtitle>Quelques notes à propos de l&apos;architecture x86_64 sous l&apos;ABI amd64 linux. Notez que les instructions des exemples suivent la syntaxe AT&amp;T.</subtitle><author><name>S-Mazigh</name><email>mazigh.o.saoudi@gmail.com</email></author><entry><title type="html">Tape3</title><link href="https://s-mazigh.github.io/ASMx86_64/2024/01/23/phoenix.html" rel="alternate" type="text/html" title="Tape3" /><published>2024-01-23T00:00:00+01:00</published><updated>2024-01-23T00:00:00+01:00</updated><id>https://s-mazigh.github.io/ASMx86_64/2024/01/23/phoenix</id><content type="html" xml:base="https://s-mazigh.github.io/ASMx86_64/2024/01/23/phoenix.html"><![CDATA[<h2 id="mise-en-route">Mise en route</h2>
 <ul>
   <li>Télécharger la vm amd64 <a href="https://exploit.education/downloads/">ici</a>, qemu aussi si vous ne l’avez pas, <a href="https://www.tecmint.com/install-qemu-kvm-ubuntu-create-virtual-machines/">debian</a>, <a href="https://www.howtoforge.com/how-to-install-kvm-qemu-on-manjaro-archlinux/]">arch</a>.</li>
   <li>Lancez le script <code class="language-plaintext highlighter-rouge">boot-exploit-education-phoenix-amd64.sh</code>.</li>
@@ -79,9 +79,9 @@ Well done, the 'changeme' variable has been changed!
 
 <center><div class="figure-container-small">
 <figure class="figure"> 
-<image src="https://s-mazigh.github.io/ASMx86_64/assets/images/phoenix/stack-zero.png" />
-<figcaption>Disposition de la structure en mémoire.</figcaption>
+<img src="https://s-mazigh.github.io/ASMx86_64/assets/images/phoenix/stack-zero.png" />
 </figure>
+<figcaption>Disposition de la structure en mémoire.</figcaption>
 </div></center>
 
 <blockquote>
@@ -1116,11 +1116,11 @@ Références:
   <li>Dans un OS, on parle principalement de processus. On peut voir un processus comme un espace mémoire contenant du code et des données. Quand l’OS veut faire exécuter un certain processus, il aiguille le CPU vers le bon code (espace mémoire) pour faire le travail qui impliquera surement des lectures et des écritures dans cette espace mémoire qu’on nomme processus.</li>
 </ul>
 
-<center><div class="figure-small-container">
-<figure class="figure"> 
-<image src="https://s-mazigh.github.io/ASMx86_64/assets/images/Virtual-Memory-Dark.png" />
-<figcaption>Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bit sont reellement utilisés.<a href="https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout"> [Kernel Docs]</a></figcaption>
+<center><div class="figure-container">
+<figure class="figure-2"> 
+<img src="https://s-mazigh.github.io/ASMx86_64/assets/images/Virtual-Memory-Dark.png" />
 </figure>
+<figcaption>Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bit sont reellement utilisés.<a href="https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout"> [Kernel Docs]</a></figcaption>
 </div></center>
 
 <ul>
