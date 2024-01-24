@@ -749,6 +749,7 @@ table td {
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
+  height: 5px;
 }
 
 /* Track */
@@ -953,6 +954,15 @@ ul.toc ul {
 
 .post-container {
   display: table;
+}
+
+.highlighter-rouge {
+  max-width: 90vw;
+}
+
+pre.highlight {
+  width: 100%;
+  overflow-x: scroll;
 }
 
 /*# sourceMappingURL=style.css.map */
