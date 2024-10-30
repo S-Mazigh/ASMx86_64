@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="../revealjs/dist/reset.css">
+    <link rel="stylesheet" href="../revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="../revealjs/dist/theme/black.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <!-- <link rel="stylesheet" href="../_static/revealjs/plugin/highlight/monokai.css"> -->
+
+    <style>
+        body{
+            color: white;
+        }
+        .figure-container,
+        .figure-container-small {
+            margin: 2em 0em;
+            max-width: 70em;
+        }
+
+        figcaption {
+            color: black; /* color inverted by filter */
+            border-top: 2px solid black;
+            text-align: center;
+        }
+
+        figure {
+            margin: 0px;
+            filter: invert();
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="slide " data-h="0" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="../images/register-a-1.png" class="figure">
+                        <figcaption>Charger le registre <strong>%rax</strong> avec une valeur immédiate de 64-bits.
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section class="slide " data-h="1" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="../images/register-a-2.png" class="figure">
+                        <figcaption>Charger que les 32-bits de poids faibles de <strong>%rax</strong> dans
+                            <strong>%rbx</strong>
+                            qui remplira le reste avec des <em>zéros</em>.
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section class="slide " data-h="2" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="../images/register-a-3.png" class="figure">
+                        <figcaption>Modifier que le deuxième octet de <strong>%rax</strong>.</figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section class="slide " data-h="3" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="../images/register-a-4.png" class="figure">
+                        <figcaption>Modifier que le premier octet de <strong>%rax</strong>.</figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section class="slide " data-h="4" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="../images/register-a-5.png" class="figure">
+                        <figcaption>Modifier que les deux premiers octets (16-bits) de <strong>%rax</strong>.
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section class="slide " data-h="5" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="../images/register-a-6.png" class="figure">
+                        <figcaption>Modifier les quatre premiers octets (32-bits) de <strong>%rax</strong> tout en
+                            rajoutant des
+                            <strong>zéros</strong> jusqu'au 64ème bit.
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section class="slide " data-h="6" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="../images/register-a-7.png" class="figure">
+                        <figcaption>Modifier tous les huit octets (64-bits) de <strong>%rax</strong> en rajoutant des
+                            zéros s'il le faut.</figcaption>
+                    </figure>
+                </div>
+            </section>
+            <section class="slide " data-h="7" data-v="0">
+                <div class="figure-container-small">
+                    <figure>
+                        <img src="../images/register-a-8.png" class="figure">
+                        <figcaption>Charger les deux premiers octets de <strong>%rax</strong> dans
+                            <strong>%rbx</strong>.
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="../revealjs/dist/reveal.js"></script>
+    <!-- <script src="../_static/revealjs/plugin/notes/notes.js"></script>
+		<script src="../_static/revealjs/plugin/markdown/markdown.js"></script>
+		<script src="../_static/revealjs/plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script> -->
+    <script>
+        Reveal.initialize({
+            margin: 0,
+            minScale: 0.8,
+            maxScale: 1.1,
+            disableLayout: false
+        });
+    </script>
+</body>
+
+</html>

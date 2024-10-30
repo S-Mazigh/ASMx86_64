@@ -1,0 +1,539 @@
+
+<!DOCTYPE html>
+
+
+<html lang="fr" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Rappels OS &#8212; ASMx86_64</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/css/mystyle.css?v=ad4ecbd7" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/documentation_options.js?v=0dc8974b"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/translations.js?v=e6b791cb"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Rappels-Système';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Notions x86_64" href="x86_64.html" />
+    <link rel="prev" title="ASM x86_64" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="fr"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">ASMx86_64</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Recherche" aria-label="Recherche" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Recherche</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Rappels OS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64.html">Notions x86_64</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Téléchargez cette page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Rappels-Système.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Télécharger le fichier source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimer au format PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Mode plein écran"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Recherche" aria-label="Recherche" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Rappels OS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenu </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qu-est-ce-qu-un-processus">Qu’est-ce qu’un processus</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#le-changement-de-contexte-changement-de-tache">Le changement de contexte (changement de tâche)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quelques-exemples-d-algorithmes-d-ordonnancement">Quelques exemples d’algorithmes d’ordonnancement</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-de-taches">Types de tâches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-d-ordonnancement">Types d’ordonnancement</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="rappels-os">
+<h1>Rappels OS<a class="headerlink" href="#rappels-os" title="Lien vers cette rubrique">#</a></h1>
+<p>Quelques notes sur le cours de système d’exploitation.</p>
+<section id="qu-est-ce-qu-un-processus">
+<h2>Qu’est-ce qu’un processus<a class="headerlink" href="#qu-est-ce-qu-un-processus" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p>On peut distinguer deux types de systèmes d’exploitation (OS) :</p>
+<ul>
+<li><p>Monotâche : Une seule tâche est en cours d’exécution et monopolise toutes les ressources (Même si vous possédez un EPYC avec 96 cœurs). Ce genre d’OS est principalement utilisé dans des systèmes embarqués</p></li>
+<li><p>Multitâches : Plusieurs tâches sont en concurrence sur les ressources. Autrement dit, soit elle s’alterne en suivant une certaine logique, ou elles s’exécutent en parallèle.</p></li>
+</ul>
+</li>
+<li><p>Maintenant, un OS classique que l’on va utiliser dans nos machines de tous les jours doit pouvoir gérer plusieurs tâches en même temps, sinon il est tout bonnement impossible d’avoir un système interactif. Riens que votre interface utilisateur représente plusieurs tâches qui doivent cohabiter et s’échanger des données. Et ce pauvre OS doit faire vivre tout ce joli monde tout en faisant attention à ne pas les laisser mourrir de fin (<em>starvation</em>) en leur n’accordant pas les ressources nécessaires.</p></li>
+<li><p>Dans un OS, on parle principalement de processus. On peut voir un processus comme un espace mémoire contenant du code et des données. Quand l’OS veut faire exécuter un certain processus, il aiguille le CPU vers le bon code (espace mémoire) pour faire le travail qui impliquera surement des lectures et des écritures dans cette espace mémoire qu’on nomme processus.</p></li>
+</ul>
+<center><div class="figure-container">
+<figure class="figure-2"> 
+<img src="./_static/images/Virtual-Memory.png"/>
+</figure>
+<figcaption>Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bit sont reellement utilisés.<a href="https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout"> [Kernel Docs]</a></figcaption>
+</div></center>
+<ul class="simple">
+<li><p>La figure simplifie les différents blocs du Kernel en un seul pour ne pas complexifier encore plus la figure. Retenez juste que dans le le bloc kernel existe une pile pour ce processus utilisée lors de l’exécution de code  kernel pour ce même processus.</p></li>
+<li><p>Dans ce qui suit je vais utiliser le terme tâche pour mieux définir les threads plus tard.</p></li>
+<li><p>La structure qu’on appelle le PCB (process control block) est là pour que l’OS ne fasse pas n’importe quoi lors de la gestion des tâches existantes, notamment avec toute l’histoire de mémoire virtuelle.</p></li>
+<li><p>Cette structure est immense, puisque pour satisfaire tout ce beau monde, il faut un maximum d’informations. À la fois pour optimiser l’ordonnancement (qui exécuter) et aussi pour toujours garder la stabilité de tout le système lors des réponses aux demandes (les syscalls) des tâches. Ainsi, un processus mal attentionné ne va pas pouvoir contrôler tout le système, par exemple.</p>
+<ul>
+<li><p>Prenez comme exemple la `task_struct`` de Linux que vous pouvez voir <a class="reference external" href="https://elixir.bootlin.com/linux/latest/source/include/linux/sched.h#L743">ici</a>, la structure ne se termine qu’à la ligne 1554. Le kernel faisant le lien matériel-logiciel, doit réussir à abstraire les différentes architectures supportées au logiciel.</p></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><p><strong>Question :</strong></p>
+<ul class="simple">
+<li><p><em>Si c’est le code du processus qui est exécuté par le CPU, quand est-ce que le code du kernel est exécuté ? Y a-t-il un processus kernel ?</em></p></li>
+</ul>
+<p><strong>Réponse:</strong></p>
+<ul class="simple">
+<li><p>Ce qu’on appelle le kernel est une partie du système d’exploitation. C’est tout le code de l’OS qui est exécuté en mode privilégié qui permet de gérer les interruptions du CPU et d’accéder au matériel des systèmes. Ce code est présent chez tous les processus d’un système, à la manière des bibliothèques partagées, où la pagination et son concept de monde virtuel fait en sorte qu’il existe une seule copie du kernel dans la mémoire physique.</p></li>
+<li><p>Pour faire simple, quand une interruption est levée par le CPU ou que le processus fait un syscall, ce dernier se retrouve à devoir exécuter le code du kernel pour gérer cette interruption ou ce syscall. Le kernel est omniprésent dans son système, il intervient quand il faut pour répondre à une demande et veille toujours à son bon fonctionnement.</p></li>
+</ul>
+</div></blockquote>
+<blockquote>
+<div><p>Pour ceux qui veulent savoir comment les adresses kernel sont traduites alors qu’elles sont au delà des 48-bits. Comprennez que les adresses utilisateurs ne mettent jamais à 1 le 48éme bit (d’où le 7 dans l’adresse finale et non F). Ce dernier par contre est toujours à 1 dans les adresses kernel, et avec cette unique changement on explorera un tout autre bloc de 128 TebiBytes différent de celui du UserSpace (Les 4 FFFF supérieurs ne sont jamais lus par le matériel).</p>
+</div></blockquote>
+</section>
+<section id="le-changement-de-contexte-changement-de-tache">
+<h2>Le changement de contexte (changement de tâche)<a class="headerlink" href="#le-changement-de-contexte-changement-de-tache" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p>Quand le CPU exécute du code (une suite d’instructions) il interagit avec la mémoire principale (cache et RAM) mais avant tout avec ses registres. La lecture et écriture en mémoire est lentes par rapport au CPU, le temps d’un <strong>simple</strong> accès RAM est l’équivalent du temps de 100 instructions <strong>simples</strong> utilisant que les registres. C’est pour cela qu’on veut que l’accès en mémoire principale ne soit fait que si obligatoire.</p></li>
+</ul>
+<blockquote>
+<div><p>Le cache existe pour accélérer les accès mémoire, le cache est plus de 10x plus rapide que la RAM classique.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Un accès en mémoire peut plus lent, ça dépend de la taille des données lues. Plus la taille des données est grande, plus le temps d’accès croît. En vérité, le burst mode (mode rafale) et d’autres optimisations matérielles et logicielles permettent d’avoir des temps d’accès acceptables pour les données lourdes.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Comme décrit précédemment, un OS multitâche doit gérer plusieurs tâches et faire en sorte de donner du temps d’exécution à ses dernières de façon équitable ou <strong>pas</strong>. Quand une nouvelle tâche (<strong>N</strong>) est en cours d’exécution, celle d’avant (<strong>P</strong>) n’est pas nécessairement fini et elle doit être rechargée dans le futur pour qu’elle puisse se finir correctement.</p></li>
+<li><p>Vu que la nouvelle tâche (<strong>N</strong>) a le CPU à elle toute seule, elle va pouvoir utiliser ses registres comme elle le souhaite, après tout, c’est ce que promet l’OS pour la tâche qu’il a choisie à être exécutée.</p>
+<ul>
+<li><p>Grâce à la virtualisation et toute la gestion de la pagination, les modifications en mémoire des tâches précédentes sont en sécurités. Par contre, les valeurs qu’elles avaient dans les registres du CPU sont très probablement perdues à jamais.</p></li>
+<li><p>Pour n’avoir pas à refaire tout le travail déjà fait par la tâche (<strong>P</strong>) qui a perdu le CPU, une sauvegarde en mémoire principale et crée avant le changement de tâche. La sauvegarde contient les valeurs des registres juste avant le changement de tâches. Ainsi, au retour de la tâche (<strong>P</strong>) elle pourra reprendre son exécution comme si elle ne s’est jamais arrêtée.</p></li>
+</ul>
+</li>
+<li><p>Lors d’un changement de tâches, l’OS doit mettre à jour les structures de données qui lui permettent de gérer <strong>N</strong> et <strong>P</strong>, maintenant <strong>N</strong> est en état d”<strong>exécution</strong> alors que <strong>P</strong> repasse en mode <strong>« je suis prête »</strong>. Naturellement, pour ne pas causer de conflits entre le monde virtuel de <strong>N</strong> et celui <strong>P</strong>, l’OS doit changer l’adresse de la table des pages présente dans le registre qui doit la contenir (<strong>CR3</strong> pour l’architecture x86).</p></li>
+<li><p>Si vous regardez bien la <strong>task_struct</strong> vous  verrez qu’il ne y a pas d’attribut pour enregistrer les valeurs des registres. En vrai, il existe ce qu’on appelle une pile de kernel que le kernel utilise lors de l’exécution de son code et enregistre dessus des données supplementaires necessaires à la gestion d’une tâche.</p>
+<ul>
+<li><p>Du coup, une tâche possède à la fois une pile classique(accessible en mode utilisateur) et une pile kernel (accessible qu’en mode kernel).</p></li>
+<li><p>La taille de cette pile kernel est fixée à la compilation du kernel, et elle est generalement égale à 2 pages (8184 octets = 8Kib).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="quelques-exemples-d-algorithmes-d-ordonnancement">
+<h2>Quelques exemples d’algorithmes d’ordonnancement<a class="headerlink" href="#quelques-exemples-d-algorithmes-d-ordonnancement" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p>Il existe plusieurs algorithmes d’ordonnancement, chacun avec ses avantages et incovenients. Mais avant on doit parler des deux catégories de tâches et les deux types d’ordonnancement.</p></li>
+</ul>
+<section id="types-de-taches">
+<h3>Types de tâches<a class="headerlink" href="#types-de-taches" title="Lien vers cette rubrique">#</a></h3>
+<ul class="simple">
+<li><p>Durant l’exécution d’une tâche, elle peut faire appelle aux périphériques connectés. Soit, elle leur envoie des données, par exemple une image à afficher sur le périphérique écran ou un son à jouer pour un périphérique audio, sinon elle doit recevoir une donnée de la part d’un périphérique.</p></li>
+<li><p>Voyez-vous, les périphériques sont très lents par rapport au CPU, ainsi une écriture ou une lecture depuis un périphérique peut être l’équivalent de millions d’instructions CPU simples. Pour ne pas gâcher autant de temps à ne rien faire, dans les OS modernes, une tâche attendant la fin d’une écriture ou d’une lecture perd le CPU et est mise en état d”<em>attente</em> jusqu’à la réception de la réponse du périphérique (fin d’écriture ou les données lues). Une fois la réponse reçue, la tâche est remise en état « je suis prête » et pourra poursuivre son exécution très prochainement.</p></li>
+</ul>
+<blockquote>
+<div><p>La fameuse mesure IOPS représente le nombre d’opérations d’entrées et de sorties possibles dans la seconde par un périphérique. Maintenant avec les SSD (pouvant atteindre le million d’IOPS), on arrive à avoir des périphériques de stockage permettant une meilleure interactivité qu’un CPU classique, alors que les disques durs (HDD) sont très lents en comparaison (<a class="reference external" href="https://www.wikiwand.com/en/IOPS">HDD vs SSD</a>).</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>On aime catégorie les tâches en deux grandes familles :</p>
+<ul>
+<li><p>Les tâches <strong>I/O bound</strong>: les tâches qui passent la majorité de leur temps à attendre les réponses de périphériques (exemples : un éditeur de texte, l’interface graphique).</p></li>
+<li><p>Les tâches <strong>CPU bound</strong>: elles n’en nullement besoin de périphériques (très rares) ou très rarement, autrement dit, elle passe la majorité de leur temps à exécuter du code CPU (exemple : votre programme Fibonacci).</p></li>
+<li><p>Par contre, il existe des tâches qui utilisent les deux de manière équilibrée, par exemple un jeu vidéo effectue plein de calcul pour dessiner une scène, mais il interagit aussi avec vos périphériques pour lire vos commandes et émettre la scène calculée à partir de votre écran. Mais pour la suite de l’histoire, disant qu’il n’existe que les deux extrémités (I/O bound et CPU bound).</p></li>
+</ul>
+</li>
+<li><p>Les périphériques étant le matériel utilisé par l’utilisateur pour interagir avec son système, les tâches I/O bound doivent rapidement poursuivre avec leur exécution pour qu’utilisateur puisse avoir une meilleure expérience <em>(pour que le système soit interactif)</em>.</p></li>
+</ul>
+</section>
+<section id="types-d-ordonnancement">
+<h3>Types d’ordonnancement<a class="headerlink" href="#types-d-ordonnancement" title="Lien vers cette rubrique">#</a></h3>
+<ul class="simple">
+<li><p>Il existe deux types d’ordonnancement :</p>
+<ul>
+<li><p><strong>Non-préemptif</strong> : L’ordonnanceur ne peut choisir une nouvelle tâche que si la tâche précédente à d’elle-même choisie de lâcher le CPU (soit attend une I/O ou s’est terminée).</p></li>
+<li><p><strong>Préemptif</strong> : L’ordonnanceur peut faire arrêter une tâche (en cours d’exécution) et en choisir une nouvelle à n’importe quel moment. Si la tâche lâche d’elle-même le CPU, l’ordonnanceur en choisie une nouvelle.</p></li>
+</ul>
+</li>
+</ul>
+<!-- 
+## Algorithmes d'ordonnancement
+> Prochainement
+
+
+## Processus dans linux
+
+Chaque process a un pére.
+
+## Deadlock
+- Même ordre -> pas de deadlock
+
+## Inode
+Toujours même taille.
+L'indirection : un bloc contenant une liste de numéro bloc. --></section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">précédent</p>
+        <p class="prev-next-title">ASM x86_64</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="x86_64.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">suivant</p>
+        <p class="prev-next-title">Notions x86_64</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenu
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qu-est-ce-qu-un-processus">Qu’est-ce qu’un processus</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#le-changement-de-contexte-changement-de-tache">Le changement de contexte (changement de tâche)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quelques-exemples-d-algorithmes-d-ordonnancement">Quelques exemples d’algorithmes d’ordonnancement</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-de-taches">Types de tâches</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-d-ordonnancement">Types d’ordonnancement</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Par Mazigh
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Mazigh.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
