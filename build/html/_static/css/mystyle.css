@@ -7,33 +7,56 @@
 }
 
 .red-row {
-  background-color: rgba(151, 26, 23, 0.658) !important; }
+  background-color: rgba(151, 26, 23, 0.658) !important;
+}
 
 .green-row {
-  background-color: rgba(26, 148, 30, 0.664) !important; }
+  background-color: rgba(26, 148, 30, 0.664) !important;
+}
+
+.red-row:hover {
+  background-color: rgb(197, 33, 30) !important;
+}
+
+.green-row:hover {
+  background-color: rgb(32, 175, 37) !important;
+}
 
 body {
-  word-wrap: break-word; }
+  word-wrap: break-word;
+}
 
 h1 {
-  font-size: 38px; }
+  font-size: 38px;
+}
 
 h2 {
-  font-size: 34px; }
+  font-size: 34px;
+}
 
-ul, li, p, table, figcaption, span, code {
-  font-size: 16px; }
+ul,
+li,
+p,
+table,
+figcaption,
+span,
+code {
+  font-size: 16px;
+}
 
 code.language-plaintext.highlighter-rouge {
   display: inline-block;
   background-color: rgba(10, 8, 2, 0.397);
   border-radius: 5px;
-  transition: .3s; }
+  transition: .3s;
+}
 
 #execution-registers {
   width: 50em;
   max-width: 70em;
-  height: calc(70em / 3); }
+  height: calc(70em / 3);
+}
+
 /*
 #execution-function {
   width: 60em;
@@ -41,48 +64,64 @@ code.language-plaintext.highlighter-rouge {
   height: 50em;
   max-height: 70em; } */
 
-.figure-container, .figure-container-small {
+.figure-container,
+.figure-container-small {
   border: 1px solid var(--pst-color-text-base);
   margin: 2em 0em;
-  max-width: 70em; }
+  max-width: 70em;
+}
 
 figcaption {
   border-top: 1px solid var(--pst-color-text-base);
   font-size: 18 px;
-  text-align: center; }
+  text-align: center;
+}
 
 figure {
-  margin: 0px; }
+  margin: 0px;
+}
 
-.figure, .figure2 {
-  max-height: 70em; }
+.figure,
+.figure2 {
+  max-height: 70em;
+}
 
 .figure-container-small {
-  max-width: 40em; }
+  max-width: 40em;
+}
 
-.table-wrapper:focus, .table-wrapper:hover, .table-wrapper:active {
-  overflow-x: scroll; }
+.table-wrapper:focus,
+.table-wrapper:hover,
+.table-wrapper:active {
+  overflow-x: scroll;
+}
 
 section {
-  max-width: 100%; }
+  max-width: 100%;
+}
 
 /* .inner */
 .wrapper {
-  max-width: 90%; }
+  max-width: 90%;
+}
 
 ul.toc ul {
   padding: 0px;
   list-style: none;
   padding: 0px;
   padding-left: 10px;
-  margin: 0px; }
+  margin: 0px;
+}
 
 .small-text {
   opacity: 30%;
-  transition: 0.5s; }
+  transition: 0.5s;
+}
 
 .small-text:hover {
-  opacity: 100%; }
+  opacity: 100%;
+}
 
 .small-text * {
-  font-size: small; }
+  font-size: small;
+}

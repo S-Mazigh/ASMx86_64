@@ -131,13 +131,13 @@ Références:
 </tr>   
 <tr class="green-row">
    <td>rcx</td><td>ecx</td><td>cx</td><td>ch,cl</td>
-      <td>4<sup>th</sup> argument entier</td>
+      <td>4<sup>e</sup> argument entier</td>
       <td>Peut être modifié par la fonction appelée</td>
       
 </tr>   
 <tr class="green-row">
    <td>rdx</td><td>edx</td><td>dx</td><td>dh,dl</td>
-      <td>3<sup>rd</sup> argument entier</td>
+      <td>3<sup>e</sup> argument entier</td>
       <td>Peut être modifié par la fonction appelée</td>
       
 </tr>   
@@ -214,10 +214,10 @@ Références:
 </tbody></table></center>
 
 
-:pencil: **Remarques:**
-- Quand vous appelez une fonction il **ne faut pas** vous attendre à ce que les registres en **vert** aient gardé leur valeur. Autrement dit, si votre programme assembleur utilise le registre `%rdx` il faut qu'il soit sauvegardé (`pushq %rdx`) avant l'appel `call my_func` et puis restauré après l'appel (`popq %rdx`).
-- Par contre si une fonction veut utiliser un des registres en **rouge**, elle doit le sauvegarder avant sa modification et le restaurer avant le retour (`ret`).
-> Vous n'avez pas à apprendre quel registre il faut sauvegardé. Le document sur l'ABI AMD64 présente dans un tableau plus complet dans la section **3.2.3 Parameter Passing** citant l'utilisation de chaque registre. Les sources latex officielles sont sur [gitlab](https://gitlab.com/x86-psABIs/x86-64-ABI), vous trouverez un lien pour télécharger le pdf dans le README.
+> - Quand vous appelez une fonction il **ne faut pas** vous attendre à ce que les registres en **vert** aient gardé leur valeur. Autrement dit, si votre programme assembleur utilise le registre `%rdx` il faut qu'il soit sauvegardé (`pushq %rdx`) avant l'appel `call my_func` et puis restauré après l'appel (`popq %rdx`).
+> - Par contre si une fonction veut utiliser un des registres en **rouge**, elle doit le sauvegarder avant sa modification et le restaurer avant le retour (`ret`).
+
+Vous n'avez pas à apprendre quel registre il faut sauvegardé. Le document sur l'ABI AMD64 présente dans un tableau plus complet dans la section **3.2.3 Parameter Passing** citant l'utilisation de chaque registre. Les sources latex officielles sont sur [gitlab](https://gitlab.com/x86-psABIs/x86-64-ABI), vous trouverez un lien pour télécharger le pdf dans le README.
 
 ```nasm
 my_func:
@@ -315,6 +315,7 @@ Références:
 
 <!-- http://ref.x86asm.net/coder64.html -->
 
+## Les modes d'adressage
 
 Commençons par le commencement : l'adressage, c'est tout simplement la façon dont on dit au processeur "hé, va chercher/mettre cette donnée à tel endroit !". C'est comme donner des indications à quelqu'un pour trouver un livre dans une immense bibliothèque.
 
@@ -353,7 +354,7 @@ movq value, %rax      ; Charge depuis l'adresse 'value'
 movq %rbx, target     ; Stocke dans l'adresse 'target'
 ```
 
-L'adressage mémoire direct utilise une adresse mémoire fixe. Pour les appels absolus, le préfixe '*' est nécessaire. Ainsi, vous comprendrez quand le code machine ne stocke pas l'adresse absolue de votre label dans un `jmp`, mais le deplacement vers ce dernier depuis l'adresse de l'instruction `jmp`.
+L'adressage mémoire direct utilise une adresse mémoire fixe. Pour les appels absolus, le préfixe `*` est nécessaire. Ainsi, vous comprendrez pourquoi le code machine ne stocke pas l'adresse absolue de votre label dans un `jmp` sans `*`, mais le deplacement vers ce dernier depuis l'adresse actuelle dans **rip**.
 
 ```nasm
 ; AT&T
@@ -389,7 +390,7 @@ movq %rax, 18(%rbx)      ; Stocke à rbx + 18
 
 #### 3. Mode d'adressage RIP-relative
 
-Le mode d'adressage RIP-relative est spécifique à l'architecture x86-64. Ce mode est fondamental pour le Position Independent Code (PIC). Les adresses sont calculées relativement à la position courante du pointeur d'instruction (**rip**), permettant au code d'être chargé à n'importe quelle adresse en mémoire virtuelle sans nécessiter de relocation. C'est une technique fondamentale pour les bibliothèques partagées.
+Le mode d'adressage RIP-relative est spécifique à l'architecture x86-64. Ce mode est fondamental pour le Position Independent Code (PIC). Les adresses sont calculées relativement à la position courante du pointeur d'instruction (**rip**), permettant au code d'être chargé à n'importe quelle adresse en mémoire virtuelle sans nécessiter de relocation. C'est une technique fondamentale pour les bibliothèques partagées. L'assembler (ex:`gnu as` ou `nasm`) et le linker se charge de calculer le deplacement et le mettre dans le code machine finale.
 
 ```nasm
 ; 1. Déplacement constant :
@@ -465,7 +466,7 @@ section .text
 global memory_copy_optimized
 memory_copy_optimized:
     mov rcx, rdx
-    shr rcx, 2         ; Division par 4 pour utiliser MOVSD
+    shr rcx, 2         ; Division par 4 pour utiliser movsd (4 octets)
     cld
     rep movsd          ; Copie principale par blocs de 4 octets
     
@@ -474,5 +475,6 @@ memory_copy_optimized:
     rep movsb          ; Copie des octets restants
     ret
 ```
+
 > **Note sur la performance:**
 > Bien que ces instructions soient optimisées au niveau du processeur, leur efficacité dépend du contexte. Pour de très petites copies (quelques octets), une simple séquence de `mov` peut s'avérer plus rapide. Pour de très grandes copies, les fonctions système comme memcpy, qui peuvent utiliser des instructions SIMD (Single Instruction Multiple Data) ou des optimisations spécifiques au processeur, sont souvent préférables.

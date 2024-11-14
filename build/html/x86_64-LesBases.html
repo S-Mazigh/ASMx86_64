@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="_static/css/mystyle.css?v=ad4ecbd7" />
+    <link rel="stylesheet" type="text/css" href="_static/css/mystyle.css?v=e69b93c9" />
   
   <!-- So that users can add custom icons -->
   <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -48,7 +48,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'x86_64-LesBases';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
-    <link rel="next" title="Les fonctions et leur contexte en x86_64" href="x86_64-LesFonctions.html" />
+    <link rel="next" title="Les fonctions en x86_64" href="x86_64-LesFonctions.html" />
     <link rel="prev" title="Les syntaxes AT&amp;T et Intel" href="x86_64-LesSyntaxes.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="fr"/>
@@ -148,11 +148,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="x86_64-LesSyntaxes.html">Les syntaxes AT&amp;T et Intel</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Les registres et l’adressage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="x86_64-LesFonctions.html">Les fonctions et leur contexte en x86_64</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Travaux pratiques</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesFonctions.html">Les fonctions en x86_64</a></li>
 </ul>
 
     </div>
@@ -299,7 +295,8 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resume-sur-les-registres">Résumé sur les registres</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#les-flags-en-x86-64">Les flags en x86_64</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#les-flags-en-x86-64">Les flags en x86_64</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#les-modes-d-adressage">Les modes d’adressage</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modes-directs">Modes Directs</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-immediat">1. Mode d’adressage immédiat</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-par-registre">2. Mode d’adressage par registre</a></li>
@@ -460,12 +457,12 @@ Références:
 </tr>   
 <tr class="green-row">
    <td>rcx</td><td>ecx</td><td>cx</td><td>ch,cl</td>
-      <td>4<sup>th</sup> argument entier</td>
+      <td>4<sup>e</sup> argument entier</td>
       <td>Peut être modifié par la fonction appelée</td>
 </tr>   
 <tr class="green-row">
    <td>rdx</td><td>edx</td><td>dx</td><td>dh,dl</td>
-      <td>3<sup>rd</sup> argument entier</td>
+      <td>3<sup>e</sup> argument entier</td>
       <td>Peut être modifié par la fonction appelée</td>
 </tr>   
 <tr class="green-row">
@@ -529,14 +526,13 @@ Références:
       <td>Doit être sauvegardé par la fonction appelée</td>
 </tr>
 </tbody></table></center>
-<p>:pencil: <strong>Remarques:</strong></p>
-<ul class="simple">
+<blockquote>
+<div><ul class="simple">
 <li><p>Quand vous appelez une fonction il <strong>ne faut pas</strong> vous attendre à ce que les registres en <strong>vert</strong> aient gardé leur valeur. Autrement dit, si votre programme assembleur utilise le registre <code class="docutils literal notranslate"><span class="pre">%rdx</span></code> il faut qu’il soit sauvegardé (<code class="docutils literal notranslate"><span class="pre">pushq</span> <span class="pre">%rdx</span></code>) avant l’appel <code class="docutils literal notranslate"><span class="pre">call</span> <span class="pre">my_func</span></code> et puis restauré après l’appel (<code class="docutils literal notranslate"><span class="pre">popq</span> <span class="pre">%rdx</span></code>).</p></li>
 <li><p>Par contre si une fonction veut utiliser un des registres en <strong>rouge</strong>, elle doit le sauvegarder avant sa modification et le restaurer avant le retour (<code class="docutils literal notranslate"><span class="pre">ret</span></code>).</p></li>
 </ul>
-<blockquote>
-<div><p>Vous n’avez pas à apprendre quel registre il faut sauvegardé. Le document sur l’ABI AMD64 présente dans un tableau plus complet dans la section <strong>3.2.3 Parameter Passing</strong> citant l’utilisation de chaque registre. Les sources latex officielles sont sur <a class="reference external" href="https://gitlab.com/x86-psABIs/x86-64-ABI">gitlab</a>, vous trouverez un lien pour télécharger le pdf dans le README.</p>
 </div></blockquote>
+<p>Vous n’avez pas à apprendre quel registre il faut sauvegardé. Le document sur l’ABI AMD64 présente dans un tableau plus complet dans la section <strong>3.2.3 Parameter Passing</strong> citant l’utilisation de chaque registre. Les sources latex officielles sont sur <a class="reference external" href="https://gitlab.com/x86-psABIs/x86-64-ABI">gitlab</a>, vous trouverez un lien pour télécharger le pdf dans le README.</p>
 <div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="nl">my_func:</span>
 <span class="w">   </span><span class="nf">pushq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span><span class="w"> </span><span class="c1">; sauvegarde %rbx</span>
 <span class="w">   </span><span class="nf">pushq</span><span class="w"> </span><span class="o">%</span><span class="nb">r14</span><span class="w"> </span><span class="c1">; sauvegarde %r14</span>
@@ -650,6 +646,9 @@ Références:
 </ul>
 </blockquote>
 <!-- http://ref.x86asm.net/coder64.html -->
+</section>
+<section id="les-modes-d-adressage">
+<h2>Les modes d’adressage<a class="headerlink" href="#les-modes-d-adressage" title="Lien vers cette rubrique">#</a></h2>
 <p>Commençons par le commencement : l’adressage, c’est tout simplement la façon dont on dit au processeur « hé, va chercher/mettre cette donnée à tel endroit ! ». C’est comme donner des indications à quelqu’un pour trouver un livre dans une immense bibliothèque.</p>
 <section id="modes-directs">
 <h3>Modes Directs<a class="headerlink" href="#modes-directs" title="Lien vers cette rubrique">#</a></h3>
@@ -679,7 +678,7 @@ Références:
 <span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span><span class="p">,</span><span class="w"> </span><span class="nv">target</span><span class="w">     </span><span class="c1">; Stocke dans l&#39;adresse &#39;target&#39;</span>
 </pre></div>
 </div>
-<p>L’adressage mémoire direct utilise une adresse mémoire fixe. Pour les appels absolus, le préfixe “*” est nécessaire. Ainsi, vous comprendrez quand le code machine ne stocke pas l’adresse absolue de votre label dans un <code class="docutils literal notranslate"><span class="pre">jmp</span></code>, mais le deplacement vers ce dernier depuis l’adresse de l’instruction <code class="docutils literal notranslate"><span class="pre">jmp</span></code>.</p>
+<p>L’adressage mémoire direct utilise une adresse mémoire fixe. Pour les appels absolus, le préfixe <code class="docutils literal notranslate"><span class="pre">*</span></code> est nécessaire. Ainsi, vous comprendrez pourquoi le code machine ne stocke pas l’adresse absolue de votre label dans un <code class="docutils literal notranslate"><span class="pre">jmp</span></code> sans <code class="docutils literal notranslate"><span class="pre">*</span></code>, mais le deplacement vers ce dernier depuis l’adresse actuelle dans <strong>rip</strong>.</p>
 <div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; AT&amp;T</span>
 <span class="nf">call</span><span class="w"> </span><span class="o">*</span><span class="ow">abs</span><span class="nv">olute_address</span><span class="w">    </span><span class="c1">; Appel absolu</span>
 <span class="nf">call</span><span class="w"> </span><span class="ow">rel</span><span class="nv">ative_address</span><span class="w">     </span><span class="c1">; Appel relatif (défaut)</span>
@@ -710,7 +709,7 @@ Références:
 </section>
 <section id="mode-d-adressage-rip-relative">
 <h4>3. Mode d’adressage RIP-relative<a class="headerlink" href="#mode-d-adressage-rip-relative" title="Lien vers cette rubrique">#</a></h4>
-<p>Le mode d’adressage RIP-relative est spécifique à l’architecture x86-64. Ce mode est fondamental pour le Position Independent Code (PIC). Les adresses sont calculées relativement à la position courante du pointeur d’instruction (<strong>rip</strong>), permettant au code d’être chargé à n’importe quelle adresse en mémoire virtuelle sans nécessiter de relocation. C’est une technique fondamentale pour les bibliothèques partagées.</p>
+<p>Le mode d’adressage RIP-relative est spécifique à l’architecture x86-64. Ce mode est fondamental pour le Position Independent Code (PIC). Les adresses sont calculées relativement à la position courante du pointeur d’instruction (<strong>rip</strong>), permettant au code d’être chargé à n’importe quelle adresse en mémoire virtuelle sans nécessiter de relocation. C’est une technique fondamentale pour les bibliothèques partagées. L’assembler (ex:<code class="docutils literal notranslate"><span class="pre">gnu</span> <span class="pre">as</span></code> ou <code class="docutils literal notranslate"><span class="pre">nasm</span></code>) et le linker se charge de calculer le deplacement et le mettre dans le code machine finale.</p>
 <div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; 1. Déplacement constant :</span>
 <span class="c1">; AT&amp;T</span>
 <span class="nf">movq</span><span class="w"> </span><span class="mi">1234</span><span class="p">(</span><span class="o">%</span><span class="nv">rip</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="w">    </span><span class="c1">; Accède à l&#39;adresse rip+1234</span>
@@ -780,7 +779,7 @@ La direction de cette mise à jour est contrôlée par le flag de direction (<st
 <span class="k">global</span><span class="w"> </span><span class="nv">memory_copy_optimized</span>
 <span class="nl">memory_copy_optimized:</span>
 <span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="nb">rcx</span><span class="p">,</span><span class="w"> </span><span class="nb">rdx</span>
-<span class="w">    </span><span class="nf">shr</span><span class="w"> </span><span class="nb">rcx</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w">         </span><span class="c1">; Division par 4 pour utiliser MOVSD</span>
+<span class="w">    </span><span class="nf">shr</span><span class="w"> </span><span class="nb">rcx</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w">         </span><span class="c1">; Division par 4 pour utiliser movsd (4 octets)</span>
 <span class="w">    </span><span class="nf">cld</span>
 <span class="w">    </span><span class="nf">rep</span><span class="w"> </span><span class="nv">movsd</span><span class="w">          </span><span class="c1">; Copie principale par blocs de 4 octets</span>
 <span class="w">    </span>
@@ -822,7 +821,7 @@ Bien que ces instructions soient optimisées au niveau du processeur, leur effic
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">suivant</p>
-        <p class="prev-next-title">Les fonctions et leur contexte en x86_64</p>
+        <p class="prev-next-title">Les fonctions en x86_64</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -849,7 +848,8 @@ Bien que ces instructions soient optimisées au niveau du processeur, leur effic
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resume-sur-les-registres">Résumé sur les registres</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#les-flags-en-x86-64">Les flags en x86_64</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#les-flags-en-x86-64">Les flags en x86_64</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#les-modes-d-adressage">Les modes d’adressage</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modes-directs">Modes Directs</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-immediat">1. Mode d’adressage immédiat</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-par-registre">2. Mode d’adressage par registre</a></li>

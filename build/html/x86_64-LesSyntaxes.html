@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="_static/css/mystyle.css?v=ad4ecbd7" />
+    <link rel="stylesheet" type="text/css" href="_static/css/mystyle.css?v=e69b93c9" />
   
   <!-- So that users can add custom icons -->
   <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -148,11 +148,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Les syntaxes AT&amp;T et Intel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="x86_64-LesBases.html">Les registres et l’adressage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="x86_64-LesFonctions.html">Les fonctions et leur contexte en x86_64</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Travaux pratiques</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesFonctions.html">Les fonctions en x86_64</a></li>
 </ul>
 
     </div>
@@ -298,7 +294,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-additionnelles">Notes Additionnelles</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commentaires-at-t">Commentaires AT&amp;T</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimisations-courantes">Optimisations courantes</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-pour-sur-le-mode-64-bits">Notes pour sur le mode 64 bits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-pour-le-mode-64-bits">Notes pour le mode 64 bits</a></li>
 </ul>
 </li>
 </ul>
@@ -345,8 +341,7 @@
 </li>
 </ol>
 <blockquote>
-<div><p>[!important]
-Sur AT&amp;T les saut et appels absolu doivent être préfixés par “*”, Sans “*”, l’assembleur utilise l’adressage relatif au <strong>rip</strong>.</p>
+<div><p>Sur AT&amp;T les saut et appels absolu doivent être préfixés par “*”, Sans “*”, l’assembleur x86_64 utilise l’adressage relatif au <a class="reference internal" href="x86_64-LesBases.html#pointer-register-rip"><span class="std std-ref"><strong>rip</strong></span></a>.</p>
 </div></blockquote>
 <p>Exemple:</p>
 <div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; Copier 42 dans eax</span>
@@ -555,8 +550,8 @@ Sur AT&amp;T les saut et appels absolu doivent être préfixés par “*”, San
 <li><p>Le compilateur peut ajouter des instructions <code class="docutils literal notranslate"><span class="pre">nop</span></code> (qui font rien) pour optimiser l’alignement en mémoire et l’utilisation du cache d’instructions.</p></li>
 </ul>
 </section>
-<section id="notes-pour-sur-le-mode-64-bits">
-<h3>Notes pour sur le mode 64 bits<a class="headerlink" href="#notes-pour-sur-le-mode-64-bits" title="Lien vers cette rubrique">#</a></h3>
+<section id="notes-pour-le-mode-64-bits">
+<h3>Notes pour le mode 64 bits<a class="headerlink" href="#notes-pour-le-mode-64-bits" title="Lien vers cette rubrique">#</a></h3>
 <ul class="simple">
 <li><p>Les opérations 32 bits sur les registres étends implicitement leur valeur à 64 bits avec des zéros. Par exemple, charger une valeur de 32-bits dans <code class="docutils literal notranslate"><span class="pre">%rax</span></code> va forcer les 32 bits de poids fort à zero même si la valeur est négative.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">movslq</span></code>/<code class="docutils literal notranslate"><span class="pre">movsxd</span></code> sont nécessaire pour l’extension de signe 32→64 bits.</p></li>
@@ -617,7 +612,7 @@ Sur AT&amp;T les saut et appels absolu doivent être préfixés par “*”, San
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-additionnelles">Notes Additionnelles</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commentaires-at-t">Commentaires AT&amp;T</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimisations-courantes">Optimisations courantes</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-pour-sur-le-mode-64-bits">Notes pour sur le mode 64 bits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-pour-le-mode-64-bits">Notes pour le mode 64 bits</a></li>
 </ul>
 </li>
 </ul>

@@ -24,8 +24,8 @@ La principale différence entre les syntaxes AT&T et Intel réside dans l'ordre 
 4. **Les appels/sauts lointains** :
    - AT&T : `lcall` et `ljmp`
    - Intel : `call far` et `jump far`
-> [!important]
-> Sur AT&T les saut et appels absolu doivent être préfixés par '\*', Sans '\*', l'assembleur utilise l'adressage relatif au **rip**.
+
+> Sur AT&T les saut et appels absolu doivent être préfixés par '\*', Sans '\*', l'assembleur x86_64 utilise l'adressage relatif au [**rip**](x86_64-LesBases.md#pointer-register-rip).
 
 Exemple:
 ```nasm
@@ -130,7 +130,7 @@ Il existe des instructions d'extension de signe specialement pour le registre `a
 - `test %rax, %rax` est plus efficace que `cmp $0, %rax` pour tester si un registre est à zéro.
 - Le compilateur peut ajouter des instructions `nop` (qui font rien) pour optimiser l'alignement en mémoire et l'utilisation du cache d'instructions.
 
-### Notes pour sur le mode 64 bits
+### Notes pour le mode 64 bits
 - Les opérations 32 bits sur les registres étends implicitement leur valeur à 64 bits avec des zéros. Par exemple, charger une valeur de 32-bits dans `%rax` va forcer les 32 bits de poids fort à zero même si la valeur est négative.
 - `movslq`/`movsxd` sont nécessaire pour l'extension de signe 32→64 bits.
 - `movq` ne peut pas être utilisée avec une valeur immédiates de 8 octets (64 bits). Utilisez `movabs` pour cela, par contre elle ne peut pas accèder directement à la mémoire, elle prend comme prend opérand que des registres et immédiats.

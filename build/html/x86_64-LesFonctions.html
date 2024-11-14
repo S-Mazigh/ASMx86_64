@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Les fonctions et leur contexte en x86_64 &#8212; ASMx86_64</title>
+    <title>Les fonctions en x86_64 &#8212; ASMx86_64</title>
   
   
   
@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="_static/css/mystyle.css?v=ad4ecbd7" />
+    <link rel="stylesheet" type="text/css" href="_static/css/mystyle.css?v=e69b93c9" />
   
   <!-- So that users can add custom icons -->
   <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -48,7 +48,6 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'x86_64-LesFonctions';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
-    <link rel="next" title="Tape3" href="Tape3.html" />
     <link rel="prev" title="Les registres et l’adressage" href="x86_64-LesBases.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="fr"/>
@@ -148,11 +147,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="x86_64-LesSyntaxes.html">Les syntaxes AT&amp;T et Intel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="x86_64-LesBases.html">Les registres et l’adressage</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Les fonctions et leur contexte en x86_64</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Travaux pratiques</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Les fonctions en x86_64</a></li>
 </ul>
 
     </div>
@@ -283,7 +278,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Les fonctions et leur contexte en x86_64</h1>
+    <h1>Les fonctions en x86_64</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -315,8 +310,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="les-fonctions-et-leur-contexte-en-x86-64">
-<h1>Les fonctions et leur contexte en x86_64<a class="headerlink" href="#les-fonctions-et-leur-contexte-en-x86-64" title="Lien vers cette rubrique">#</a></h1>
+  <section id="les-fonctions-en-x86-64">
+<h1>Les fonctions en x86_64<a class="headerlink" href="#les-fonctions-en-x86-64" title="Lien vers cette rubrique">#</a></h1>
 <section id="stack-frame">
 <h2>Stack frame<a class="headerlink" href="#stack-frame" title="Lien vers cette rubrique">#</a></h2>
 <ul class="simple">
@@ -332,7 +327,7 @@
 <ul>
 <li><p>Pour résumer, lors d’un appel de fonction, les arguments à partir du 7ᵉ sont empilés par la fonction appelante. Ce 7ᵉ argument s’il existe marquera la fin de la stack frame de la fonction appelante avec son octet de poids faible. L’adresse de retour est empilée par l’instruction <code class="docutils literal notranslate"><span class="pre">call</span></code> et son octet de poids fort marque le début de la stack frame de la fonction appelée.</p>
 <ul class="simple">
-<li><p><strong>Le Prologue:</strong> Après le <code class="docutils literal notranslate"><span class="pre">call</span></code>, c’est le code de la fonction appelée qui s’exécute, ainsi, il est responsable de la sauvegarde de <strong>rbp</strong> et de sa mise à jour.</p></li>
+<li><p><strong>La Prologue:</strong> Après le <code class="docutils literal notranslate"><span class="pre">call</span></code>, c’est le code de la fonction appelée qui s’exécute, ainsi, il est responsable de la sauvegarde de <strong>rbp</strong> et de sa mise à jour.</p></li>
 </ul>
 <div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="nl">my_func:</span>
 <span class="w">   </span><span class="nf">pushq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span><span class="w"> </span><span class="c1">; %rsp pointe vers la sauvegarde de %rbp</span>
@@ -574,15 +569,6 @@ Références:
         <p class="prev-next-subtitle">précédent</p>
         <p class="prev-next-title">Les registres et l’adressage</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="Tape3.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">suivant</p>
-        <p class="prev-next-title">Tape3</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

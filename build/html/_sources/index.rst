@@ -14,7 +14,7 @@ Ce document propose une introduction à la programmation en assembleur x86_64 en
 
    Rappels-Système
    Rappels-Compilation
-   
+
 .. toctree::
    :maxdepth: 2
    :caption: Syntaxe et bases de l'assembleur x86_64
@@ -24,10 +24,10 @@ Ce document propose une introduction à la programmation en assembleur x86_64 en
    x86_64-LesFonctions
 
 .. toctree::
-   :maxdepth: 1
-   :caption: Travaux pratiques
+..    :maxdepth: 1
+..    :caption: Travaux pratiques
 
-   Tape3
+..    Tape3
 
 .. Indices and tables
 .. ==================

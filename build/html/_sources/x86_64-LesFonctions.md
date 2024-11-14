@@ -3,7 +3,7 @@ title: Your Page Title
 index: true
 ---
 
-# Les fonctions et leur contexte en x86_64
+# Les fonctions en x86_64
 
 ## Stack frame
 
@@ -21,7 +21,7 @@ index: true
 </figure></div></center>
 
 - Pour résumer, lors d'un appel de fonction, les arguments à partir du 7ᵉ sont empilés par la fonction appelante. Ce 7ᵉ argument s'il existe marquera la fin de la stack frame de la fonction appelante avec son octet de poids faible. L'adresse de retour est empilée par l'instruction `call` et son octet de poids fort marque le début de la stack frame de la fonction appelée.
-  - **Le Prologue:** Après le `call`, c'est le code de la fonction appelée qui s'exécute, ainsi, il est responsable de la sauvegarde de **rbp** et de sa mise à jour.
+  - **La Prologue:** Après le `call`, c'est le code de la fonction appelée qui s'exécute, ainsi, il est responsable de la sauvegarde de **rbp** et de sa mise à jour.
    ```nasm
    my_func:
       pushq %rbp ; %rsp pointe vers la sauvegarde de %rbp
