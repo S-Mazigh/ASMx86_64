@@ -1,3 +1,8 @@
+---
+title: Your Page Title 
+index: true
+---
+
 # Tape3
 
 ## Mise en route

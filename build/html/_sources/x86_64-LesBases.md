@@ -1,4 +1,9 @@
-# Les bases: les registres et l'adressage
+---
+title: Your Page Title 
+index: true
+---
+
+# Les registres et l'adressage
 
 ## Registres en x86_64
 

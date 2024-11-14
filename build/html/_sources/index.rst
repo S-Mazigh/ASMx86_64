@@ -6,22 +6,32 @@
 ASM x86_64
 =====================================
 
+Ce document propose une introduction à la programmation en assembleur x86_64 en utilisant la syntaxe AT&T.
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contenu:
+   :caption: Notions préalables
 
    Rappels-Système
    Rappels-Compilation
-   x86_64-LesBases
+   
+.. toctree::
+   :maxdepth: 2
+   :caption: Syntaxe et bases de l'assembleur x86_64
+   
    x86_64-LesSyntaxes
+   x86_64-LesBases
    x86_64-LesFonctions
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Travaux pratiques
+
    Tape3
 
-Veuillez noter que ce document suit majoritairement la syntax AT&T. Pour avoir une idée générale sur cette dérniere et voir ses différences majeurs avec celle d'Intel (du manuel), merci de lire [x86_64-Syntaxes](./x86_64-Syntaxes.md).
+.. Indices and tables
+.. ==================
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`

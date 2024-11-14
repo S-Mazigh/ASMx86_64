@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="_static/documentation_options.js?v=0dc8974b"></script>
+    <script src="_static/documentation_options.js?v=a1409530"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -49,7 +49,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
     <link rel="next" title="Tape3" href="Tape3.html" />
-    <link rel="prev" title="Les syntaxes AT&amp;T et Intel" href="x86_64-LesSyntaxes.html" />
+    <link rel="prev" title="Les registres et l’adressage" href="x86_64-LesBases.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="fr"/>
   <meta name="docsearch:version" content="" />
@@ -139,14 +139,19 @@
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
-<ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Notions préalables</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Rappels-Syst%C3%A8me.html">Rappels OS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Rappels-Compilation.html">Rappel sur la compilation avec gcc</a></li>
-<li class="toctree-l1"><a class="reference internal" href="x86_64-LesBases.html">Les bases: les registres et l’adressage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Rappels-Compilation.html">Rappels sur la compilation avec gcc</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Syntaxe et bases de l'assembleur x86_64</span></p>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="x86_64-LesSyntaxes.html">Les syntaxes AT&amp;T et Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesBases.html">Les registres et l’adressage</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Les fonctions et leur contexte en x86_64</a></li>
-
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Travaux pratiques</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a></li>
 </ul>
 
@@ -288,7 +293,6 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Les fonctions et leur contexte en x86_64</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-frame">Stack frame</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#la-red-zone">La red zone</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enter-et-leave">enter et leave</a></li>
@@ -299,11 +303,8 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fonction-variadic-nombre-d-arguments-dynamique">Fonction variadic (nombre d’arguments dynamique)</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syscalls-en-assembleur">Syscalls en assembleur</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#syscalls-en-assembleur">Syscalls en assembleur</a></li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -509,9 +510,8 @@ Références:
 </blockquote>
 </section>
 </section>
-</section>
 <section id="syscalls-en-assembleur">
-<h1>Syscalls en assembleur<a class="headerlink" href="#syscalls-en-assembleur" title="Lien vers cette rubrique">#</a></h1>
+<h2>Syscalls en assembleur<a class="headerlink" href="#syscalls-en-assembleur" title="Lien vers cette rubrique">#</a></h2>
 <ul class="simple">
 <li><p>Dans les instructions du programme <strong>safe</strong> vous avez découvert l’instruction <a href="https://www.felixcloutier.com/x86/syscall" target="_blank"><code class=" clickable">syscall</code></a>. Si vous lisez la description de l’instruction dans le manuel d’intel, vous trouverez la phrase <em>« Fast call to privilege level 0 system procedures. »</em>. Ils la décrivent comment étant rapide, cela est en rapport à l’ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l’interruption à chaque fois.</p></li>
 <li><p>Sinon pour faire court, c’est l’instruction assembleur utilisée pour faire appel à un syscall défini par l’OS qui va s’exécuter en mode Kernel (d’où le privilege level 0).</p></li>
@@ -553,6 +553,7 @@ Références:
 <li><a href="https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf" target="_blank">https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf [Appendix A]</a></li>
 </ul>
 </blockquote></section>
+</section>
 
 
                 </article>
@@ -566,12 +567,12 @@ Références:
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="x86_64-LesSyntaxes.html"
+       href="x86_64-LesBases.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">précédent</p>
-        <p class="prev-next-title">Les syntaxes AT&amp;T et Intel</p>
+        <p class="prev-next-title">Les registres et l’adressage</p>
       </div>
     </a>
     <a class="right-next"
@@ -600,7 +601,6 @@ Références:
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Les fonctions et leur contexte en x86_64</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-frame">Stack frame</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#la-red-zone">La red zone</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enter-et-leave">enter et leave</a></li>
@@ -611,11 +611,8 @@ Références:
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fonction-variadic-nombre-d-arguments-dynamique">Fonction variadic (nombre d’arguments dynamique)</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syscalls-en-assembleur">Syscalls en assembleur</a></li>
 </ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#syscalls-en-assembleur">Syscalls en assembleur</a></li>
-</ul>
-
   </nav></div>
 
 </div></div>

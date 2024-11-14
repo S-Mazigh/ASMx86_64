@@ -1,4 +1,9 @@
-# Rappel sur la compilation avec gcc
+---
+title: Your Page Title 
+index: true
+---
+
+# Rappels sur la compilation avec gcc
 
 ## Les différentes étapes de la compilation
 

@@ -1,3 +1,8 @@
+---
+title: Your Page Title 
+index: true
+---
+
 # Les fonctions et leur contexte en x86_64
 
 ## Stack frame
@@ -171,7 +176,7 @@ Références:
 </ul>
 </blockquote>
 
-# Syscalls en assembleur
+## Syscalls en assembleur
 - Dans les instructions du programme **safe** vous avez découvert l'instruction <a href="https://www.felixcloutier.com/x86/syscall" target="_blank"><code class=" clickable">syscall</code></a>. Si vous lisez la description de l'instruction dans le manuel d'intel, vous trouverez la phrase *"Fast call to privilege level 0 system procedures."*. Ils la décrivent comment étant rapide, cela est en rapport à l'ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l'interruption à chaque fois.
 - Sinon pour faire court, c'est l'instruction assembleur utilisée pour faire appel à un syscall défini par l'OS qui va s'exécuter en mode Kernel (d'où le privilege level 0).
 - Vous remarquerez que plusieurs registres sont initialisés avant d'instruction syscall.

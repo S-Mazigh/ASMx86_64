@@ -1,3 +1,8 @@
+---
+title: Your Page Title 
+index: true
+---
+
 # Rappels OS
 
 Quelques notes sur le cours de système d'exploitation.

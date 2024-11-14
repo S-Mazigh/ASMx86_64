@@ -1,3 +1,8 @@
+---
+title: Your Page Title 
+index: true
+---
+
 # Les syntaxes AT&T et Intel
 
 La principale différence entre les syntaxes AT&T et Intel réside dans l'ordre des opérandes et leur notation. Pour une instruction de la forme `<op> A, B` :

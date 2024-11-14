@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Rappel sur la compilation avec gcc &#8212; ASMx86_64</title>
+    <title>Rappels sur la compilation avec gcc &#8212; ASMx86_64</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="_static/documentation_options.js?v=0dc8974b"></script>
+    <script src="_static/documentation_options.js?v=a1409530"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -48,7 +48,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Rappels-Compilation';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
-    <link rel="next" title="Les bases: les registres et l’adressage" href="x86_64-LesBases.html" />
+    <link rel="next" title="Les syntaxes AT&amp;T et Intel" href="x86_64-LesSyntaxes.html" />
     <link rel="prev" title="Rappels OS" href="Rappels-Syst%C3%A8me.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="fr"/>
@@ -139,14 +139,19 @@
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Notions préalables</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Rappels-Syst%C3%A8me.html">Rappels OS</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Rappel sur la compilation avec gcc</a></li>
-<li class="toctree-l1"><a class="reference internal" href="x86_64-LesBases.html">Les bases: les registres et l’adressage</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Rappels sur la compilation avec gcc</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Syntaxe et bases de l'assembleur x86_64</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="x86_64-LesSyntaxes.html">Les syntaxes AT&amp;T et Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesBases.html">Les registres et l’adressage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="x86_64-LesFonctions.html">Les fonctions et leur contexte en x86_64</a></li>
-
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Travaux pratiques</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a></li>
 </ul>
 
@@ -278,7 +283,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Rappel sur la compilation avec gcc</h1>
+    <h1>Rappels sur la compilation avec gcc</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -313,8 +318,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="rappel-sur-la-compilation-avec-gcc">
-<h1>Rappel sur la compilation avec gcc<a class="headerlink" href="#rappel-sur-la-compilation-avec-gcc" title="Lien vers cette rubrique">#</a></h1>
+  <section id="rappels-sur-la-compilation-avec-gcc">
+<h1>Rappels sur la compilation avec gcc<a class="headerlink" href="#rappels-sur-la-compilation-avec-gcc" title="Lien vers cette rubrique">#</a></h1>
 <section id="les-differentes-etapes-de-la-compilation">
 <h2>Les différentes étapes de la compilation<a class="headerlink" href="#les-differentes-etapes-de-la-compilation" title="Lien vers cette rubrique">#</a></h2>
 <p>La compilation d’un programme C est un processus en plusieurs étapes, chacune transformant le code d’un format à un autre.</p>
@@ -599,11 +604,11 @@ readelf<span class="w"> </span>-l<span class="w"> </span>executable
       </div>
     </a>
     <a class="right-next"
-       href="x86_64-LesBases.html"
+       href="x86_64-LesSyntaxes.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">suivant</p>
-        <p class="prev-next-title">Les bases: les registres et l’adressage</p>
+        <p class="prev-next-title">Les syntaxes AT&amp;T et Intel</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
