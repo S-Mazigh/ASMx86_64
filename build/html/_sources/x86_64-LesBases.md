@@ -275,19 +275,19 @@ Références:
 - Lors du développement de l'architecture, les ingénieurs ont dû choisir quelles informations garder sur le résultat d'une instruction. Pour optimiser un maximum tout en gardant l'utilisation simple, ils se sont limiter à un seul registre, où chaque **bit** annonce la présence ou l'absence d'un flag décrivant un état. Les bits vides sont réservés et intel ou amd les utilisent comme ils veulent.
 
 - Les flags sont divisés en **3** groupes:
-  - <span style="color: rgba(233, 163, 91,255);">Status Flags:</span> 
+  - <span style="color: rgba(91, 163, 233);">Status Flags:</span> 
     - **CF**(Carry Flag): **1** s'il y a eu une retenue au-delà du bit de poids fort du résultat, sinon **0**.
     - **PF**(Parity Flag): **1** si le nombre de bits à 1 dans les 8-bits de poids faible est pair, **0** si impair.
     - **AF**(Auxiliary Carry Flag): **1** s'il y a eu une retenue depuis le bit 3 vers le bit 4, sinon **0**.
     - **ZF**(Zero Flag): **1** si le résultat est nul, sinon **0**.
     - **SF**(Sign Flag): **1** si le résultat est négatif, sinon **0**.
     - **OF**(Overflow Flag): **1** si le résultat en signé a débordé (changement de signe inattendu) au-delà de la taille du registre destination, sinon **0**.
-  - <span style="color: #7dad4e;">Control Flags:</span>
+  - <span style="color: rgba(200, 80, 200);">Control Flags:</span>
     - **IF**(Interrupt Flag): **1** si les interruptions sont actives, **0** si désactivées.
     - **DF**(Direction Flag): **1** pour que les adresses soient décrementées lors des instructions iteratives (<a href="https://www.felixcloutier.com/x86/rep:repe:repz:repne:repnz" target="_blank"><code class=" clickable">rep</code></a>), **0** pour incrémenter les adresses.
     - **TF**(Trap Flag): **1**  pour appeler une fonction après chaque instruction permettant d'avoir une exécution pas à pas (debug), **0** pour une exécution classique.
     - **MD**(Mode Flag).
-  - <span style="color: #559393;">System Flags:</span>
+  - <span style="color: rgba(233, 100, 100);">System Flags:</span>
     - **IOPL**(I/O privilege level).
     - ...
 

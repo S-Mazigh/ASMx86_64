@@ -591,7 +591,7 @@ Références:
 <li><p>Lors du développement de l’architecture, les ingénieurs ont dû choisir quelles informations garder sur le résultat d’une instruction. Pour optimiser un maximum tout en gardant l’utilisation simple, ils se sont limiter à un seul registre, où chaque <strong>bit</strong> annonce la présence ou l’absence d’un flag décrivant un état. Les bits vides sont réservés et intel ou amd les utilisent comme ils veulent.</p></li>
 <li><p>Les flags sont divisés en <strong>3</strong> groupes:</p>
 <ul>
-<li><p><span style="color: rgba(233, 163, 91,255);">Status Flags:</span></p>
+<li><p><span style="color: rgba(91, 163, 233);">Status Flags:</span></p>
 <ul>
 <li><p><strong>CF</strong>(Carry Flag): <strong>1</strong> s’il y a eu une retenue au-delà du bit de poids fort du résultat, sinon <strong>0</strong>.</p></li>
 <li><p><strong>PF</strong>(Parity Flag): <strong>1</strong> si le nombre de bits à 1 dans les 8-bits de poids faible est pair, <strong>0</strong> si impair.</p></li>
@@ -601,7 +601,7 @@ Références:
 <li><p><strong>OF</strong>(Overflow Flag): <strong>1</strong> si le résultat en signé a débordé (changement de signe inattendu) au-delà de la taille du registre destination, sinon <strong>0</strong>.</p></li>
 </ul>
 </li>
-<li><p><span style="color: #7dad4e;">Control Flags:</span></p>
+<li><p><span style="color: rgba(200, 80, 200);">Control Flags:</span></p>
 <ul>
 <li><p><strong>IF</strong>(Interrupt Flag): <strong>1</strong> si les interruptions sont actives, <strong>0</strong> si désactivées.</p></li>
 <li><p><strong>DF</strong>(Direction Flag): <strong>1</strong> pour que les adresses soient décrementées lors des instructions iteratives (<a href="https://www.felixcloutier.com/x86/rep:repe:repz:repne:repnz" target="_blank"><code class=" clickable">rep</code></a>), <strong>0</strong> pour incrémenter les adresses.</p></li>
@@ -609,7 +609,7 @@ Références:
 <li><p><strong>MD</strong>(Mode Flag).</p></li>
 </ul>
 </li>
-<li><p><span style="color: #559393;">System Flags:</span></p>
+<li><p><span style="color: rgba(233, 100, 100);">System Flags:</span></p>
 <ul>
 <li><p><strong>IOPL</strong>(I/O privilege level).</p></li>
 <li><p>…</p></li>
