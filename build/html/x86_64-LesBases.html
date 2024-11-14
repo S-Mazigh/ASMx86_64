@@ -1,0 +1,918 @@
+
+<!DOCTYPE html>
+
+
+<html lang="fr" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Les bases: les registres et l’adressage &#8212; ASMx86_64</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/css/mystyle.css?v=ad4ecbd7" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/documentation_options.js?v=0dc8974b"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/translations.js?v=e6b791cb"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'x86_64-LesBases';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Les syntaxes AT&amp;T et Intel" href="x86_64-LesSyntaxes.html" />
+    <link rel="prev" title="Rappel sur la compilation avec gcc" href="Rappels-Compilation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="fr"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">ASMx86_64</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Recherche" aria-label="Recherche" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Recherche</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Rappels-Syst%C3%A8me.html">Rappels OS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Rappels-Compilation.html">Rappel sur la compilation avec gcc</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Les bases: les registres et l’adressage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesSyntaxes.html">Les syntaxes AT&amp;T et Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesFonctions.html">Les fonctions et leur contexte en x86_64</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Téléchargez cette page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/x86_64-LesBases.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Télécharger le fichier source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimer au format PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Mode plein écran"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Recherche" aria-label="Recherche" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Les bases: les registres et l’adressage</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenu </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#registres-en-x86-64">Registres en x86_64</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-purpose-registers">General Purpose Registers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pointer-register-rip">Pointer Register (RIP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resume-sur-les-registres">Résumé sur les registres</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#les-flags-en-x86-64">Les flags en x86_64</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modes-directs">Modes Directs</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-immediat">1. Mode d’adressage immédiat</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-par-registre">2. Mode d’adressage par registre</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-memoire-direct">3. Mode d’adressage mémoire direct</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modes-indirects">Modes Indirects</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-indirect-par-registre">1. Mode d’adressage indirect par registre</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-avec-deplacement">2. Mode d’adressage avec déplacement</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-rip-relative">3. Mode d’adressage RIP-relative</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-base-index-echelle-deplacement">4. Mode d’adressage base + index + échelle + déplacement</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instructions-movs-et-prefixes-rep">Instructions MOVS et préfixes REP</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="les-bases-les-registres-et-l-adressage">
+<h1>Les bases: les registres et l’adressage<a class="headerlink" href="#les-bases-les-registres-et-l-adressage" title="Lien vers cette rubrique">#</a></h1>
+<section id="registres-en-x86-64">
+<h2>Registres en x86_64<a class="headerlink" href="#registres-en-x86-64" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p>Il existe plusieurs types de registres dans l’architecture x86_64:</p>
+<ul>
+<li><p><strong>General Purpose Registers</strong></p></li>
+<li><p><strong>The pointer register</strong></p></li>
+<li><p><strong>Flag Register</strong></p></li>
+<li><p><em>Control Registers</em></p></li>
+<li><p>Debug Registers</p></li>
+<li><p>Model-Specific Register</p></li>
+<li><p>XMM Registers</p></li>
+<li><p>x87 Float registers (en pratique, les XMM registers les ont remplacés)</p></li>
+</ul>
+</li>
+<li><p>On va principalement parler des deux premieres familles de registres.</p></li>
+</ul>
+<section id="general-purpose-registers">
+<h3>General Purpose Registers<a class="headerlink" href="#general-purpose-registers" title="Lien vers cette rubrique">#</a></h3>
+<ul class="simple">
+<li><p>En x86_64 les registres généralistes ont une taille maximale de 64-bits (8 octets). Il existe 16 registres dans cette famille, dont certain ont une utilisation spécifique.</p></li>
+<li><p>Les registres sont :</p>
+<ul>
+<li><p><strong>rax</strong>, <strong>rbx</strong>, <strong>rcx</strong>, <strong>rdx</strong>: version 64-bits des registres: A, B, C, D.</p></li>
+<li><p><strong>rbp</strong>, <strong>rsp</strong>: version 64-bits des registres de gestion de la pile: BP(base pointer) et SP (stack pointer).</p></li>
+<li><p><strong>rsi</strong>, <strong>rdi</strong>: version 64-bits des registres pour la copie  de données: SI(source index) et DI(destination index).</p></li>
+<li><p><strong>r8</strong>,<strong>r9</strong>,<strong>r10</strong>,<strong>r11</strong>,<strong>r12</strong>,<strong>r13</strong>,<strong>r14</strong>,<strong>r15</strong>: registres 64-bits introduit avec l’architecture x86_64 (inexistant en architecture x86 (32-bits)).</p></li>
+</ul>
+</li>
+<li><p>Les registres hérités de l’architecture x86 <strong>(A,B,C,D)</strong> peuvent être accédés de différentes manières, on peut faire en sorte d’accéder que certains octets des registres.</p></li>
+<li><p>Comme le montrent les figures et code suivants, chaque nom permet de spécifier les octets à lire ou à écrire (sachez qu’il y existe une différence de comportement pour les versions 32-bits et 64-bits, même si à premiere vue elles paraissent equivalentes):</p></li>
+</ul>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; source:</span>
+<span class="nf">.global</span><span class="w"> </span><span class="nv">main</span>
+
+<span class="nl">main:</span>
+<span class="w">    </span><span class="nf">movabsq</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x71ff9b005c4e258a</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span>
+<span class="w">    </span><span class="nf">movl</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ebx</span>
+<span class="w">    </span><span class="nf">movb</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x41</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ah</span>
+<span class="w">    </span><span class="nf">movb</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x41</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">al</span>
+<span class="w">    </span><span class="nf">movw</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x51</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ax</span>
+<span class="w">    </span><span class="nf">movl</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x41</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span>
+<span class="w">    </span><span class="nf">movq</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x51</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span>
+<span class="w">    </span><span class="nf">movw</span><span class="w"> </span><span class="o">%</span><span class="nb">ax</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">bx</span>
+<span class="w">    </span><span class="nf">ret</span>
+
+<span class="c1">; compilé (objdump):</span>
+<span class="c1">;main:</span>
+<span class="c1">;    1129:	48 b8 8a 25 4e 5c 00 	movabs $0x71ff9b005c4e258a,%rax</span>
+<span class="c1">;    1130:	9b ff 71 </span>
+<span class="c1">;    1133:	89 c3                	mov    %eax,%ebx</span>
+<span class="c1">;    1135:	b4 41                	mov    $0x41,%ah</span>
+<span class="c1">;    1137:	b0 41                	mov    $0x41,%al</span>
+<span class="c1">;    1139:	66 b8 51 00          	mov    $0x51,%ax</span>
+<span class="c1">;    113d:	b8 41 00 00 00       	mov    $0x41,%eax</span>
+<span class="c1">;    1142:	48 c7 c0 51 00 00 00 	mov    $0x51,%rax</span>
+<span class="c1">;    1149:	66 89 c3             	mov    %ax,%bx</span>
+<span class="c1">;    114c:	c3                   	ret   </span>
+</pre></div>
+</div>
+<center>
+<iframe class="slideshow-iframe" id="execution-registers" src="./_static/slides/register-sequence.html"
+frameborder="0" scrolling="no"></iframe>
+</center>
+<ul class="simple">
+<li><p>Les autres registres hérités <strong>(SI,DI,SP,BP)</strong> ne permettent pas d’accéder leur deuxième octet.</p></li>
+</ul>
+<center><div  class="figure-container-small"><figure>
+    <img src="./_static/images/register-sp.png" class="figure">
+    <figcaption>Les différentes manières d'accéder au registre <strong>%rsp</strong>.</figcaption>
+</figure></div></center>
+- Pour les nouveaux registres de l'architecture x86_64 **(r8,r9,r10,r11,r12,r13,r14,r15)** on utilise plutôt des suffixes pour spécifier la taille à lire ou à écrire.
+<center><div  class="figure-container-small">
+<figure>
+    <img src="./_static/images/register-8.png" alt="Register 8 calling convention" class="figure">
+    <figcaption>Registre 8 de l'architecture x86_64.</figcaption>
+</figure>
+</div></center>
+<blockquote>
+<div><ul class="simple">
+<li><p>On remarque que les deux instructions <code class="docutils literal notranslate"><span class="pre">movl</span> <span class="pre">$0x41,</span> <span class="pre">%eax</span></code> et <code class="docutils literal notranslate"><span class="pre">movq</span> <span class="pre">$0x51,</span> <span class="pre">%rax</span></code> se comportent exactement de la même maniére dans ce cas de figure, tout en ayant des tailles différentes: la version avec <code class="docutils literal notranslate"><span class="pre">%eax</span></code> utilisant 2 octets de moins.</p></li>
+<li><p>Pour des raisons de performances de calculs en 32-bits (comme expliqué <a href="https://stackoverflow.com/questions/11177137/why-do-x86-64-instructions-on-32-bit-registers-zero-the-upper-part-of-the-full-6" target="_blank">ici</a>) amd a fait en sorte de forcer les 32-bits de poids fort à zéro.</p></li>
+<li><p><strong>Retenez juste que les instructions sur les 32-bits de poids faible forcent implicitement les 32-bits de poids fort d’un registre 64-bits à zéro.</strong></p></li>
+</ul>
+</div></blockquote>
+<blockquote class="small-text">
+Références:
+<ul>
+<li><a href="https://wiki.osdev.org/CPU_Registers_x86-64">https://wiki.osdev.org/CPU_Registers_x86-64</a></li>
+<li><a href="https://stackoverflow.com/questions/26280229/is-x87-fp-stack-still-relevant">https://stackoverflow.com/questions/26280229/is-x87-fp-stack-still-relevant</a></li>
+</ul>
+</blockquote>
+</section>
+<section id="pointer-register-rip">
+<h3>Pointer Register (RIP)<a class="headerlink" href="#pointer-register-rip" title="Lien vers cette rubrique">#</a></h3>
+<ul class="simple">
+<li><p>Le pointer register contient l”<strong>adresse</strong> mémoire ou la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d’exécuter l’instruction <a href="https://sourceware.org/binutils/docs/as/i386_002dVariations.html" target="_blank"><code class=" clickable">movabs</code></a> qui est à l’adresse <code class="docutils literal notranslate"><span class="pre">0x5129</span></code> la valeur de <code class="docutils literal notranslate"><span class="pre">%rip</span></code> est l’adresse de l’instruction suivante <code class="docutils literal notranslate"><span class="pre">mov</span> <span class="pre">%eax,</span> <span class="pre">%ebx</span></code> à l’adresse <code class="docutils literal notranslate"><span class="pre">0x5133</span></code>.</p></li>
+</ul>
+<center><div  class="figure-container"><figure>
+    <img src="./_static/images/rip-1.png" class="figure2">
+  <img src="./_static/images/rip-2.png" class="figure2">
+    <figcaption>La valeur du <strong>%rip</strong> est calculée lors de l'exécution d'une instruction.</figcaption>
+</figure></div></center>
+<ul class="simple">
+<li><p>Il faut que vous sachiez que les instructions ont des tailles différentes. elles varient de <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">octets</span></code> jusqu’à <code class="docutils literal notranslate"><span class="pre">15</span> <span class="pre">octets</span></code>. Vu qu’en mémoire les données sont stockés par octets, durant la lecture d’un octet de l’instruction le CPU sait s’il doit interpréter les prochains octets comme faisant partie de cette même instruction grâce aux octets qu’il a déja décodés.</p></li>
+<li><p>Les instructions d’appel et de branchement <code class="docutils literal notranslate"><span class="pre">jmp</span></code>, <code class="docutils literal notranslate"><span class="pre">call</span></code>, <code class="docutils literal notranslate"><span class="pre">ret</span></code>, … ne font que modifier la valeur de ce fameux registre <code class="docutils literal notranslate"><span class="pre">%rip</span></code>, en d’autres termes elles changent l’adresse de la prochaine instruction.</p></li>
+</ul>
+</section>
+<section id="resume-sur-les-registres">
+<h3>Résumé sur les registres<a class="headerlink" href="#resume-sur-les-registres" title="Lien vers cette rubrique">#</a></h3>
+<center class="table-wrapper"><table align="center" cellpadding="7px" cellspacing="0" border="2">
+<tbody><tr class="header-row">
+   <th>64-bits</th>
+   <th>32-bits</th>
+   <th>16-bits</th>
+   <th>8-bits</th>
+   <th>Utilisation dans l'ABI Linux AMD64</th>
+   <th>Appel de fonction</th>
+</tr>
+<tr class="green-row">
+   <td>rax</td><td>eax</td><td>ax</td><td>ah,al</td>
+      <td>Valeur de retour</td>
+      <td>Peut être modifié par la fonction appelée</td>
+</tr>   
+<tr class="red-row">
+   <td>rbx</td><td>ebx</td><td>bx</td><td>bh,bl</td>
+      <td>&nbsp;</td>
+      <td>Doit être sauvegardé par la fonction appelée</td>
+</tr>   
+<tr class="green-row">
+   <td>rcx</td><td>ecx</td><td>cx</td><td>ch,cl</td>
+      <td>4<sup>th</sup> argument entier</td>
+      <td>Peut être modifié par la fonction appelée</td>
+</tr>   
+<tr class="green-row">
+   <td>rdx</td><td>edx</td><td>dx</td><td>dh,dl</td>
+      <td>3<sup>rd</sup> argument entier</td>
+      <td>Peut être modifié par la fonction appelée</td>
+</tr>   
+<tr class="green-row">
+   <td>rsi</td><td>esi</td><td>si</td><td>sil</td>
+      <td>2<sup>e</sup> argument entier</td>
+      <td>Peut être modifié par la fonction appelée</td>
+</tr>   
+<tr class="green-row">
+   <td>rdi</td><td>edi</td><td>di</td><td>dil</td>
+      <td>1<sup>er</sup>argument entier</td>
+      <td>Peut être modifié par la fonction appelée</td>
+</tr>   
+<tr class="red-row">
+   <td>rbp</td><td>ebp</td><td>bp</td><td>bpl</td>
+      <td>Début d'une stack frame</td>
+      <td>Faire extrêmement attention à son utilisation et à sa sauvegarde</td>
+</tr>   
+<tr class="red-row">
+   <td>rsp</td><td>esp</td><td>sp</td><td>spl</td>
+      <td>La fin de la pile (top of stack)</td>
+      <td>Faire extrêmement attention à son utilisation et à sa sauvegarde</td>
+</tr>
+<tr class="green-row">
+   <td>r8</td><td>r8d</td><td>r8w</td><td>r8b</td>
+      <td>5<sup>e</sup> argument entier</td>
+      <td>Peut être modifié par la fonction appelée</td>
+</tr>
+<tr class="green-row">
+   <td>r9</td><td>r9d</td><td>r9w</td><td>r9b</td>
+      <td>6<sup>e</sup> argument entier</td>
+      <td>Peut être modifié par la fonction appelée</td>
+</tr>
+<tr class="green-row">
+   <td>r10</td><td>r10d</td><td>r10w</td><td>r10b</td>
+      <td>&nbsp;</td>
+      <td>Peut être modifié par la fonction appelée</td>
+</tr>
+<tr class="green-row">
+   <td>r11</td><td>r11d</td><td>r11w</td><td>r11b</td>
+      <td>&nbsp;</td>
+      <td>Peut être modifié par la fonction appelée</td>
+</tr>
+<tr class="red-row">
+   <td>r12</td><td>r12d</td><td>r12w</td><td>r12b</td>
+      <td>&nbsp;</td>
+      <td>Doit être sauvegardé par la fonction appelée</td>
+</tr>
+<tr class="red-row">
+   <td>r13</td><td>r13d</td><td>r13w</td><td>r13b</td>
+      <td>&nbsp;</td>
+      <td>Doit être sauvegardé par la fonction appelée</td>
+</tr>
+<tr class="red-row">
+   <td>r14</td><td>r14d</td><td>r14w</td><td>r14b</td>
+      <td>&nbsp;</td>
+      <td>Doit être sauvegardé par la fonction appelée</td>
+</tr>
+<tr class="red-row">
+   <td>r15</td><td>r15d</td><td>r15w</td><td>r15b</td>
+      <td>&nbsp;</td>
+      <td>Doit être sauvegardé par la fonction appelée</td>
+</tr>
+</tbody></table></center>
+<p>:pencil: <strong>Remarques:</strong></p>
+<ul class="simple">
+<li><p>Quand vous appelez une fonction il <strong>ne faut pas</strong> vous attendre à ce que les registres en <strong>vert</strong> aient gardé leur valeur. Autrement dit, si votre programme assembleur utilise le registre <code class="docutils literal notranslate"><span class="pre">%rdx</span></code> il faut qu’il soit sauvegardé (<code class="docutils literal notranslate"><span class="pre">pushq</span> <span class="pre">%rdx</span></code>) avant l’appel <code class="docutils literal notranslate"><span class="pre">call</span> <span class="pre">my_func</span></code> et puis restauré après l’appel (<code class="docutils literal notranslate"><span class="pre">popq</span> <span class="pre">%rdx</span></code>).</p></li>
+<li><p>Par contre si une fonction veut utiliser un des registres en <strong>rouge</strong>, elle doit le sauvegarder avant sa modification et le restaurer avant le retour (<code class="docutils literal notranslate"><span class="pre">ret</span></code>).</p></li>
+</ul>
+<blockquote>
+<div><p>Vous n’avez pas à apprendre quel registre il faut sauvegardé. Le document sur l’ABI AMD64 présente dans un tableau plus complet dans la section <strong>3.2.3 Parameter Passing</strong> citant l’utilisation de chaque registre. Les sources latex officielles sont sur <a class="reference external" href="https://gitlab.com/x86-psABIs/x86-64-ABI">gitlab</a>, vous trouverez un lien pour télécharger le pdf dans le README.</p>
+</div></blockquote>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="nl">my_func:</span>
+<span class="w">   </span><span class="nf">pushq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span><span class="w"> </span><span class="c1">; sauvegarde %rbx</span>
+<span class="w">   </span><span class="nf">pushq</span><span class="w"> </span><span class="o">%</span><span class="nb">r14</span><span class="w"> </span><span class="c1">; sauvegarde %r14</span>
+<span class="w">   </span><span class="c1">; ...</span>
+<span class="w">   </span><span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rdi</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span><span class="w"> </span><span class="c1">; modifie %rbx</span>
+<span class="w">   </span><span class="c1">; ...</span>
+<span class="w">   </span><span class="nf">movq</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nb">r14</span><span class="w"> </span><span class="c1">; modifie %r14</span>
+<span class="w">   </span><span class="c1">; ...</span>
+<span class="w">   </span><span class="nf">addq</span><span class="w"> </span><span class="o">%</span><span class="nb">r14</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">edx</span><span class="w"> </span><span class="c1">; modifie %rax</span>
+<span class="w">   </span><span class="c1">; ...</span>
+<span class="w">   </span><span class="nf">popq</span><span class="w"> </span><span class="o">%</span><span class="nb">r14</span><span class="w"> </span><span class="c1">; restaure %r14</span>
+<span class="w">   </span><span class="nf">popq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span><span class="w"> </span><span class="c1">; restaure %rbx</span>
+<span class="w">   </span><span class="nf">ret</span>
+
+<span class="nl">main:</span>
+<span class="w">   </span><span class="c1">; ...</span>
+<span class="w">   </span><span class="nf">movabs</span><span class="w"> </span><span class="kc">$</span><span class="mi">4523902</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span>
+<span class="w">   </span><span class="nf">movl</span><span class="w"> </span><span class="kc">$</span><span class="mi">125</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">edx</span><span class="w"> </span><span class="c1">; utilise %eax</span>
+<span class="w">   </span><span class="nf">movl</span><span class="w"> </span><span class="kc">$</span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">edi</span>
+<span class="w">   </span><span class="nf">pushl</span><span class="w"> </span><span class="o">%</span><span class="nb">edx</span>
+<span class="w">   </span><span class="nf">call</span><span class="w"> </span><span class="nv">my_func</span>
+<span class="w">   </span><span class="c1">; %edx a été changé par my_func</span>
+<span class="w">   </span><span class="nf">movl</span><span class="w"> </span><span class="o">%</span><span class="nb">edx</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">)</span><span class="w"> </span><span class="c1">; la valeur de %rbx est maintenue par my_func</span>
+<span class="w">   </span><span class="c1">; maintenant, j&#39;ai besoin de mon %edx</span>
+<span class="w">   </span><span class="nf">popl</span><span class="w"> </span><span class="o">%</span><span class="nb">edx</span>
+<span class="w">   </span><span class="nf">movl</span><span class="w"> </span><span class="o">%</span><span class="nb">edx</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">)</span><span class="w"> </span><span class="c1">; la valeur initiale de %edx est écrite en adresse mémoire %rbx + 4</span>
+<span class="w">   </span><span class="c1">; ...</span>
+<span class="w">   </span><span class="nf">ret</span>
+<span class="w">   </span>
+</pre></div>
+</div>
+<blockquote class="small-text">
+Références:
+<ul>
+<li><a href="https://wiki.osdev.org/Calling_Conventions" target="_blank">https://wiki.osdev.org/Calling_Conventions</a></li>
+<li><a href="https://math.hws.edu/eck/cs220/f22/registers.html" target="_blank">https://math.hws.edu/eck/cs220/f22/registers.html</a></li>
+</ul>
+</blockquote>
+</section>
+</section>
+<section id="les-flags-en-x86-64">
+<h2>Les flags en x86_64<a class="headerlink" href="#les-flags-en-x86-64" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p>Lors de l’exécution de certaines instructions, il est intéressant de garder certaines informations sur le résultat de ces dernières, pour ainsi pouvoir rendre certaines instructions inter-dépendantes. Par exemple, si on veut additionner des nombres de taille supérieure à 64-bits, disons 128-bits il est primordiale de savoir si l’addition des 64-bits de poids faible a générée une retenue pour le 65-bits ou pas pour avoir un résultat correct (<a href="https://www.felixcloutier.com/x86/adc" target="_blank"><code class=" clickable">adc</code></a>). Il existe plein d’autres cas autre que les jump, où l’on veut avoir des informations sur le résultat de l’instruction précédente.</p></li>
+<li><p>En x86_64, on a à notre disposition le registre <strong>RFLAGS</strong> pour stocker et accéder aux informations décrivant la nature du résultat d’une instruction. En x86(32 bits), le registre se dénommait <strong>EFLAGS</strong> et à l’âge de l’architecture 16-bits <strong>FLAGS</strong>. Vous pouvez voir comment ce registre fut étendue avec le changements d’architecture dans la figure ci-dessous.</p>
+<ul>
+<li><p>En pratique, le registre RFLAGS décrit aussi des restrictions d’exécution, ainsi une instruction va changer son comportement, voir lever une exception dépendant des restrictions actives.</p></li>
+</ul>
+</li>
+</ul>
+<center><div  class="figure-container"><figure>
+    <img src="./_static/images/RFLAGS.png" alt="RFLAGS" class="figure">
+    <figcaption>Registres RFLAGS avec tous les FLAGS connus.</figcaption>
+</figure></div></center>
+<ul class="simple">
+<li><p>Lors du développement de l’architecture, les ingénieurs ont dû choisir quelles informations garder sur le résultat d’une instruction. Pour optimiser un maximum tout en gardant l’utilisation simple, ils se sont limiter à un seul registre, où chaque <strong>bit</strong> annonce la présence ou l’absence d’un flag décrivant un état. Les bits vides sont réservés et intel ou amd les utilisent comme ils veulent.</p></li>
+<li><p>Les flags sont divisés en <strong>3</strong> groupes:</p>
+<ul>
+<li><p><span style="color: rgba(233, 163, 91,255);">Status Flags:</span></p>
+<ul>
+<li><p><strong>CF</strong>(Carry Flag): <strong>1</strong> s’il y a eu une retenue au-delà du bit de poids fort du résultat, sinon <strong>0</strong>.</p></li>
+<li><p><strong>PF</strong>(Parity Flag): <strong>1</strong> si le nombre de bits à 1 dans les 8-bits de poids faible est pair, <strong>0</strong> si impair.</p></li>
+<li><p><strong>AF</strong>(Auxiliary Carry Flag): <strong>1</strong> s’il y a eu une retenue depuis le bit 3 vers le bit 4, sinon <strong>0</strong>.</p></li>
+<li><p><strong>ZF</strong>(Zero Flag): <strong>1</strong> si le résultat est nul, sinon <strong>0</strong>.</p></li>
+<li><p><strong>SF</strong>(Sign Flag): <strong>1</strong> si le résultat est négatif, sinon <strong>0</strong>.</p></li>
+<li><p><strong>OF</strong>(Overflow Flag): <strong>1</strong> si le résultat en signé a débordé (changement de signe inattendu) au-delà de la taille du registre destination, sinon <strong>0</strong>.</p></li>
+</ul>
+</li>
+<li><p><span style="color: #7dad4e;">Control Flags:</span></p>
+<ul>
+<li><p><strong>IF</strong>(Interrupt Flag): <strong>1</strong> si les interruptions sont actives, <strong>0</strong> si désactivées.</p></li>
+<li><p><strong>DF</strong>(Direction Flag): <strong>1</strong> pour que les adresses soient décrementées lors des instructions iteratives (<a href="https://www.felixcloutier.com/x86/rep:repe:repz:repne:repnz" target="_blank"><code class=" clickable">rep</code></a>), <strong>0</strong> pour incrémenter les adresses.</p></li>
+<li><p><strong>TF</strong>(Trap Flag): <strong>1</strong>  pour appeler une fonction après chaque instruction permettant d’avoir une exécution pas à pas (debug), <strong>0</strong> pour une exécution classique.</p></li>
+<li><p><strong>MD</strong>(Mode Flag).</p></li>
+</ul>
+</li>
+<li><p><span style="color: #559393;">System Flags:</span></p>
+<ul>
+<li><p><strong>IOPL</strong>(I/O privilege level).</p></li>
+<li><p>…</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>La mise à jour des flags nécessite des tests et des écritures, cela prend du temps, pour ne pas en perdre inutilement, ils ont fait en sorte que certaines instructions ne touchent pas aux flags (le <code class="docutils literal notranslate"><span class="pre">mov</span></code> par exemple), et même que les instructions mettant à jour les flags, ne touchent pas à tous les flags, seulement ceux nécessaires, entre autres l’instruction <code class="docutils literal notranslate"><span class="pre">add</span></code> ne met à jour que les <strong>status flags</strong>.</p>
+<ul>
+<li><p>En général, on dit que les instructions qui ne font <strong>que</strong> <strong>déplacer</strong> des données ne modifient pas les flags. Par contre, celles qui <strong>effectuent</strong> des <strong>calculs</strong> mettent à jour les flags nécessaires.</p></li>
+<li><p>Il existe certaines exceptions d’instructions qui calculent mais ne mettent pas à jour les flags, parmi elles : <a href="https://www.felixcloutier.com/x86/not" target="_blank"><code class=" clickable">not</code></a> et <a href="https://www.felixcloutier.com/x86/lea" target="_blank"><code class=" clickable">lea</code></a>.</p></li>
+</ul>
+</li>
+<li><p>Il est possible d’accéder au registre <strong>RFLAGS</strong> via des instructions spéciales :</p>
+<ul>
+<li><p><a href="https://www.felixcloutier.com/x86/lahf" target="_blank"><code class=" clickable">lahf</code></a> enregistre les 8-bits de poids faibles de <strong>FLAGS</strong> dans <strong>ah</strong>. <a href="https://www.felixcloutier.com/x86/sahf" target="_blank"><code class=" clickable">sahf</code></a> récupère les valeurs de <strong>SF</strong>, <strong>ZF</strong>, <strong>AF</strong>, <strong>PF</strong>, et <strong>CF</strong> (les 8-bits de poids faible) depuis <strong>ah</strong>.</p></li>
+<li><p><a href="https://www.felixcloutier.com/x86/clc" target="_blank"><code class=" clickable">clc</code></a> (mettre CF à 0), <a href="https://www.felixcloutier.com/x86/stc" target="_blank"><code class=" clickable">stc</code></a> (mettre CF à 1), <a href="https://www.felixcloutier.com/x86/cmc" target="_blank"><code class=" clickable">cmc</code></a> (inverser CF), <a href="https://www.felixcloutier.com/x86/cli" target="_blank"><code class=" clickable">cli</code></a> (mettre IF à 0), <a href="https://www.felixcloutier.com/x86/sti" target="_blank"><code class=" clickable">sti</code></a> (mettre IF à 1), <a href="https://www.felixcloutier.com/x86/cld" target="_blank"><code class=" clickable">cld</code></a> (mettre DF à 0), <a href="https://www.felixcloutier.com/x86/std" target="_blank"><code class=" clickable">std</code></a> (mettre DF à 1).</p></li>
+<li><p><a href="https://www.felixcloutier.com/x86/pushf:pushfd:pushfq" target="_blank"><code class=" clickable">pushf</code></a>/<a href="https://www.felixcloutier.com/x86/popf:popfd:popfq" target="_blank"><code class=" clickable">popf</code></a> empile/dépile le registre <strong>FLAGS</strong>, <code class="docutils literal notranslate"><span class="pre">pushfd</span></code>/<code class="docutils literal notranslate"><span class="pre">popfd</span></code> empile/dépile le registre <strong>EFLAGS</strong>, <code class="docutils literal notranslate"><span class="pre">pushfq</span></code>/<code class="docutils literal notranslate"><span class="pre">popfq</span></code> empile/dépile le registre <strong>RFLAGS</strong>.</p>
+<ul>
+<li><p>Les instructions ont le même opcode, tout dépend du mode dans lequel le CPU est.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>L’instruction <code class="docutils literal notranslate"><span class="pre">cmp</span> <span class="pre">i1,</span> <span class="pre">i2</span></code> fait une soustraction <code class="docutils literal notranslate"><span class="pre">i2</span> <span class="pre">-</span> <span class="pre">i1</span></code> sans sauvegarder le résultat dans l’opérant destination et met à jour les flags <strong>CF</strong>, <strong>OF</strong>, <strong>SF</strong>, <strong>ZF</strong>, <strong>AF</strong>, et <strong>PF</strong>.</p></li>
+<li><p>L’instruction <code class="docutils literal notranslate"><span class="pre">test</span> <span class="pre">i1,</span> <span class="pre">i2</span></code> fait un bit-wise AND <code class="docutils literal notranslate"><span class="pre">i2</span> <span class="pre">&amp;</span> <span class="pre">i1</span></code> et met à jour les flags <strong>PF</strong>, <strong>SF</strong>, <strong>ZF</strong>. Elle permet de tester si un registre est nul <code class="docutils literal notranslate"><span class="pre">testq</span> <span class="pre">%rax,</span> <span class="pre">%rax</span></code>, elle est plus compacte que <code class="docutils literal notranslate"><span class="pre">cmp</span> <span class="pre">$0,</span> <span class="pre">%rax</span></code>.</p></li>
+<li><p>Les instructions de la famille <a href="https://www.felixcloutier.com/x86/jcc" target="_blank"><code class=" clickable">jcc</code></a> vérifient les flags pour charger l’adresse spécifiée dans le registre <strong>rip</strong> ou pas (<strong>rip</strong> pointe vers l’instruction suivante).</p></li>
+</ul>
+<blockquote class="small-text">
+Références:
+<ul>
+<li><a href="https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags" target="_blank">https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags</a></li>
+<li><a href="https://www.wikiwand.com/en/FLAGS_register" target="_blank">https://www.wikiwand.com/en/FLAGS_register</a></li>
+</ul>
+</blockquote>
+<!-- http://ref.x86asm.net/coder64.html -->
+<p>Commençons par le commencement : l’adressage, c’est tout simplement la façon dont on dit au processeur « hé, va chercher/mettre cette donnée à tel endroit ! ». C’est comme donner des indications à quelqu’un pour trouver un livre dans une immense bibliothèque.</p>
+<section id="modes-directs">
+<h3>Modes Directs<a class="headerlink" href="#modes-directs" title="Lien vers cette rubrique">#</a></h3>
+<section id="mode-d-adressage-immediat">
+<h4>1. Mode d’adressage immédiat<a class="headerlink" href="#mode-d-adressage-immediat" title="Lien vers cette rubrique">#</a></h4>
+<p>Le mode le plus simple, c’est l’adressage immédiat. Imagine que tu dis directement « le nombre c’est 42 ». Pas besoin de chercher ailleurs, la valeur est directement dans l’instruction. C’est comme écrire une constante dans votre code.</p>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; AT&amp;T</span>
+<span class="nf">movq</span><span class="w"> </span><span class="kc">$</span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="w">    </span><span class="c1">; Charge la valeur 42 dans rax</span>
+<span class="nf">addq</span><span class="w"> </span><span class="kc">$</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span><span class="w">    </span><span class="c1">; Ajoute 10 à rbx</span>
+</pre></div>
+</div>
+</section>
+<section id="mode-d-adressage-par-registre">
+<h4>2. Mode d’adressage par registre<a class="headerlink" href="#mode-d-adressage-par-registre" title="Lien vers cette rubrique">#</a></h4>
+<p>L’adressage par registre utilise directement les registres du processeur. C’est la méthode la plus rapide pour manipuler des données.</p>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; AT&amp;T</span>
+<span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="w">    </span><span class="c1">; Copie rbx dans rax</span>
+<span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="w">    </span><span class="c1">; Mise à zéro rapide de rax</span>
+</pre></div>
+</div>
+</section>
+<section id="mode-d-adressage-memoire-direct">
+<h4>3. Mode d’adressage mémoire direct<a class="headerlink" href="#mode-d-adressage-memoire-direct" title="Lien vers cette rubrique">#</a></h4>
+<p>Maintenant, parlons de l’adressage mémoire direct, ce mode utilise une adresse mémoire fixe. C’est comme si tu donnais l’adresse exacte d’une maison. Tu dis au processeur « va chercher ce qu’il y a à l’adresse 0x1234 ». C’est utile pour accéder à des variables globales ou des constantes dont on connait l’adresse à la compilation (pas de <code class="docutils literal notranslate"><span class="pre">malloc</span></code>).</p>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; AT&amp;T</span>
+<span class="nf">movq</span><span class="w"> </span><span class="nv">value</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="w">      </span><span class="c1">; Charge depuis l&#39;adresse &#39;value&#39;</span>
+<span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span><span class="p">,</span><span class="w"> </span><span class="nv">target</span><span class="w">     </span><span class="c1">; Stocke dans l&#39;adresse &#39;target&#39;</span>
+</pre></div>
+</div>
+<p>L’adressage mémoire direct utilise une adresse mémoire fixe. Pour les appels absolus, le préfixe “*” est nécessaire. Ainsi, vous comprendrez quand le code machine ne stocke pas l’adresse absolue de votre label dans un <code class="docutils literal notranslate"><span class="pre">jmp</span></code>, mais le deplacement vers ce dernier depuis l’adresse de l’instruction <code class="docutils literal notranslate"><span class="pre">jmp</span></code>.</p>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; AT&amp;T</span>
+<span class="nf">call</span><span class="w"> </span><span class="o">*</span><span class="ow">abs</span><span class="nv">olute_address</span><span class="w">    </span><span class="c1">; Appel absolu</span>
+<span class="nf">call</span><span class="w"> </span><span class="ow">rel</span><span class="nv">ative_address</span><span class="w">     </span><span class="c1">; Appel relatif (défaut)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="modes-indirects">
+<h3>Modes Indirects<a class="headerlink" href="#modes-indirects" title="Lien vers cette rubrique">#</a></h3>
+<p>Les choses deviennent plus intéressantes avec l’adressage indirect. Ici l’adresse qu’on cherche à accéder n’est pas directement accessible, soit une lecteur ou un calcul sont nécessaires.</p>
+<section id="mode-d-adressage-indirect-par-registre">
+<h4>1. Mode d’adressage indirect par registre<a class="headerlink" href="#mode-d-adressage-indirect-par-registre" title="Lien vers cette rubrique">#</a></h4>
+<p>L’adressage indirect utilise un registre comme pointeur vers la mémoire. Au lieu de dire « va à telle adresse », tu dis « va à l’adresse qui est stockée dans ce registre ». C’est la base de la manipulation des pointeurs.</p>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; AT&amp;T</span>
+<span class="nf">movq</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="w">     </span><span class="c1">; Charge depuis l&#39;adresse contenue dans rbx</span>
+<span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rcx</span><span class="p">)</span><span class="w">     </span><span class="c1">; Stocke à l&#39;adresse contenue dans rcx</span>
+</pre></div>
+</div>
+</section>
+<section id="mode-d-adressage-avec-deplacement">
+<h4>2. Mode d’adressage avec déplacement<a class="headerlink" href="#mode-d-adressage-avec-deplacement" title="Lien vers cette rubrique">#</a></h4>
+<p>Ce mode combine un registre et un déplacement pour calculer l’adresse finale. Parfait pour les tableaux et structures.</p>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; AT&amp;T</span>
+<span class="nf">movq</span><span class="w"> </span><span class="mi">10</span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="w">      </span><span class="c1">; Adresse = rbx + 10</span>
+<span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">)</span><span class="w">      </span><span class="c1">; Stocke à rbx + 18</span>
+</pre></div>
+</div>
+</section>
+<section id="mode-d-adressage-rip-relative">
+<h4>3. Mode d’adressage RIP-relative<a class="headerlink" href="#mode-d-adressage-rip-relative" title="Lien vers cette rubrique">#</a></h4>
+<p>Le mode d’adressage RIP-relative est spécifique à l’architecture x86-64. Ce mode est fondamental pour le Position Independent Code (PIC). Les adresses sont calculées relativement à la position courante du pointeur d’instruction (<strong>rip</strong>), permettant au code d’être chargé à n’importe quelle adresse en mémoire virtuelle sans nécessiter de relocation. C’est une technique fondamentale pour les bibliothèques partagées.</p>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; 1. Déplacement constant :</span>
+<span class="c1">; AT&amp;T</span>
+<span class="nf">movq</span><span class="w"> </span><span class="mi">1234</span><span class="p">(</span><span class="o">%</span><span class="nv">rip</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="w">    </span><span class="c1">; Accède à l&#39;adresse rip+1234</span>
+<span class="w">                         </span><span class="c1">; (1234 octets après la fin de l&#39;instruction courante, i.e le début de l&#39;instruction suivante)</span>
+<span class="c1">; 2. Symboles :</span>
+<span class="c1">; AT&amp;T</span>
+<span class="nf">movq</span><span class="w"> </span><span class="nv">symbol</span><span class="p">(</span><span class="o">%</span><span class="nv">rip</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="w">  </span><span class="c1">; Accède au symbole de manière relative</span>
+<span class="w">                         </span><span class="c1">; Plus efficace et plus compact que l&#39;adressage absolu </span>
+</pre></div>
+</div>
+</section>
+<section id="mode-d-adressage-base-index-echelle-deplacement">
+<h4>4. Mode d’adressage base + index + échelle + déplacement<a class="headerlink" href="#mode-d-adressage-base-index-echelle-deplacement" title="Lien vers cette rubrique">#</a></h4>
+<p>Le mode le plus complet, permettant des calculs d’adresse complexes.</p>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; AT&amp;T</span>
+<span class="c1">; Format général : déplacement(base,index,échelle)</span>
+
+<span class="nf">movq</span><span class="w"> </span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">,</span><span class="o">%</span><span class="nb">rcx</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="w">    </span><span class="c1">; déplacement=8, base=rbx, index=rcx, échelle=4</span>
+<span class="w">                             </span><span class="c1">; Adresse = rbx + (rcx*4) + 8</span>
+
+<span class="nf">movq</span><span class="w"> </span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">,</span><span class="o">%</span><span class="nb">rcx</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="w">      </span><span class="c1">; déplacement=8, base=rbx, index=rcx, échelle=1 (implicite)</span>
+<span class="w">                             </span><span class="c1">; Adresse = rbx + (rcx*1) + 8</span>
+
+<span class="nf">movq</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">,</span><span class="o">%</span><span class="nb">rcx</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="w">       </span><span class="c1">; déplacement=0 (omis), base=rbx, index=rcx, échelle=1 (implicite)</span>
+<span class="w">                             </span><span class="c1">; Adresse = rbx + (rcx*1)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>Notes sur la performance:</strong></p>
+<ul class="simple">
+<li><p>Les modes impliquant des accès mémoire sont généralement plus lents</p></li>
+<li><p>L’utilisation de l’échelle peut ajouter des cycles supplémentaires</p></li>
+<li><p>Les registres sont toujours les plus rapides</p></li>
+</ul>
+</div></blockquote>
+<blockquote class="small-text">
+Références:
+<ul>
+<li><a href="https://sourceware.org/binutils/docs/as/i386_002dMemory.html
+" target="_blank">https://sourceware.org/binutils/docs/as/i386_002dMemory.html</a>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="instructions-movs-et-prefixes-rep">
+<h2>Instructions MOVS et préfixes REP<a class="headerlink" href="#instructions-movs-et-prefixes-rep" title="Lien vers cette rubrique">#</a></h2>
+<p><a href="https://www.felixcloutier.com/x86/movs:movsb:movsw:movsd:movsq" target="_blank"> <code class=" clickable">movsb/movsw/movsd/movsq</code> </a> permet de copier une donnée d’une taille donnée (b:1 octet, w: 2 octets, d: 4 octets, q: 8 octets) depuis l’adresse spécifiée par le registre <strong>rsi</strong> vers l’adresse spécifiée par le registre <strong>rdi</strong>. Après chaque opération, ces registres sont automatiquement mis à jour pour pointer vers l’adresse suivante.
+La direction de cette mise à jour est contrôlée par le flag de direction (<strong>DF</strong>) dans le registre <strong>RFLAGS</strong>. L’instruction <a href="https://www.felixcloutier.com/x86/cld" target="_blank"> <code class=" clickable">cld</code> </a> (Clear Direction Flag) configure le système pour incrémenter <strong>rsi</strong> et <strong>rdi</strong>, permettant une copie vers l’avant. À l’inverse, <a href="https://www.felixcloutier.com/x86/std" target="_blank"> <code class=" clickable">std</code> </a>  (Set Direction Flag) les fait décrémenter pour une copie vers l’arrière.</p>
+<p>Le préfixe <a href="https://www.felixcloutier.com/x86/rep:repe:repz:repne:repnz" target="_blank"> <code class=" clickable">rep</code> </a> transforme une simple instruction de copie en une puissante opération de copie en bloc. Il utilise le registre <strong>rcx</strong> comme compteur et répète l’instruction autant de fois que spécifié. Par exemple, <code class="docutils literal notranslate"><span class="pre">rep</span> <span class="pre">movsb</span></code> copiera exactement <strong>rcx</strong> octets de la source vers la destination.</p>
+<p>Il existe également des variantes plus sophistiquées : REPE/REPZ et REPNE/REPNZ. Ces préfixes <strong>ajoutent</strong> une condition (le <strong>rcx</strong> est toujours utilisé comme compteur) supplémentaire à la répétition. REPE/REPZ continue tant que le flag zéro est actif, tandis que REPNE/REPNZ poursuit tant qu’il est inactif.</p>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="k">section</span><span class="w"> </span><span class="nv">.text</span>
+<span class="k">global</span><span class="w"> </span><span class="nv">memory_copy</span>
+<span class="nl">memory_copy:</span>
+<span class="w">    </span><span class="c1">; Les paramètres suivent la convention System V AMD64 :</span>
+<span class="w">    </span><span class="c1">; rdi contient l&#39;adresse de destination</span>
+<span class="w">    </span><span class="c1">; rsi contient l&#39;adresse source</span>
+<span class="w">    </span><span class="c1">; rdx contient le nombre d&#39;octets à copier</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="nb">rcx</span><span class="p">,</span><span class="w"> </span><span class="nb">rdx</span><span class="w">        </span><span class="c1">; Préparation du compteur</span>
+<span class="w">    </span><span class="nf">cld</span><span class="w">                 </span><span class="c1">; Configuration pour copie vers l&#39;avant</span>
+<span class="w">    </span><span class="nf">rep</span><span class="w"> </span><span class="nv">movsb</span><span class="w">          </span><span class="c1">; Exécution de la copie</span>
+<span class="w">    </span><span class="nf">ret</span>
+</pre></div>
+</div>
+<p>Pour des copies de grande taille, il peut être plus efficace d’utiliser <code class="docutils literal notranslate"><span class="pre">movsd</span></code> ou <code class="docutils literal notranslate"><span class="pre">movsq</span></code> qui copient respectivement 4 ou 8 octets par opération. Voici une version optimisée qui traite les données par blocs de 4 octets :</p>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="k">section</span><span class="w"> </span><span class="nv">.text</span>
+<span class="k">global</span><span class="w"> </span><span class="nv">memory_copy_optimized</span>
+<span class="nl">memory_copy_optimized:</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="nb">rcx</span><span class="p">,</span><span class="w"> </span><span class="nb">rdx</span>
+<span class="w">    </span><span class="nf">shr</span><span class="w"> </span><span class="nb">rcx</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w">         </span><span class="c1">; Division par 4 pour utiliser MOVSD</span>
+<span class="w">    </span><span class="nf">cld</span>
+<span class="w">    </span><span class="nf">rep</span><span class="w"> </span><span class="nv">movsd</span><span class="w">          </span><span class="c1">; Copie principale par blocs de 4 octets</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="nb">rcx</span><span class="p">,</span><span class="w"> </span><span class="nb">rdx</span>
+<span class="w">    </span><span class="nf">and</span><span class="w"> </span><span class="nb">rcx</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="w">         </span><span class="c1">; Récupération du reste (0,1,2 ou 3)</span>
+<span class="w">    </span><span class="nf">rep</span><span class="w"> </span><span class="nv">movsb</span><span class="w">          </span><span class="c1">; Copie des octets restants</span>
+<span class="w">    </span><span class="nf">ret</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>Note sur la performance:</strong>
+Bien que ces instructions soient optimisées au niveau du processeur, leur efficacité dépend du contexte. Pour de très petites copies (quelques octets), une simple séquence de <code class="docutils literal notranslate"><span class="pre">mov</span></code> peut s’avérer plus rapide. Pour de très grandes copies, les fonctions système comme memcpy, qui peuvent utiliser des instructions SIMD (Single Instruction Multiple Data) ou des optimisations spécifiques au processeur, sont souvent préférables.</p>
+</div></blockquote>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Rappels-Compilation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">précédent</p>
+        <p class="prev-next-title">Rappel sur la compilation avec gcc</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="x86_64-LesSyntaxes.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">suivant</p>
+        <p class="prev-next-title">Les syntaxes AT&amp;T et Intel</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenu
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#registres-en-x86-64">Registres en x86_64</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-purpose-registers">General Purpose Registers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pointer-register-rip">Pointer Register (RIP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resume-sur-les-registres">Résumé sur les registres</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#les-flags-en-x86-64">Les flags en x86_64</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modes-directs">Modes Directs</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-immediat">1. Mode d’adressage immédiat</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-par-registre">2. Mode d’adressage par registre</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-memoire-direct">3. Mode d’adressage mémoire direct</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modes-indirects">Modes Indirects</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-indirect-par-registre">1. Mode d’adressage indirect par registre</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-avec-deplacement">2. Mode d’adressage avec déplacement</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-rip-relative">3. Mode d’adressage RIP-relative</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-d-adressage-base-index-echelle-deplacement">4. Mode d’adressage base + index + échelle + déplacement</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instructions-movs-et-prefixes-rep">Instructions MOVS et préfixes REP</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Par Mazigh
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Mazigh.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

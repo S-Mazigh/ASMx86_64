@@ -143,7 +143,11 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Rappels-Syst%C3%A8me.html">Rappels OS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="x86_64.html">Notions x86_64</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Rappels-Compilation.html">Rappel sur la compilation avec gcc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesBases.html">Les bases: les registres et l’adressage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesSyntaxes.html">Les syntaxes AT&amp;T et Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesFonctions.html">Les fonctions et leur contexte en x86_64</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a></li>
 </ul>
 
@@ -310,15 +314,29 @@
 <li class="toctree-l2"><a class="reference internal" href="Rappels-Syst%C3%A8me.html#quelques-exemples-d-algorithmes-d-ordonnancement">Quelques exemples d’algorithmes d’ordonnancement</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="x86_64.html">Notions x86_64</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="x86_64.html#notes-importantes">Notes importantes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="x86_64.html#registres-en-x86-64">Registres en x86_64</a></li>
-<li class="toctree-l2"><a class="reference internal" href="x86_64.html#les-flags-en-x86-64">Les flags en x86_64</a></li>
-<li class="toctree-l2"><a class="reference internal" href="x86_64.html#stack-frame">Stack frame</a></li>
-<li class="toctree-l2"><a class="reference internal" href="x86_64.html#appeler-les-fonctions-ecrite-en-c-compilee-sous-linux">Appeler les fonctions écrite en C compilée sous Linux</a></li>
-<li class="toctree-l2"><a class="reference internal" href="x86_64.html#syscalls-en-assembleur">Syscalls en assembleur</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Rappels-Compilation.html">Rappel sur la compilation avec gcc</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Rappels-Compilation.html#les-differentes-etapes-de-la-compilation">Les différentes étapes de la compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rappels-Compilation.html#recuperer-l-assembleur-d-un-elf">Récupérer l’assembleur d’un ELF</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesBases.html">Les bases: les registres et l’adressage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="x86_64-LesBases.html#registres-en-x86-64">Registres en x86_64</a></li>
+<li class="toctree-l2"><a class="reference internal" href="x86_64-LesBases.html#les-flags-en-x86-64">Les flags en x86_64</a></li>
+<li class="toctree-l2"><a class="reference internal" href="x86_64-LesBases.html#instructions-movs-et-prefixes-rep">Instructions MOVS et préfixes REP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesSyntaxes.html">Les syntaxes AT&amp;T et Intel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="x86_64-LesSyntaxes.html#specification-de-la-taille">Spécification de la taille</a></li>
+<li class="toctree-l2"><a class="reference internal" href="x86_64-LesSyntaxes.html#extensions-de-signe-et-de-zero">Extensions de signe et de zéro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="x86_64-LesSyntaxes.html#notes-additionnelles">Notes Additionnelles</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesFonctions.html">Les fonctions et leur contexte en x86_64</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="x86_64-LesFonctions.html#stack-frame">Stack frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="x86_64-LesFonctions.html#appeler-les-fonctions-ecrite-en-c-compilee-sous-linux">Appeler les fonctions écrite en C compilée sous Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesFonctions.html#syscalls-en-assembleur">Syscalls en assembleur</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Tape3.html#mise-en-route">Mise en route</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Tape3.html#notes-importantes">Notes importantes</a></li>
@@ -332,6 +350,7 @@
 </li>
 </ul>
 </div>
+<p>Veuillez noter que ce document suit majoritairement la syntax AT&amp;T. Pour avoir une idée générale sur cette dérniere et voir ses différences majeurs avec celle d’Intel (du manuel), merci de lire [x86_64-Syntaxes](./x86_64-Syntaxes.md).</p>
 </section>
 <section id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Lien vers cette rubrique">#</a></h1>

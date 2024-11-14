@@ -11,9 +11,14 @@ ASM x86_64
    :caption: Contenu:
 
    Rappels-Système
-   x86_64
+   Rappels-Compilation
+   x86_64-LesBases
+   x86_64-LesSyntaxes
+   x86_64-LesFonctions
    Tape3
-   
+
+Veuillez noter que ce document suit majoritairement la syntax AT&T. Pour avoir une idée générale sur cette dérniere et voir ses différences majeurs avec celle d'Intel (du manuel), merci de lire [x86_64-Syntaxes](./x86_64-Syntaxes.md).
+
 Indices and tables
 ==================
 

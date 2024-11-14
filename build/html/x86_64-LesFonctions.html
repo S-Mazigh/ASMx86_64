@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Notions x86_64 &#8212; ASMx86_64</title>
+    <title>Les fonctions et leur contexte en x86_64 &#8212; ASMx86_64</title>
   
   
   
@@ -45,11 +45,11 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="_static/translations.js?v=e6b791cb"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'x86_64';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'x86_64-LesFonctions';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
     <link rel="next" title="Tape3" href="Tape3.html" />
-    <link rel="prev" title="Rappels OS" href="Rappels-Syst%C3%A8me.html" />
+    <link rel="prev" title="Les syntaxes AT&amp;T et Intel" href="x86_64-LesSyntaxes.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="fr"/>
   <meta name="docsearch:version" content="" />
@@ -142,7 +142,11 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Rappels-Syst%C3%A8me.html">Rappels OS</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Notions x86_64</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Rappels-Compilation.html">Rappel sur la compilation avec gcc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesBases.html">Les bases: les registres et l’adressage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesSyntaxes.html">Les syntaxes AT&amp;T et Intel</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Les fonctions et leur contexte en x86_64</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a></li>
 </ul>
 
@@ -198,7 +202,7 @@
       
       
       
-      <li><a href="_sources/x86_64.md" target="_blank"
+      <li><a href="_sources/x86_64-LesFonctions.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Télécharger le fichier source"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -274,7 +278,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Notions x86_64</h1>
+    <h1>Les fonctions et leur contexte en x86_64</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -284,14 +288,7 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-importantes">Notes importantes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#registres-en-x86-64">Registres en x86_64</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-purpose-registers">General Purpose Registers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pointer-register-rip">Pointer Register (RIP)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resume-sur-les-registres">Résumé sur les registres</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#les-flags-en-x86-64">Les flags en x86_64</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Les fonctions et leur contexte en x86_64</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-frame">Stack frame</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#la-red-zone">La red zone</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enter-et-leave">enter et leave</a></li>
@@ -302,8 +299,11 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fonction-variadic-nombre-d-arguments-dynamique">Fonction variadic (nombre d’arguments dynamique)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syscalls-en-assembleur">Syscalls en assembleur</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#syscalls-en-assembleur">Syscalls en assembleur</a></li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -314,337 +314,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <!-- regex for links: [-a-zA-Z0-9@:%._\+~#= "/<>]+ -->
-<section id="notions-x86-64">
-<h1>Notions x86_64<a class="headerlink" href="#notions-x86-64" title="Lien vers cette rubrique">#</a></h1>
-<section id="notes-importantes">
-<h2>Notes importantes<a class="headerlink" href="#notes-importantes" title="Lien vers cette rubrique">#</a></h2>
-<blockquote>
-<ul>
-<li> <code>movabs</code> est un <code>mov</code> qui ne peut utiliser que des immédiats et des registers (pas d'adresse mémoire), par contre il peut utiliser des immédiats de 64 bits.</li>
-<li><a href="https://www.felixcloutier.com/x86/movs:movsb:movsw:movsd:movsq" target="_blank"> <code class=" clickable">movsb/movsw/movsd/movsq</code> </a> permet de copier une donnée d'une taille donnée (b:1 octet, w: 2 octets, d: 4 octets, q: 8 octets) depuis l'adresse spécifiée par le registre <strong>rdi</strong> vers l'adresse spécifiée par le registre <strong>rsi</strong>.</li>
-</ul>
-</blockquote>
-</section>
-<section id="registres-en-x86-64">
-<h2>Registres en x86_64<a class="headerlink" href="#registres-en-x86-64" title="Lien vers cette rubrique">#</a></h2>
-<ul class="simple">
-<li><p>Il existe plusieurs types de registres dans l’architecture x86_64:</p>
-<ul>
-<li><p><strong>General Purpose Registers</strong></p></li>
-<li><p><strong>The pointer register</strong></p></li>
-<li><p><strong>Flag Register</strong></p></li>
-<li><p><em>Control Registers</em></p></li>
-<li><p>Debug Registers</p></li>
-<li><p>Model-Specific Register</p></li>
-<li><p>XMM Registers</p></li>
-<li><p>Float registers (en pratique XMM registers les ont remplacés)</p></li>
-</ul>
-</li>
-<li><p>On va principalement parler des deux premieres familles de registres.</p></li>
-</ul>
-<section id="general-purpose-registers">
-<h3>General Purpose Registers<a class="headerlink" href="#general-purpose-registers" title="Lien vers cette rubrique">#</a></h3>
-<ul class="simple">
-<li><p>En x86_64 les registres généralistes ont une taille maximale de 64-bits (8 octets). Il existe 16 registres dans cette famille, dont certain ont une utilisation spécifique.</p></li>
-<li><p>Les registres sont :</p>
-<ul>
-<li><p><strong>rax</strong>, <strong>rbx</strong>, <strong>rcx</strong>, <strong>rdx</strong>: version 64-bits des registres: A, B, C, D.</p></li>
-<li><p><strong>rbp</strong>, <strong>rsp</strong>: version 64-bits des registres de gestion de la pile: BP(base pointer) et SP (stack pointer).</p></li>
-<li><p><strong>rsi</strong>, <strong>rdi</strong>: version 64-bits des registres pour la copie  de données: SI(source index) et DI(destination index).</p></li>
-<li><p><strong>r8</strong>,<strong>r9</strong>,<strong>r10</strong>,<strong>r11</strong>,<strong>r12</strong>,<strong>r13</strong>,<strong>r14</strong>,<strong>r15</strong>: registres 64-bits introduit avec l’architecture x86_64 (inexistant en architecture x86 (32-bits)).</p></li>
-</ul>
-</li>
-<li><p>Les registres hérités de l’architecture x86 <strong>(A,B,C,D)</strong> peuvent être accédés de différentes manières, on peut faire en sorte d’accéder que certains octets des registres.</p></li>
-<li><p>Comme le montrent les figures et code suivants, chaque nom permet de spécifier les octets à lire ou à écrire (sachez qu’il y existe une différence de comportement pour les versions 32-bits et 64-bits, même si à premiere vue elles paraissent equivalentes):</p></li>
-</ul>
-<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="c1">; source:</span>
-<span class="nf">.global</span><span class="w"> </span><span class="nv">main</span>
-
-<span class="nl">main:</span>
-<span class="w">    </span><span class="nf">movabsq</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x71ff9b005c4e258a</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span>
-<span class="w">    </span><span class="nf">movl</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ebx</span>
-<span class="w">    </span><span class="nf">movb</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x41</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ah</span>
-<span class="w">    </span><span class="nf">movb</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x41</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">al</span>
-<span class="w">    </span><span class="nf">movw</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x51</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ax</span>
-<span class="w">    </span><span class="nf">movl</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x41</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span>
-<span class="w">    </span><span class="nf">movq</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x51</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span>
-<span class="w">    </span><span class="nf">movw</span><span class="w"> </span><span class="o">%</span><span class="nb">ax</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">bx</span>
-<span class="w">    </span><span class="nf">ret</span>
-
-<span class="c1">; compilé (objdump):</span>
-<span class="c1">;main:</span>
-<span class="c1">;    1129:	48 b8 8a 25 4e 5c 00 	movabs $0x71ff9b005c4e258a,%rax</span>
-<span class="c1">;    1130:	9b ff 71 </span>
-<span class="c1">;    1133:	89 c3                	mov    %eax,%ebx</span>
-<span class="c1">;    1135:	b4 41                	mov    $0x41,%ah</span>
-<span class="c1">;    1137:	b0 41                	mov    $0x41,%al</span>
-<span class="c1">;    1139:	66 b8 51 00          	mov    $0x51,%ax</span>
-<span class="c1">;    113d:	b8 41 00 00 00       	mov    $0x41,%eax</span>
-<span class="c1">;    1142:	48 c7 c0 51 00 00 00 	mov    $0x51,%rax</span>
-<span class="c1">;    1149:	66 89 c3             	mov    %ax,%bx</span>
-<span class="c1">;    114c:	c3                   	ret   </span>
-</pre></div>
-</div>
-<center>
-<iframe class="slideshow-iframe" id="execution-registers" src="./_static/slides/register-sequence.html"
-frameborder="0" scrolling="no"></iframe>
-</center>
-<ul class="simple">
-<li><p>Les autres registres hérités <strong>(SI,DI,SP,BP)</strong> ne permettent pas d’accéder leur deuxième octet.</p></li>
-</ul>
-<center><div  class="figure-container-small"><figure>
-	<img src="./_static/images/register-sp.png" class="figure">
-	<figcaption>Les différentes manières d'accéder au registre <strong>%rsp</strong>.</figcaption>
-</figure></div></center>
-- Pour les nouveaux registres de l'architecture x86_64 **(r8,r9,r10,r11,r12,r13,r14,r15)** on utilise plutôt des suffixes pour spécifier la taille à lire ou à écrire.
-<center><div  class="figure-container-small">
-<figure>
-	<img src="./_static/images/register-8.png" alt="Register 8 calling convention" class="figure">
-	<figcaption>Registre 8 de l'architecture x86_64.</figcaption>
-</figure>
-</div></center>
-<blockquote>
-<div><ul class="simple">
-<li><p>On remarque que les deux instructions <code class="docutils literal notranslate"><span class="pre">movl</span> <span class="pre">$0x41,</span> <span class="pre">%eax</span></code> et <code class="docutils literal notranslate"><span class="pre">movq</span> <span class="pre">$0x51,</span> <span class="pre">%rax</span></code> se comportent exactement de la même maniére dans ce cas de figure, tout en ayant des tailles différentes: la version avec <code class="docutils literal notranslate"><span class="pre">%eax</span></code> utilisant 2 octets de moins.</p></li>
-<li><p>Pour des raisons de performances de calculs en 32-bits (comme expliqué <a href="https://stackoverflow.com/questions/11177137/why-do-x86-64-instructions-on-32-bit-registers-zero-the-upper-part-of-the-full-6" target="_blank">ici</a>) amd a fait en sorte de forcer les 32-bits de poids fort à zéro.</p></li>
-<li><p><strong>Retenez juste que les instructions 32-bits forcent les 32-bits de poids fort à zéro.</strong></p></li>
-</ul>
-</div></blockquote>
-<blockquote class="small-text">
-Références:
-<ul>
-<li><a href="https://wiki.osdev.org/CPU_Registers_x86-64">https://wiki.osdev.org/CPU_Registers_x86-64</a></li>
-<li><a href="https://stackoverflow.com/questions/26280229/is-x87-fp-stack-still-relevant">https://stackoverflow.com/questions/26280229/is-x87-fp-stack-still-relevant</a></li>
-</ul>
-</blockquote>
-</section>
-<section id="pointer-register-rip">
-<h3>Pointer Register (RIP)<a class="headerlink" href="#pointer-register-rip" title="Lien vers cette rubrique">#</a></h3>
-<ul class="simple">
-<li><p>Le pointer register contient l”<strong>adresse</strong> mémoire ou la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d’exécuter l’instruction <a href="https://sourceware.org/binutils/docs/as/i386_002dVariations.html" target="_blank"><code class=" clickable">movabs</code></a> qui est à l’adresse <code class="docutils literal notranslate"><span class="pre">0x5129</span></code> la valeur de <code class="docutils literal notranslate"><span class="pre">%rip</span></code> est l’adresse de l’instruction suivante <code class="docutils literal notranslate"><span class="pre">mov</span> <span class="pre">%eax,</span> <span class="pre">%ebx</span></code> à l’adresse <code class="docutils literal notranslate"><span class="pre">0x5133</span></code>.</p></li>
-</ul>
-<center><div  class="figure-container"><figure>
-	<img src="./_static/images/rip-1.png" class="figure2">
-  <img src="./_static/images/rip-2.png" class="figure2">
-	<figcaption>La valeur du <strong>%rip</strong> est calculée lors de l'exécution d'une instruction.</figcaption>
-</figure></div></center>
-<ul class="simple">
-<li><p>Il faut que vous sachiez que les instructions ont des tailles différentes. elles varient de <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">octets</span></code> jusqu’à <code class="docutils literal notranslate"><span class="pre">15</span> <span class="pre">octets</span></code>. Vu qu’en mémoire les données sont stockés par octets, durant la lecture d’un octet de l’instruction le CPU sait s’il doit interpréter les prochains octets comme faisant partie de cette même instruction grâce aux octets qu’il a déja décodés.</p></li>
-<li><p>Les instructions d’appel et de branchement <code class="docutils literal notranslate"><span class="pre">jmp</span></code>, <code class="docutils literal notranslate"><span class="pre">call</span></code>, <code class="docutils literal notranslate"><span class="pre">ret</span></code>, … ne font que modifier la valeur de ce fameux registre <code class="docutils literal notranslate"><span class="pre">%rip</span></code>, en d’autres termes elles changent l’adresse de la prochaine instruction.</p></li>
-</ul>
-</section>
-<section id="resume-sur-les-registres">
-<h3>Résumé sur les registres<a class="headerlink" href="#resume-sur-les-registres" title="Lien vers cette rubrique">#</a></h3>
-<center class="table-wrapper"><table align="center" cellpadding="7px" cellspacing="0" border="2">
-<tbody><tr class="header-row">
-   <th>64-bits</th>
-   <th>32-bits</th>
-   <th>16-bits</th>
-   <th>8-bits</th>
-   <th>Utilisation dans l'ABI Linux AMD64</th>
-   <th>Appel de fonction</th>
-</tr>
-<tr class="green-row">
-   <td>rax</td><td>eax</td><td>ax</td><td>ah,al</td>
-      <td>Valeur de retour</td>
-      <td>Peut être modifié par la fonction appelée</td>
-</tr>   
-<tr class="red-row">
-   <td>rbx</td><td>ebx</td><td>bx</td><td>bh,bl</td>
-      <td>&nbsp;</td>
-      <td>Doit être sauvegardé par la fonction appelée</td>
-</tr>   
-<tr class="green-row">
-   <td>rcx</td><td>ecx</td><td>cx</td><td>ch,cl</td>
-      <td>4<sup>th</sup> argument entier</td>
-      <td>Peut être modifié par la fonction appelée</td>
-</tr>   
-<tr class="green-row">
-   <td>rdx</td><td>edx</td><td>dx</td><td>dh,dl</td>
-      <td>3<sup>rd</sup> argument entier</td>
-      <td>Peut être modifié par la fonction appelée</td>
-</tr>   
-<tr class="green-row">
-   <td>rsi</td><td>esi</td><td>si</td><td>sil</td>
-      <td>2<sup>e</sup> argument entier</td>
-      <td>Peut être modifié par la fonction appelée</td>
-</tr>   
-<tr class="green-row">
-   <td>rdi</td><td>edi</td><td>di</td><td>dil</td>
-      <td>1<sup>er</sup>argument entier</td>
-      <td>Peut être modifié par la fonction appelée</td>
-</tr>   
-<tr class="red-row">
-   <td>rbp</td><td>ebp</td><td>bp</td><td>bpl</td>
-      <td>Début d'une stack frame</td>
-      <td>Bien faire attention à son utilisation et à sa sauvegarde</td>
-</tr>   
-<tr class="red-row">
-   <td>rsp</td><td>esp</td><td>sp</td><td>spl</td>
-      <td>La fin de la pile (top of stack)</td>
-      <td>Extrêmement faire attention à son utilisation et à sa sauvegarde</td>
-</tr>
-<tr class="green-row">
-   <td>r8</td><td>r8d</td><td>r8w</td><td>r8b</td>
-      <td>5<sup>e</sup> argument entier</td>
-      <td>Peut être modifié par la fonction appelée</td>
-</tr>
-<tr class="green-row">
-   <td>r9</td><td>r9d</td><td>r9w</td><td>r9b</td>
-      <td>6<sup>e</sup> argument entier</td>
-      <td>Peut être modifié par la fonction appelée</td>
-</tr>
-<tr class="green-row">
-   <td>r10</td><td>r10d</td><td>r10w</td><td>r10b</td>
-      <td>&nbsp;</td>
-      <td>Peut être modifié par la fonction appelée</td>
-</tr>
-<tr class="green-row">
-   <td>r11</td><td>r11d</td><td>r11w</td><td>r11b</td>
-      <td>&nbsp;</td>
-      <td>Peut être modifié par la fonction appelée</td>
-</tr>
-<tr class="red-row">
-   <td>r12</td><td>r12d</td><td>r12w</td><td>r12b</td>
-      <td>&nbsp;</td>
-      <td>Doit être sauvegardé par la fonction appelée</td>
-</tr>
-<tr class="red-row">
-   <td>r13</td><td>r13d</td><td>r13w</td><td>r13b</td>
-      <td>&nbsp;</td>
-      <td>Doit être sauvegardé par la fonction appelée</td>
-</tr>
-<tr class="red-row">
-   <td>r14</td><td>r14d</td><td>r14w</td><td>r14b</td>
-      <td>&nbsp;</td>
-      <td>Doit être sauvegardé par la fonction appelée</td>
-</tr>
-<tr class="red-row">
-   <td>r15</td><td>r15d</td><td>r15w</td><td>r15b</td>
-      <td>&nbsp;</td>
-      <td>Doit être sauvegardé par la fonction appelée</td>
-</tr>
-</tbody></table></center>
-<p>:pencil: <strong>Remarques:</strong></p>
-<ul class="simple">
-<li><p>Quand vous appelez une fonction il <strong>ne faut pas</strong> vous attendre à ce que les registres en <strong>vert</strong> aient gardé leur valeur. Autrement dit, si votre programme assembleur utilise le registre <code class="docutils literal notranslate"><span class="pre">%rdx</span></code> il faut qu’il soit sauvegardé (<code class="docutils literal notranslate"><span class="pre">pushq</span> <span class="pre">%rdx</span></code>) avant l’appel <code class="docutils literal notranslate"><span class="pre">call</span> <span class="pre">my_func</span></code> et puis restauré après l’appel (<code class="docutils literal notranslate"><span class="pre">popq</span> <span class="pre">%rdx</span></code>).</p></li>
-<li><p>Par contre si une fonction veut utiliser un des registres en <strong>rouge</strong>, elle doit le sauvegarder avant sa modification et le restaurer avant le retour (<code class="docutils literal notranslate"><span class="pre">ret</span></code>).</p></li>
-</ul>
-<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="nl">my_func:</span>
-<span class="w">   </span><span class="nf">pushq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span><span class="w"> </span><span class="c1">; sauvegarde %rbx</span>
-<span class="w">   </span><span class="nf">pushq</span><span class="w"> </span><span class="o">%</span><span class="nb">r14</span><span class="w"> </span><span class="c1">; sauvegarde %r14</span>
-<span class="w">   </span><span class="c1">; ...</span>
-<span class="w">   </span><span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rdi</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span><span class="w"> </span><span class="c1">; modifie %rbx</span>
-<span class="w">   </span><span class="c1">; ...</span>
-<span class="w">   </span><span class="nf">movq</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nb">r14</span><span class="w"> </span><span class="c1">; modifie %r14</span>
-<span class="w">   </span><span class="c1">; ...</span>
-<span class="w">   </span><span class="nf">addq</span><span class="w"> </span><span class="o">%</span><span class="nb">r14</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">edx</span><span class="w"> </span><span class="c1">; modifie %rax</span>
-<span class="w">   </span><span class="c1">; ...</span>
-<span class="w">   </span><span class="nf">popq</span><span class="w"> </span><span class="o">%</span><span class="nb">r14</span><span class="w"> </span><span class="c1">; restaure %r14</span>
-<span class="w">   </span><span class="nf">popq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span><span class="w"> </span><span class="c1">; restaure %rbx</span>
-<span class="w">   </span><span class="nf">ret</span>
-
-<span class="nl">main:</span>
-<span class="w">   </span><span class="c1">; ...</span>
-<span class="w">   </span><span class="nf">movabs</span><span class="w"> </span><span class="kc">$</span><span class="mi">4523902</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rbx</span>
-<span class="w">   </span><span class="nf">movl</span><span class="w"> </span><span class="kc">$</span><span class="mi">125</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">edx</span><span class="w"> </span><span class="c1">; utilise %eax</span>
-<span class="w">   </span><span class="nf">movl</span><span class="w"> </span><span class="kc">$</span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">edi</span>
-<span class="w">   </span><span class="nf">pushl</span><span class="w"> </span><span class="o">%</span><span class="nb">edx</span>
-<span class="w">   </span><span class="nf">call</span><span class="w"> </span><span class="nv">my_func</span>
-<span class="w">   </span><span class="c1">; %edx a été changé par my_func</span>
-<span class="w">   </span><span class="nf">movl</span><span class="w"> </span><span class="o">%</span><span class="nb">edx</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">)</span><span class="w"> </span><span class="c1">; la valeur de %rbx est maintenue par my_func</span>
-<span class="w">   </span><span class="c1">; maintenant, j&#39;ai besoin de mon %edx</span>
-<span class="w">   </span><span class="nf">popl</span><span class="w"> </span><span class="o">%</span><span class="nb">edx</span>
-<span class="w">   </span><span class="nf">movl</span><span class="w"> </span><span class="o">%</span><span class="nb">edx</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">)</span><span class="w"> </span><span class="c1">; la valeur initiale de %edx est écrite en adresse mémoire %rbx + 4</span>
-<span class="w">   </span><span class="c1">; ...</span>
-<span class="w">   </span><span class="nf">ret</span>
-<span class="w">   </span>
-</pre></div>
-</div>
-<blockquote class="small-text">
-Références:
-<ul>
-<li><a href="https://wiki.osdev.org/Calling_Conventions" target="_blank">https://wiki.osdev.org/Calling_Conventions</a></li>
-<li><a href="https://math.hws.edu/eck/cs220/f22/registers.html" target="_blank">https://math.hws.edu/eck/cs220/f22/registers.html</a></li>
-</ul>
-</blockquote>
-</section>
-</section>
-<section id="les-flags-en-x86-64">
-<h2>Les flags en x86_64<a class="headerlink" href="#les-flags-en-x86-64" title="Lien vers cette rubrique">#</a></h2>
-<ul class="simple">
-<li><p>Lors de l’exécution de certaines instructions, il est intéressant de garder certaines informations sur le résultat de ces dernières, pour ainsi pouvoir rendre certaines instructions inter-dépendantes. Par exemple, si on veut additionner des nombres de taille supérieure à 64-bits, disons 128-bits il est primordiale de savoir si l’addition des 64-bits de poids faible a générée une retenue pour le 65-bits ou pas pour avoir un résultat correct (<a href="https://www.felixcloutier.com/x86/adc" target="_blank"><code class=" clickable">adc</code></a>). Il existe plein d’autres cas autre que les jump, où l’on veut avoir des informations sur le résultat de l’instruction précédente.</p></li>
-<li><p>En x86_64, on a à notre disposition le registre <strong>RFLAGS</strong> pour stocker et accéder aux informations décrivant la nature du résultat d’une instruction. En x86(32 bits), le registre se dénommait <strong>EFLAGS</strong> et à l’âge de l’architecture 16-bits <strong>FLAGS</strong>. Vous pouvez voir comment ce registre fut étendue avec le changements d’architecture dans la figure ci-dessous.</p>
-<ul>
-<li><p>En pratique, le registre RFLAGS décrit aussi des restrictions d’exécution, ainsi une instruction va changer son comportement, voir lever une exception dépendant des restrictions actives.</p></li>
-</ul>
-</li>
-</ul>
-<center><div  class="figure-container"><figure>
-	<img src="./_static/images/RFLAGS.png" alt="RFLAGS" class="figure">
-	<figcaption>Registres RFLAGS avec tous les FLAGS connus.</figcaption>
-</figure></div></center>
-<ul class="simple">
-<li><p>Lors du développement de l’architecture, les ingénieurs ont dû choisir quelles informations garder sur le résultat d’une instruction. Pour optimiser un maximum tout en gardant l’utilisation simple, ils se sont limiter à un seul registre, où chaque <strong>bit</strong> annonce la présence ou l’absence d’un flag décrivant un état. Les bits vides sont réservés et intel ou amd les utilisent comme ils veulent.</p></li>
-<li><p>Les flags sont divisés en <strong>3</strong> groupes:</p>
-<ul>
-<li><p><span style="color: rgba(233, 163, 91,255);">Status Flags:</span></p>
-<ul>
-<li><p><strong>CF</strong>(Carry Flag): <strong>1</strong> s’il y a eu une retenue au-delà du bit de poids fort du résultat, sinon <strong>0</strong>.</p></li>
-<li><p><strong>PF</strong>(Parity Flag): <strong>1</strong> si le nombre de bits à 1 dans les 8-bits de poids faible est pair, <strong>0</strong> si impair.</p></li>
-<li><p><strong>AF</strong>(Auxiliary Carry Flag): <strong>1</strong> s’il y a eu une retenue depuis le bit 3 vers le bit 4, sinon <strong>0</strong>.</p></li>
-<li><p><strong>ZF</strong>(Zero Flag): <strong>1</strong> si le résultat est nul, sinon <strong>0</strong>.</p></li>
-<li><p><strong>SF</strong>(Sign Flag): <strong>1</strong> si le résultat est négatif, sinon <strong>0</strong>.</p></li>
-<li><p><strong>OF</strong>(Overflow Flag): <strong>1</strong> si le résultat en signé a débordé (changement de signe inattendu) au-delà de la taille du registre destination, sinon <strong>0</strong>.</p></li>
-</ul>
-</li>
-<li><p><span style="color: #7dad4e;">Control Flags:</span></p>
-<ul>
-<li><p><strong>IF</strong>(Interrupt Flag): <strong>1</strong> si les interruptions sont actives, <strong>0</strong> si désactivées.</p></li>
-<li><p><strong>DF</strong>(Direction Flag): <strong>1</strong> pour que les adresses soient décrementées lors des instructions iteratives (<a href="https://www.felixcloutier.com/x86/rep:repe:repz:repne:repnz" target="_blank"><code class=" clickable">rep</code></a>), <strong>0</strong> pour incrémenter les adresses.</p></li>
-<li><p><strong>TF</strong>(Trap Flag): <strong>1</strong>  pour appeler une fonction après chaque instruction permettant d’avoir une exécution pas à pas (debug), <strong>0</strong> pour une exécution classique.</p></li>
-<li><p><strong>MD</strong>(Mode Flag).</p></li>
-</ul>
-</li>
-<li><p><span style="color: #559393;">System Flags:</span></p>
-<ul>
-<li><p><strong>IOPL</strong>(I/O privilege level).</p></li>
-<li><p>…</p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>La mise à jour des flags nécessite des tests et des écritures, cela prend du temps, pour ne pas en perdre inutilement, ils ont fait en sorte que certaines instructions ne touchent pas aux flags (le <code class="docutils literal notranslate"><span class="pre">mov</span></code> par exemple), et même que les instructions mettant à jour les flags, ne touchent pas à tous les flags, seulement ceux nécessaires, entre autres l’instruction <code class="docutils literal notranslate"><span class="pre">add</span></code> ne met à jour que les <strong>status flags</strong>.</p>
-<ul>
-<li><p>En général, on dit que les instructions qui ne font <strong>que</strong> <strong>déplacer</strong> des données ne modifient pas les flags. Par contre, celles qui <strong>effectuent</strong> des <strong>calculs</strong> mettent à jour les flags nécessaires.</p></li>
-<li><p>Il existe certaines exceptions d’instructions qui calculent mais ne mettent pas à jour les flags, parmi elles : <a href="https://www.felixcloutier.com/x86/not" target="_blank"><code class=" clickable">not</code></a> et <a href="https://www.felixcloutier.com/x86/lea" target="_blank"><code class=" clickable">lea</code></a>.</p></li>
-</ul>
-</li>
-<li><p>Il est possible d’accéder au registre <strong>RFLAGS</strong> via des instructions spéciales :</p>
-<ul>
-<li><p><a href="https://www.felixcloutier.com/x86/lahf" target="_blank"><code class=" clickable">lahf</code></a> enregistre les 8-bits de poids faibles de <strong>FLAGS</strong> dans <strong>ah</strong>. <a href="https://www.felixcloutier.com/x86/sahf" target="_blank"><code class=" clickable">sahf</code></a> récupère les valeurs de <strong>SF</strong>, <strong>ZF</strong>, <strong>AF</strong>, <strong>PF</strong>, et <strong>CF</strong> (les 8-bits de poids faible) depuis <strong>ah</strong>.</p></li>
-<li><p><a href="https://www.felixcloutier.com/x86/clc" target="_blank"><code class=" clickable">clc</code></a> (mettre CF à 0), <a href="https://www.felixcloutier.com/x86/stc" target="_blank"><code class=" clickable">stc</code></a> (mettre CF à 1), <a href="https://www.felixcloutier.com/x86/cmc" target="_blank"><code class=" clickable">cmc</code></a> (inverser CF), <a href="https://www.felixcloutier.com/x86/cli" target="_blank"><code class=" clickable">cli</code></a> (mettre IF à 0), <a href="https://www.felixcloutier.com/x86/sti" target="_blank"><code class=" clickable">sti</code></a> (mettre IF à 1), <a href="https://www.felixcloutier.com/x86/cld" target="_blank"><code class=" clickable">cld</code></a> (mettre DF à 0), <a href="https://www.felixcloutier.com/x86/std" target="_blank"><code class=" clickable">std</code></a> (mettre DF à 1).</p></li>
-<li><p><a href="https://www.felixcloutier.com/x86/pushf:pushfd:pushfq" target="_blank"><code class=" clickable">pushf</code></a>/<a href="https://www.felixcloutier.com/x86/popf:popfd:popfq" target="_blank"><code class=" clickable">popf</code></a> empile/dépile le registre <strong>FLAGS</strong>, <code class="docutils literal notranslate"><span class="pre">pushfd</span></code>/<code class="docutils literal notranslate"><span class="pre">popfd</span></code> empile/dépile le registre <strong>EFLAGS</strong>, <code class="docutils literal notranslate"><span class="pre">pushfq</span></code>/<code class="docutils literal notranslate"><span class="pre">popfq</span></code> empile/dépile le registre <strong>RFLAGS</strong>.</p>
-<ul>
-<li><p>Les instructions ont le même opcode, tout dépend du mode dans lequel le CPU est.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>L’instruction <code class="docutils literal notranslate"><span class="pre">cmp</span> <span class="pre">i1,</span> <span class="pre">i2</span></code> fait une soustraction <code class="docutils literal notranslate"><span class="pre">i2</span> <span class="pre">-</span> <span class="pre">i1</span></code> sans sauvegarder le résultat dans l’opérant destination et met à jour les flags <strong>CF</strong>, <strong>OF</strong>, <strong>SF</strong>, <strong>ZF</strong>, <strong>AF</strong>, et <strong>PF</strong>.</p></li>
-<li><p>L’instruction <code class="docutils literal notranslate"><span class="pre">test</span> <span class="pre">i1,</span> <span class="pre">i2</span></code> fait un bit-wise AND <code class="docutils literal notranslate"><span class="pre">i2</span> <span class="pre">&amp;</span> <span class="pre">i1</span></code> et met à jour les flags <strong>PF</strong>, <strong>SF</strong>, <strong>ZF</strong>. Elle permet de tester si un registre est nul <code class="docutils literal notranslate"><span class="pre">testq</span> <span class="pre">%rax,</span> <span class="pre">%rax</span></code>, elle est plus compacte que <code class="docutils literal notranslate"><span class="pre">cmp</span> <span class="pre">$0,</span> <span class="pre">%rax</span></code>.</p></li>
-<li><p>Les instructions de la famille <a href="https://www.felixcloutier.com/x86/jcc" target="_blank"><code class=" clickable">jcc</code></a> vérifient les flags pour charger l’adresse spécifiée dans le registre <strong>RIP</strong> ou pas (<strong>RIP</strong> pointe vers l’instruction suivante).</p></li>
-</ul>
-<blockquote class="small-text">
-Références:
-<ul>
-<li><a href="https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags" target="_blank">https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags</a></li>
-<li><a href="https://www.wikiwand.com/en/FLAGS_register" target="_blank">https://www.wikiwand.com/en/FLAGS_register</a></li>
-</ul>
-</blockquote>
-<!-- http://ref.x86asm.net/coder64.html -->
-</section>
+  <section id="les-fonctions-et-leur-contexte-en-x86-64">
+<h1>Les fonctions et leur contexte en x86_64<a class="headerlink" href="#les-fonctions-et-leur-contexte-en-x86-64" title="Lien vers cette rubrique">#</a></h1>
 <section id="stack-frame">
 <h2>Stack frame<a class="headerlink" href="#stack-frame" title="Lien vers cette rubrique">#</a></h2>
 <ul class="simple">
@@ -654,8 +325,8 @@ Références:
 <li><p>Comme le montre la figure ci-dessous, lors de l’exécution d’une fonction, le <strong>rbp</strong> contient l’<strong>adresse</strong> où l’<strong>ancien</strong> <strong>rbp</strong> est <strong>stocké</strong>, une <strong>incrémentation</strong> de <strong>8</strong> permet toujours d’avoir l”<strong>adresse</strong> <strong>où</strong> <strong>est</strong> <strong>l’adresse de retour</strong>, et de <strong>16</strong> pour avoir l”<strong>adresse</strong> du <strong>7ᵉ argument</strong> (s’il existe)(les arguments sont empilés de droite à gauche). Une <strong>décrémentation</strong> d’un certain nombre d’octets permet d’accéder aux registres sauvegardés ou aux variables locales allouées par la décrémentation du <strong>rsp</strong>.</p></li>
 </ul>
 <center><div  class="figure-container"><figure>
-	<img src="./_static/images/stack-frame.png" alt="RFLAGS" class="figure2">
-	<figcaption>Illustration d'un exemple de stack frame de l'abi linux amd64.</figcaption>
+    <img src="./_static/images/stack-frame.png" alt="RFLAGS" class="figure2">
+    <figcaption>Illustration d'un exemple de stack frame de l'abi linux amd64.</figcaption>
 </figure></div></center>
 <ul>
 <li><p>Pour résumer, lors d’un appel de fonction, les arguments à partir du 7ᵉ sont empilés par la fonction appelante. Ce 7ᵉ argument s’il existe marquera la fin de la stack frame de la fonction appelante avec son octet de poids faible. L’adresse de retour est empilée par l’instruction <code class="docutils literal notranslate"><span class="pre">call</span></code> et son octet de poids fort marque le début de la stack frame de la fonction appelée.</p>
@@ -705,11 +376,11 @@ Références:
 <ul class="simple">
 <li><p>L’architecture x86_64 propose deux instructions <a href="https://www.felixcloutier.com/x86/enter" target="_blank"><code class=" clickable">enter</code></a> et <a href="https://www.felixcloutier.com/x86/leave" target="_blank"><code class=" clickable">leave</code></a> pour gérer le prologue et l’épilogue d’une fonction.</p></li>
 <li><p>L’instruction <code class="docutils literal notranslate"><span class="pre">enter</span></code> prend deux immédiats comme opérant, le premier (de 16-bits) spécifiant la taille à allouer dans la pile pour les registres à sauvegarder et les variables locales. Le deuxième est utilisé pour les fonctions imbriquées (une fonction définie à l’intérieur d’une autre) qui doivent avoir accès aux variables locales de leur fonction mére.</p></li>
-<li><p>En utilisation simple, <code class="docutils literal notranslate"><span class="pre">enter</span></code> tente de remplacer la suite de trois instructions: <code class="docutils literal notranslate"><span class="pre">push</span> <span class="pre">%rbp</span></code>, <code class="docutils literal notranslate"><span class="pre">movq</span>&#160; <span class="pre">%rsp,</span> <span class="pre">%rbp</span></code>, <code class="docutils literal notranslate"><span class="pre">sub</span>&#160; <span class="pre">imm16,</span> <span class="pre">%rsp</span></code>. Mais, comme l’explique si bien <a href="https://stackoverflow.com/questions/5959890/enter-vs-push-ebp-mov-ebp-esp-sub-esp-imm-and-leave-vs-mov-esp-ebp" target="_blank">ce post sur stackoverflow</a>, <code class="docutils literal notranslate"><span class="pre">enter</span></code> est qu’un vestige du passé maintenue uniquement pour pour la rétrocompatibilité et est en réalité moins performant en temps d’exécution que les trois instructions qu’il tente de remplacer.</p></li>
-<li><p>Pour ce qui de l’instruction <code class="docutils literal notranslate"><span class="pre">leave</span></code> elle est l’équivalent à la suite d’instruction <code class="docutils literal notranslate"><span class="pre">movq</span> <span class="pre">%rbp,</span> <span class="pre">%rsp</span></code>, <code class="docutils literal notranslate"><span class="pre">popq</span> <span class="pre">%rbp</span></code>. Elle est toujours valable, mais les compilateurs l’utilisent de moins en moins. Elle reste une instruction vieillissante, qui n’est pas aussi optimisée que <code class="docutils literal notranslate"><span class="pre">mov</span></code> et <code class="docutils literal notranslate"><span class="pre">pop</span></code> réunies. La différence reste négligeable mais les developpeurs ont fait le choix de ne plus trop l’utiliser, même si elle permet d’avoir une plus petite empreinte mémoire.</p></li>
+<li><p>En utilisation simple, <code class="docutils literal notranslate"><span class="pre">enter</span></code> tente de remplacer la suite de trois instructions: <code class="docutils literal notranslate"><span class="pre">push</span> <span class="pre">%rbp</span></code>, <code class="docutils literal notranslate"><span class="pre">movq</span>&#160; <span class="pre">%rsp,</span> <span class="pre">%rbp</span></code>, <code class="docutils literal notranslate"><span class="pre">sub</span>&#160; <span class="pre">imm16,</span> <span class="pre">%rsp</span></code>. Mais, comme l’explique si bien <a href="https://stackoverflow.com/questions/5959890/enter-vs-push-ebp-mov-ebp-esp-sub-esp-imm-and-leave-vs-mov-esp-ebp" target="_blank">ce post sur stackoverflow</a>, <code class="docutils literal notranslate"><span class="pre">enter</span></code> est qu’un vestige du passé maintenue uniquement pour la rétrocompatibilité et est en réalité moins performant en temps d’exécution que les trois instructions qu’il tente de remplacer.</p></li>
+<li><p>Pour ce qui de l’instruction <code class="docutils literal notranslate"><span class="pre">leave</span></code> elle est équivalente à la suite d’instruction <code class="docutils literal notranslate"><span class="pre">movq</span> <span class="pre">%rbp,</span> <span class="pre">%rsp</span></code>, <code class="docutils literal notranslate"><span class="pre">popq</span> <span class="pre">%rbp</span></code>. Elle est toujours valable, mais les compilateurs l’utilisent de moins en moins. Elle reste une instruction vieillissante, qui n’est pas aussi optimisée que <code class="docutils literal notranslate"><span class="pre">mov</span></code> et <code class="docutils literal notranslate"><span class="pre">pop</span></code> réunies. La différence reste négligeable mais les developpeurs ont fait le choix de ne plus trop l’utiliser, même si elle permet d’avoir une plus petite empreinte mémoire.</p></li>
 </ul>
 <blockquote>
-<div><p><strong>À garder en tête:</strong> Avoir moins d’instructions permet d’avoir une meilleure empreinte mémoire (code moins volumineux), par contre ce ne dit rien quant à la vitesse d’exécution du code. Du coup, avoir moins d’instructions ne veut pas toujours dire avoir un meilleur code.</p>
+<div><p><strong>À garder en tête:</strong> Avoir moins d’instructions permet d’avoir une meilleure empreinte mémoire (code moins volumineux), par contre ce ne dit rien quant à la vitesse d’exécution du code. Du coup, avoir moins d’instructions ne veut pas toujours dire avoir un code s’éxécutant plus rapidement.</p>
 </div></blockquote>
 <blockquote class="small-text">
 Références:
@@ -722,6 +393,7 @@ Références:
 <li><a href="https://www.bogotobogo.com/cplusplus/stackunwinding.php">https://www.bogotobogo.com/cplusplus/stackunwinding.php</a></li>
 </ul>
 </blockquote>
+<!-- regex for links: [-a-zA-Z0-9@:%._\+~#= "/<>]+ -->
 </section>
 </section>
 <section id="appeler-les-fonctions-ecrite-en-c-compilee-sous-linux">
@@ -837,8 +509,9 @@ Références:
 </blockquote>
 </section>
 </section>
+</section>
 <section id="syscalls-en-assembleur">
-<h2>Syscalls en assembleur<a class="headerlink" href="#syscalls-en-assembleur" title="Lien vers cette rubrique">#</a></h2>
+<h1>Syscalls en assembleur<a class="headerlink" href="#syscalls-en-assembleur" title="Lien vers cette rubrique">#</a></h1>
 <ul class="simple">
 <li><p>Dans les instructions du programme <strong>safe</strong> vous avez découvert l’instruction <a href="https://www.felixcloutier.com/x86/syscall" target="_blank"><code class=" clickable">syscall</code></a>. Si vous lisez la description de l’instruction dans le manuel d’intel, vous trouverez la phrase <em>« Fast call to privilege level 0 system procedures. »</em>. Ils la décrivent comment étant rapide, cela est en rapport à l’ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l’interruption à chaque fois.</p></li>
 <li><p>Sinon pour faire court, c’est l’instruction assembleur utilisée pour faire appel à un syscall défini par l’OS qui va s’exécuter en mode Kernel (d’où le privilege level 0).</p></li>
@@ -877,32 +550,9 @@ Références:
 Références:
 <ul>
 <li><a href="https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly" target="_blank">https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly</a></li>
-<li><a href="https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf" target="_blank">https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf [page:124]</a></li>
+<li><a href="https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf" target="_blank">https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf [Appendix A]</a></li>
 </ul>
-</blockquote>
-<!-- # Svartalfheim
-
-## Rex prefix
-
-<blockquote class="small-text">
-Références:
-<ul>
-<li><a href="https://wiki.osdev.org/X86-64_Instruction_Encoding" target="_blank">https://wiki.osdev.org/X86-64_Instruction_Encoding</a></li>
-</ul>
-</blockquote>
-
-## L'ordre d'exécution
-
-> Les accès mémoire sont faits de façon asynchrone -> registres doivent être indépendant.
-
-<blockquote class="small-text">
-Références:
-<ul>
-<li><a href="https://www.wikiwand.com/en/Register_renaming" target="_blank">https://www.wikiwand.com/en/Register_renaming</a></li>
-</ul>
-</blockquote> -->
-</section>
-</section>
+</blockquote></section>
 
 
                 </article>
@@ -916,12 +566,12 @@ Références:
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="Rappels-Syst%C3%A8me.html"
+       href="x86_64-LesSyntaxes.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">précédent</p>
-        <p class="prev-next-title">Rappels OS</p>
+        <p class="prev-next-title">Les syntaxes AT&amp;T et Intel</p>
       </div>
     </a>
     <a class="right-next"
@@ -950,14 +600,7 @@ Références:
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-importantes">Notes importantes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#registres-en-x86-64">Registres en x86_64</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-purpose-registers">General Purpose Registers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pointer-register-rip">Pointer Register (RIP)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resume-sur-les-registres">Résumé sur les registres</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#les-flags-en-x86-64">Les flags en x86_64</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Les fonctions et leur contexte en x86_64</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-frame">Stack frame</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#la-red-zone">La red zone</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enter-et-leave">enter et leave</a></li>
@@ -968,8 +611,11 @@ Références:
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fonction-variadic-nombre-d-arguments-dynamique">Fonction variadic (nombre d’arguments dynamique)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#syscalls-en-assembleur">Syscalls en assembleur</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#syscalls-en-assembleur">Syscalls en assembleur</a></li>
+</ul>
+
   </nav></div>
 
 </div></div>
