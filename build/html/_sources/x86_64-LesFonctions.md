@@ -74,6 +74,7 @@ Références:
 ## Appeler les fonctions écrite en C compilée sous Linux
 
 - Pour appeler des fonctions écrites en C de librairies comme la **libc** ou autres respectant l’ABI linux amd64, il suffit de suivre cette dernière.
+> Si vous aves besoin d'*include* des headers spécifiques, veuillez bien nommer votre fichier avec l'extension `.S` et non `.s`. Autrement, le preprocessor ne sera pas appeler pour résoudre les *includes*, et votre programme ne fonctionnera pas.
 
 ### Fonction simple
 
@@ -99,7 +100,7 @@ int main(int argc, const char *argv)
 }
 ```
 
-- En le compilant en `-O0` pour avoir le code assembleur sans optimisation, on obtient le code et exécution suivants:
+- En le compilant en `-O0` pour avoir le code assembleur sans optimisation, on obtient l'exécution suivante:
 
 <center>
 <iframe class="slideshow-iframe" id="execution-function" src="./_static/slides/function-sequence.html"

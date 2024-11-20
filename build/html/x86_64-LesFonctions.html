@@ -397,6 +397,9 @@ Références:
 <ul class="simple">
 <li><p>Pour appeler des fonctions écrites en C de librairies comme la <strong>libc</strong> ou autres respectant l’ABI linux amd64, il suffit de suivre cette dernière.</p></li>
 </ul>
+<blockquote>
+<div><p>Si vous aves besoin d”<em>include</em> des headers spécifiques, veuillez bien nommer votre fichier avec l’extension <code class="docutils literal notranslate"><span class="pre">.S</span></code> et non <code class="docutils literal notranslate"><span class="pre">.s</span></code>. Autrement, le preprocessor ne sera pas appeler pour résoudre les <em>includes</em>, et votre programme ne fonctionnera pas.</p>
+</div></blockquote>
 <section id="fonction-simple">
 <h3>Fonction simple<a class="headerlink" href="#fonction-simple" title="Lien vers cette rubrique">#</a></h3>
 <ul class="simple">
@@ -425,7 +428,7 @@ Références:
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>En le compilant en <code class="docutils literal notranslate"><span class="pre">-O0</span></code> pour avoir le code assembleur sans optimisation, on obtient le code et exécution suivants:</p></li>
+<li><p>En le compilant en <code class="docutils literal notranslate"><span class="pre">-O0</span></code> pour avoir le code assembleur sans optimisation, on obtient l’exécution suivante:</p></li>
 </ul>
 <center>
 <iframe class="slideshow-iframe" id="execution-function" src="./_static/slides/function-sequence.html"
