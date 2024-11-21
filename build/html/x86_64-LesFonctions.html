@@ -411,7 +411,7 @@ grows downwards from high addresses.</p>
 <div><p>In other words, the value <code class="docutils literal notranslate"><span class="pre">(%rsp</span> <span class="pre">+</span> <span class="pre">8)</span></code> is always a multiple of 16 (32 or 64) when control is transferred to the function entry point. The stack pointer, <code class="docutils literal notranslate"><span class="pre">%rsp</span></code>, always points to the end of the latest allocated stack frame.</p>
 </div></blockquote>
 <p>Ici le paragraphe parle de la valeur de <code class="docutils literal notranslate"><span class="pre">%rsp</span></code> directement après que l’adresse de retour fu empilée. La valeur de <code class="docutils literal notranslate"><span class="pre">%rsp</span> <span class="pre">+</span> <span class="pre">8</span></code> represente ainsi l”<strong>adresse</strong> où <em>l’adresse de retour</em> est stockée. Ainsi la conclusion est:</p>
-<center> <blockquote class="conclusion">Avant un <code>call</code> la pile doit être aligné sur 16! </blockquote></center>
+<center> <blockquote class="conclusion">Avant un <code>call</code> la pile doit être alignée sur 16! </blockquote></center>
 <p>Prennant le programme Hello World comme exemple:</p>
 <div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="nf">.global</span><span class="w"> </span><span class="nv">main</span>
 
@@ -465,7 +465,7 @@ grows downwards from high addresses.</p>
 </div></blockquote>
 <p><strong>Encore plus important:</strong></p>
 <blockquote>
-<div><p>Sur certaines architectures plus anciennes ou strictes, comme avec les verions SSE1 et SSE2 de x86, un accès mal aligné pouvait provoquer une exception fatale.</p>
+<div><p>Sur certaines architectures plus anciennes ou strictes, comme avec les versions SSE1 et SSE2 de x86, un accès mal aligné pouvait provoquer une exception fatale.</p>
 </div></blockquote>
 <p>Dans l’ABI System V, l’alignement de 16 octets garantit que les instructions SSE, qui utilisent les registres XMM pour des blocs de 128 bits (16 octets), fonctionnent sans problème (pas de segfault). De plus, les extensions AVX, qui opèrent sur des blocs encore plus grands (256 bits ou 512 bits), renforcent cette nécessité avec un alignement de 32 ou 64 octets dans des cas spécifiques.</p>
 <p>Si vous vous demandez pourquoi une fonction semble fonctionner dans certains cas et planter dans d’autres, pensez à vérifier l’alignement de la pile. Des forums comme <a class="reference external" href="https://stackoverflow.com/questions/49391001/why-does-the-x86-64-amd64-system-v-abi-mandate-a-16-byte-stack-alignment">Stack Overflow</a> ou <a class="reference external" href="https://stackoverflow.com/questions/51070716/glibc-scanf-segmentation-faults-when-called-from-a-function-that-doesnt-align-r">ce cas spécifique</a> sur <code class="docutils literal notranslate"><span class="pre">scanf</span></code> montrent bien que des erreurs subtiles peuvent survenir à cause de ce détail souvent négligé.</p>

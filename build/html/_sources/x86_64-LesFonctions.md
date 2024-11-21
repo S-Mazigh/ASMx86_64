@@ -103,7 +103,7 @@ Une fois tous les arguments empilés (du 7ème au n-ème), l'adresse mémoire da
 
 Ici le paragraphe parle de la valeur de `%rsp` directement après que l'adresse de retour fu empilée. La valeur de `%rsp + 8` represente ainsi l'**adresse** où *l'adresse de retour* est stockée. Ainsi la conclusion est: 
 
-<center> <blockquote class="conclusion">Avant un <code>call</code> la pile doit être aligné sur 16! </blockquote></center>
+<center> <blockquote class="conclusion">Avant un <code>call</code> la pile doit être alignée sur 16! </blockquote></center>
 
 Prennant le programme Hello World comme exemple:
 
@@ -165,7 +165,7 @@ Des fois, on n'a pas le choix. L'idée derrière cet alignement de 16 octets est
 > Imaginez que le processeur doit charger un bloc de 16 octets pour une instruction SIMD. Si ce bloc commence à une adresse non alignée, plusieurs requêtes mémoire sont nécessaires pour rassembler les données, ce qui ralentit l'exécution. L'alignement garantit que ces blocs peuvent être chargés en une seule opération, optimisant ainsi les performances. 
 
 **Encore plus important:**
-> Sur certaines architectures plus anciennes ou strictes, comme avec les verions SSE1 et SSE2 de x86, un accès mal aligné pouvait provoquer une exception fatale. 
+> Sur certaines architectures plus anciennes ou strictes, comme avec les versions SSE1 et SSE2 de x86, un accès mal aligné pouvait provoquer une exception fatale. 
 
 Dans l'ABI System V, l'alignement de 16 octets garantit que les instructions SSE, qui utilisent les registres XMM pour des blocs de 128 bits (16 octets), fonctionnent sans problème (pas de segfault). De plus, les extensions AVX, qui opèrent sur des blocs encore plus grands (256 bits ou 512 bits), renforcent cette nécessité avec un alignement de 32 ou 64 octets dans des cas spécifiques.
 
