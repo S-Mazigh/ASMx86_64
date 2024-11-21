@@ -6,6 +6,26 @@
   display: block;
 }
 
+.conclusion {
+  position: relative;
+  font-weight: bold;
+  text-align: center;
+  border-right: .25em solid var(--pst-color-blockquote-notch);
+  padding: .5em;
+  /* animation: neon-blink 1.5s infinite alternate; */
+}
+
+/* Neon Blinking Animation */
+@keyframes neon-blink {
+  0% {
+    box-shadow: 0 0 1px var(--pst-color-blockquote-notch), 0 0 5px var(--pst-color-blockquote-notch);
+  }
+  100% {
+    box-shadow: 0 0 5px var(--pst-color-blockquote-notch), 0 0 10px var(--pst-color-blockquote-notch);
+  }
+}
+
+
 .red-row {
   background-color: rgba(151, 26, 23, 0.658) !important;
 }
