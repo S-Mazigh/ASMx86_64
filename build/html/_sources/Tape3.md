@@ -7,8 +7,8 @@ index: true
 
 ## Mise en route
 - Télécharger la vm amd64 [ici](https://exploit.education/downloads/), qemu aussi si vous ne l'avez pas, [debian](https://www.tecmint.com/install-qemu-kvm-ubuntu-create-virtual-machines/), [arch](https://www.howtoforge.com/how-to-install-kvm-qemu-on-manjaro-archlinux/]).
-- Pour nix-os utilisez une nix shell `nix-shell -p qemu".
-- Lancez le script `boot-exploit-education-phoenix-amd64.sh`.
+- Pour nix-os utilisez un nix shell `nix-shell -p qemu`.
+- Lancez le script `boot-exploit-education-phoenix-amd64.sh` : `bash boot-exploit-education-phoenix-amd64.sh&` pour continuer à utiliser le terminal courant.
 - Utilisez le login `user` et le mot de passe `user`.
 - Faite `ssh -p2222 user@localhost` dans un autre **terminal** pour avoir une meilleure expérience.
 - Vous trouverez les fichiers exécutables dans `/opt/phoenix/amd64/`.
