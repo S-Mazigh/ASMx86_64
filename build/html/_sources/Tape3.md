@@ -408,7 +408,7 @@ export fill=$(printf "\x48\x31\xc0\x50\x5f\xb0\x03\x0f\x05\x50\x48\xbf\x2f\x64\x
 
 > On utilise `<()` pour la substitution de processus et non `$()`, afin de conserver les caractères spéciaux. Sachez qu'avec `$()`, le shell interprète la sortie du sous-processus comme une chaîne de caractères, ce qui peut entraîner la perte de caractères nuls `\x00` et d'autres caractères spéciaux. Avec `<()`, on crée un fichier temporaire qui conserve tous les caractères dans leur forme brute, y compris les caractères nuls et autres caractères spéciaux (référence : [GNU](https://www.gnu.org/software/bash/manual/bash.html#Process-Substitution)).
 
-- Et là, on retient l'adresse de `%rsp`:`0x00007fffffffe450` (elle est sûrement différente chez vous !!). On peut faire deux `stepi` pour arriver à `ret`, là on remarque que la valeur pointée par `%rsp`=`0xffffffffffffffff`, et que gdb affiche `Cannot disassemble from $PC` vu que l'adresse de retour pointe vers de l'espace kernel.
+- On s'arrète avant le `leave` pour avoir la valeur de `%rbp - 0x80` qui va être changer en `%rbp` après cette commande. Et là, on retient l'adresse de `%rsp`:`0x00007fffffffe450` (elle est sûrement différente chez vous !!). On peut faire deux `stepi` pour arriver à `ret`, là on remarque que la valeur pointée par `%rsp`=`0xffffffffffffffff`, et que gdb affiche `Cannot disassemble from $PC` vu que l'adresse de retour pointe vers de l'espace kernel.
 
 - En relançant gdb en écrivant la bonne adresse du buffer à la place de l'adresse de retour, on obtient:
 
