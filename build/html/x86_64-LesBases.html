@@ -152,6 +152,9 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Travaux pratiques</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Instructions-x86_64.html">Basic Instructions</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Atou-Analysis.html">My_Atou</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a></li>
 </ul>
 
@@ -300,7 +303,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#registres-en-x86-64">Registres en x86_64</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-purpose-registers">General Purpose Registers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pointer-register-rip">Pointer Register (RIP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pointer-register-rip">Pointer Register RIP</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resume-sur-les-registres">Résumé sur les registres</a></li>
 </ul>
 </li>
@@ -429,7 +432,7 @@ Références:
 </blockquote>
 </section>
 <section id="pointer-register-rip">
-<h3>Pointer Register (RIP)<a class="headerlink" href="#pointer-register-rip" title="Lien vers cette rubrique">#</a></h3>
+<h3>Pointer Register RIP<a class="headerlink" href="#pointer-register-rip" title="Lien vers cette rubrique">#</a></h3>
 <ul class="simple">
 <li><p>Le pointer register contient l”<strong>adresse</strong> mémoire ou la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d’exécuter l’instruction <a href="https://sourceware.org/binutils/docs/as/i386_002dVariations.html" target="_blank"><code class=" clickable">movabs</code></a> qui est à l’adresse <code class="docutils literal notranslate"><span class="pre">0x5129</span></code> la valeur de <code class="docutils literal notranslate"><span class="pre">%rip</span></code> est l’adresse de l’instruction suivante <code class="docutils literal notranslate"><span class="pre">mov</span> <span class="pre">%eax,</span> <span class="pre">%ebx</span></code> à l’adresse <code class="docutils literal notranslate"><span class="pre">0x5133</span></code>.</p></li>
 </ul>
@@ -651,7 +654,7 @@ Références:
 Références:
 <ul>
 <li><a href="https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags" target="_blank">https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags</a></li>
-<li><a href="https://www.wikiwand.com/en/FLAGS_register" target="_blank">https://www.wikiwand.com/en/FLAGS_register</a></li>
+<li><a href="https://en.wikipedia.org/wiki/FLAGS_register" target="_blank">https://en.wikipedia.org/wiki/FLAGS_register</a></li>
 </ul>
 </blockquote>
 <!-- http://ref.x86asm.net/coder64.html -->
@@ -853,7 +856,7 @@ Bien que ces instructions soient optimisées au niveau du processeur, leur effic
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#registres-en-x86-64">Registres en x86_64</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-purpose-registers">General Purpose Registers</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pointer-register-rip">Pointer Register (RIP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pointer-register-rip">Pointer Register RIP</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resume-sur-les-registres">Résumé sur les registres</a></li>
 </ul>
 </li>

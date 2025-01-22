@@ -19,7 +19,7 @@ Quelques notes sur le cours de système d'exploitation.
 <figure class="figure-2"> 
 <img src="./_static/images/Virtual-Memory.png"/>
 </figure>
-<figcaption>Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bit sont reellement utilisés.<a href="https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout"> [Kernel Docs]</a></figcaption>
+<figcaption>Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bit sont reellement utilisés.<a href="https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout" target="_blank"> [Kernel Docs]</a></figcaption>
 </div></center>
 
 
@@ -28,7 +28,7 @@ Quelques notes sur le cours de système d'exploitation.
 - Dans ce qui suit je vais utiliser le terme tâche pour mieux définir les threads plus tard.
 - La structure qu'on appelle le PCB (process control block) est là pour que l'OS ne fasse pas n'importe quoi lors de la gestion des tâches existantes, notamment avec toute l'histoire de mémoire virtuelle.
 - Cette structure est immense, puisque pour satisfaire tout ce beau monde, il faut un maximum d'informations. À la fois pour optimiser l'ordonnancement (qui exécuter) et aussi pour toujours garder la stabilité de tout le système lors des réponses aux demandes (les syscalls) des tâches. Ainsi, un processus mal attentionné ne va pas pouvoir contrôler tout le système, par exemple.
-  - Prenez comme exemple la `task_struct`` de Linux que vous pouvez voir [ici](https://elixir.bootlin.com/linux/latest/source/include/linux/sched.h#L743), la structure ne se termine qu'à la ligne 1554. Le kernel faisant le lien matériel-logiciel, doit réussir à abstraire les différentes architectures supportées au logiciel.
+  - Prenez comme exemple la `task_struct` de Linux que vous pouvez voir <a href="https://elixir.bootlin.com/linux/latest/source/include/linux/sched.h#L743" target="_blank">ici</a>, la structure ne se termine qu'à la ligne `1554`. Le kernel faisant le lien matériel-logiciel, doit réussir à abstraire les différentes architectures supportées au logiciel.
 
 
 > **Question :** 
@@ -64,7 +64,7 @@ Quelques notes sur le cours de système d'exploitation.
 ### Types de tâches
 - Durant l'exécution d'une tâche, elle peut faire appelle aux périphériques connectés. Soit, elle leur envoie des données, par exemple une image à afficher sur le périphérique écran ou un son à jouer pour un périphérique audio, sinon elle doit recevoir une donnée de la part d'un périphérique.
 - Voyez-vous, les périphériques sont très lents par rapport au CPU, ainsi une écriture ou une lecture depuis un périphérique peut être l'équivalent de millions d'instructions CPU simples. Pour ne pas gâcher autant de temps à ne rien faire, dans les OS modernes, une tâche attendant la fin d'une écriture ou d'une lecture perd le CPU et est mise en état d'*attente* jusqu'à la réception de la réponse du périphérique (fin d'écriture ou les données lues). Une fois la réponse reçue, la tâche est remise en état "je suis prête" et pourra poursuivre son exécution très prochainement.
-> La fameuse mesure IOPS représente le nombre d'opérations d'entrées et de sorties possibles dans la seconde par un périphérique. Maintenant avec les SSD (pouvant atteindre le million d'IOPS), on arrive à avoir des périphériques de stockage permettant une meilleure interactivité qu'un CPU classique, alors que les disques durs (HDD) sont très lents en comparaison ([HDD vs SSD](https://www.wikiwand.com/en/IOPS)).
+> La fameuse mesure IOPS représente le nombre d'opérations d'entrées et de sorties possibles dans la seconde par un périphérique. Maintenant avec les SSD (pouvant atteindre le million d'IOPS), on arrive à avoir des périphériques de stockage permettant une meilleure interactivité qu'un CPU classique, alors que les disques durs (HDD) sont très lents en comparaison (<a href="https://en.wikipedia.org/wiki/IOPS" target="_blank">HDD vs SSD</a>).
 - On aime catégorie les tâches en deux grandes familles : 
   - Les tâches **I/O bound**: les tâches qui passent la majorité de leur temps à attendre les réponses de périphériques (exemples : un éditeur de texte, l'interface graphique). 
   - Les tâches **CPU bound**: elles n'en nullement besoin de périphériques (très rares) ou très rarement, autrement dit, elle passe la majorité de leur temps à exécuter du code CPU (exemple : votre programme Fibonacci).

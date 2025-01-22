@@ -152,6 +152,9 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Travaux pratiques</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Instructions-x86_64.html">Basic Instructions</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Atou-Analysis.html">My_Atou</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a></li>
 </ul>
 
@@ -335,7 +338,7 @@
 <figure class="figure-2"> 
 <img src="./_static/images/Virtual-Memory.png"/>
 </figure>
-<figcaption>Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bit sont reellement utilisés.<a href="https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout"> [Kernel Docs]</a></figcaption>
+<figcaption>Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bit sont reellement utilisés.<a href="https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout" target="_blank"> [Kernel Docs]</a></figcaption>
 </div></center>
 <ul class="simple">
 <li><p>La figure simplifie les différents blocs du Kernel en un seul pour ne pas complexifier encore plus la figure. Retenez juste que dans le le bloc kernel existe une pile pour ce processus utilisée lors de l’exécution de code  kernel pour ce même processus.</p></li>
@@ -343,7 +346,7 @@
 <li><p>La structure qu’on appelle le PCB (process control block) est là pour que l’OS ne fasse pas n’importe quoi lors de la gestion des tâches existantes, notamment avec toute l’histoire de mémoire virtuelle.</p></li>
 <li><p>Cette structure est immense, puisque pour satisfaire tout ce beau monde, il faut un maximum d’informations. À la fois pour optimiser l’ordonnancement (qui exécuter) et aussi pour toujours garder la stabilité de tout le système lors des réponses aux demandes (les syscalls) des tâches. Ainsi, un processus mal attentionné ne va pas pouvoir contrôler tout le système, par exemple.</p>
 <ul>
-<li><p>Prenez comme exemple la `task_struct`` de Linux que vous pouvez voir <a class="reference external" href="https://elixir.bootlin.com/linux/latest/source/include/linux/sched.h#L743">ici</a>, la structure ne se termine qu’à la ligne 1554. Le kernel faisant le lien matériel-logiciel, doit réussir à abstraire les différentes architectures supportées au logiciel.</p></li>
+<li><p>Prenez comme exemple la <code class="docutils literal notranslate"><span class="pre">task_struct</span></code> de Linux que vous pouvez voir <a href="https://elixir.bootlin.com/linux/latest/source/include/linux/sched.h#L743" target="_blank">ici</a>, la structure ne se termine qu’à la ligne <code class="docutils literal notranslate"><span class="pre">1554</span></code>. Le kernel faisant le lien matériel-logiciel, doit réussir à abstraire les différentes architectures supportées au logiciel.</p></li>
 </ul>
 </li>
 </ul>
@@ -402,7 +405,7 @@
 <li><p>Voyez-vous, les périphériques sont très lents par rapport au CPU, ainsi une écriture ou une lecture depuis un périphérique peut être l’équivalent de millions d’instructions CPU simples. Pour ne pas gâcher autant de temps à ne rien faire, dans les OS modernes, une tâche attendant la fin d’une écriture ou d’une lecture perd le CPU et est mise en état d”<em>attente</em> jusqu’à la réception de la réponse du périphérique (fin d’écriture ou les données lues). Une fois la réponse reçue, la tâche est remise en état « je suis prête » et pourra poursuivre son exécution très prochainement.</p></li>
 </ul>
 <blockquote>
-<div><p>La fameuse mesure IOPS représente le nombre d’opérations d’entrées et de sorties possibles dans la seconde par un périphérique. Maintenant avec les SSD (pouvant atteindre le million d’IOPS), on arrive à avoir des périphériques de stockage permettant une meilleure interactivité qu’un CPU classique, alors que les disques durs (HDD) sont très lents en comparaison (<a class="reference external" href="https://www.wikiwand.com/en/IOPS">HDD vs SSD</a>).</p>
+<div><p>La fameuse mesure IOPS représente le nombre d’opérations d’entrées et de sorties possibles dans la seconde par un périphérique. Maintenant avec les SSD (pouvant atteindre le million d’IOPS), on arrive à avoir des périphériques de stockage permettant une meilleure interactivité qu’un CPU classique, alors que les disques durs (HDD) sont très lents en comparaison (<a href="https://en.wikipedia.org/wiki/IOPS" target="_blank">HDD vs SSD</a>).</p>
 </div></blockquote>
 <ul class="simple">
 <li><p>On aime catégorie les tâches en deux grandes familles :</p>

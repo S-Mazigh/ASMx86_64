@@ -1,0 +1,729 @@
+
+<!DOCTYPE html>
+
+
+<html lang="fr" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>My_Atou &#8212; ASMx86_64</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/css/mystyle.css?v=90afad5e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=a1409530"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/translations.js?v=e6b791cb"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Atou-Analysis';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Tape3" href="Tape3.html" />
+    <link rel="prev" title="Basic Instructions" href="Instructions-x86_64.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="fr"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Passer au contenu principal</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Haut de page</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Alerte de version"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">ASMx86_64</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Recherche" aria-label="Recherche" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Recherche</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Notions préalables</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Rappels-Syst%C3%A8me.html">Rappels OS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Rappels-Compilation.html">Rappels sur la compilation avec gcc</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Syntaxe et bases de l'assembleur x86_64</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesSyntaxes.html">Les syntaxes AT&amp;T et Intel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesBases.html">Les registres et l’adressage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="x86_64-LesFonctions.html">Les fonctions en x86_64</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Travaux pratiques</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Instructions-x86_64.html">Basic Instructions</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">My_Atou</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tape3.html">Tape3</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Téléchargez cette page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Atou-Analysis.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Télécharger le fichier source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimer au format PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Mode plein écran"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Thème" data-bs-title="Thème"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Clair"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Sombre"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="Paramètres système"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Recherche" aria-label="Recherche" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>My_Atou</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenu </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vue-d-ensemble-des-implementations">Vue d’ensemble des implémentations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-naive">1. Implémentation naïve</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-avec-une-meilleure-boucle">2. Implémentation avec une meilleure boucle</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-sans-multiplication">3. Implémentation sans multiplication</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-avec-lea-load-effective-address">4. Implémentation avec LEA (Load Effective Address)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resultats-de-performance">Résultats de performance</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grands-nombres-1-000-000">Grands nombres (&gt;1 000 000)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tous-les-nombres">Tous les nombres</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">Conclusions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">Appendix</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="my-atou">
+<h1>My_Atou<a class="headerlink" href="#my-atou" title="Lien vers cette rubrique">#</a></h1>
+<section id="vue-d-ensemble-des-implementations">
+<h2>Vue d’ensemble des implémentations<a class="headerlink" href="#vue-d-ensemble-des-implementations" title="Lien vers cette rubrique">#</a></h2>
+<section id="implementation-naive">
+<h3>1. Implémentation naïve<a class="headerlink" href="#implementation-naive" title="Lien vers cette rubrique">#</a></h3>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="nl">my_atou_naive:</span>
+<span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="w">    </span><span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rsp</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="w">    </span><span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">%</span><span class="nb">rax</span>
+<span class="w">    </span><span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rsi</span><span class="p">,</span><span class="o">%</span><span class="nb">rsi</span><span class="w"> </span>
+<span class="w">    </span><span class="nf">movl</span><span class="w"> </span><span class="kc">$</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ecx</span>
+
+<span class="nl">loop:</span>
+<span class="w">    </span><span class="nf">movb</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rdi</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="w">    </span><span class="nf">cmpb</span><span class="w"> </span><span class="kc">$</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="w">    </span><span class="nf">je</span><span class="w"> </span><span class="nv">end</span>
+<span class="w">    </span><span class="nf">subb</span><span class="w"> </span><span class="kc">$</span><span class="mi">48</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="w">    </span><span class="nf">mul</span><span class="w"> </span><span class="o">%</span><span class="nb">ecx</span>
+<span class="w">    </span><span class="nf">addl</span><span class="w"> </span><span class="o">%</span><span class="nb">esi</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span>
+<span class="w">    </span><span class="nf">inc</span><span class="w"> </span><span class="o">%</span><span class="nb">rdi</span>
+<span class="w">    </span><span class="nf">jmp</span><span class="w"> </span><span class="nv">loop</span>
+<span class="nl">end:</span>
+<span class="w">    </span><span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span><span class="p">,</span><span class="o">%</span><span class="nb">rsp</span>
+<span class="w">    </span><span class="nf">popq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="w">    </span><span class="nf">ret</span>
+</pre></div>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li><p>Ceci est la version réalisée durant la remédiation. Petite mais importante modification : j’ai utilisé %sil au lieu de %dl, car %rdx (et donc %dl) est modifié par l’instruction <code class="docutils literal notranslate"><span class="pre">mul</span></code> !</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mull</span></code> n’existe pas, même en AT&amp;T, la taille est déduite par le nom du registre.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="implementation-avec-une-meilleure-boucle">
+<h3>2. Implémentation avec une meilleure boucle<a class="headerlink" href="#implementation-avec-une-meilleure-boucle" title="Lien vers cette rubrique">#</a></h3>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="nl">my_atou_better_loop:</span>
+<span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="w">    </span><span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rsp</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="w">    </span><span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">%</span><span class="nb">rax</span>
+<span class="w">    </span><span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rsi</span><span class="p">,</span><span class="o">%</span><span class="nb">rsi</span>
+<span class="w">    </span><span class="nf">movl</span><span class="w"> </span><span class="kc">$</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ecx</span><span class="w"> </span>
+
+<span class="w">    </span><span class="nf">movb</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rdi</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span><span class="w">  </span><span class="c1"># Amorçage </span>
+
+<span class="nl">loopp:</span>
+<span class="w">    </span><span class="nf">subb</span><span class="w"> </span><span class="kc">$</span><span class="mi">48</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="w">    </span><span class="nf">mul</span><span class="w"> </span><span class="o">%</span><span class="nb">ecx</span>
+<span class="w">    </span><span class="nf">addl</span><span class="w"> </span><span class="o">%</span><span class="nb">esi</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span>
+<span class="w">    </span><span class="nf">inc</span><span class="w"> </span><span class="o">%</span><span class="nb">rdi</span>
+<span class="w">    </span><span class="nf">movb</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rdi</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="w">    </span><span class="nf">cmpb</span><span class="w"> </span><span class="kc">$</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="w">    </span><span class="nf">jne</span><span class="w"> </span><span class="nv">loopp</span>
+<span class="w">    </span><span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span><span class="p">,</span><span class="o">%</span><span class="nb">rsp</span>
+<span class="w">    </span><span class="nf">popq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="w">    </span><span class="nf">ret</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>La boucle peut être écrite avec un seul branchement, il suffit de précharger le premier caractère pour que le fonctionnement soit correct.</p></li>
+</ul>
+</section>
+<section id="implementation-sans-multiplication">
+<h3>3. Implémentation sans multiplication<a class="headerlink" href="#implementation-sans-multiplication" title="Lien vers cette rubrique">#</a></h3>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="nl">my_atou_no_mul:</span>
+<span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="w">    </span><span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rsp</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="w">    </span><span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">%</span><span class="nb">rax</span>
+<span class="w">    </span><span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rsi</span><span class="p">,</span><span class="o">%</span><span class="nb">rsi</span>
+
+<span class="w">    </span><span class="nf">movb</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rdi</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+
+<span class="nl">loopppp:</span>
+<span class="w">    </span><span class="nf">subb</span><span class="w"> </span><span class="kc">$</span><span class="mi">48</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="w">    </span><span class="nf">movl</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ecx</span>
+<span class="w">    </span><span class="nf">sal</span><span class="w"> </span><span class="kc">$</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span><span class="w">    </span><span class="c1"># eax = eax * 8</span>
+<span class="w">    </span><span class="nf">sal</span><span class="w"> </span><span class="kc">$</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ecx</span><span class="w">    </span><span class="c1"># ecx = ecx * 2</span>
+<span class="w">    </span><span class="nf">addl</span><span class="w"> </span><span class="o">%</span><span class="nb">ecx</span><span class="w"> </span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span><span class="w"> </span><span class="c1"># eax = (eax * 8) + (eax * 2) = eax * 10</span>
+<span class="w">    </span><span class="nf">addl</span><span class="w"> </span><span class="o">%</span><span class="nb">esi</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span><span class="w">  </span>
+<span class="w">    </span><span class="nf">inc</span><span class="w"> </span><span class="o">%</span><span class="nb">rdi</span>
+<span class="w">    </span><span class="nf">movb</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rdi</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="w">    </span><span class="nf">cmpb</span><span class="w"> </span><span class="kc">$</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="w">    </span><span class="nf">jne</span><span class="w"> </span><span class="nv">loopppp</span>
+<span class="w">    </span><span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span><span class="p">,</span><span class="o">%</span><span class="nb">rsp</span>
+<span class="w">    </span><span class="nf">popq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="w">    </span><span class="nf">ret</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>On peut éviter d’utiliser <code class="docutils literal notranslate"><span class="pre">mul</span></code> et rester avec nos bons vieux décalages à gauche (left shift) et additions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">*</span> <span class="pre">10</span> <span class="pre">=</span> <span class="pre">(x</span> <span class="pre">*</span> <span class="pre">8)</span> <span class="pre">+</span> <span class="pre">(x</span> <span class="pre">*</span> <span class="pre">2)</span></code></p></li>
+<li><p>On a plus d’opérations, mais elles sont bien plus simples que mul, et <code class="docutils literal notranslate"><span class="pre">%rdx</span></code> n’est plus utilisé, on peut donc l’utiliser au lieu de <code class="docutils literal notranslate"><span class="pre">%rsi</span></code> si on le souhaite !</p></li>
+</ul>
+</section>
+<section id="implementation-avec-lea-load-effective-address">
+<h3>4. Implémentation avec LEA (Load Effective Address)<a class="headerlink" href="#implementation-avec-lea-load-effective-address" title="Lien vers cette rubrique">#</a></h3>
+<blockquote>
+<div><p>Attention ! lea est l’incarnation même de la confusion. À utiliser avec précaution, et seulement après avoir débloqué le statut « Génie de la confusion ».</p>
+</div></blockquote>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="nl">my_atou_lea:</span>
+<span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="w">    </span><span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rsp</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="w">    </span><span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">%</span><span class="nb">rax</span>
+<span class="w">    </span><span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rsi</span><span class="p">,</span><span class="o">%</span><span class="nb">rsi</span>
+
+<span class="w">    </span><span class="nf">movb</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rdi</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+
+<span class="nl">looppp:</span>
+<span class="w">    </span><span class="nf">subb</span><span class="w"> </span><span class="kc">$</span><span class="mi">48</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">eax</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span><span class="w">    </span><span class="c1"># eax = eax + eax * 4</span>
+<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">esi</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span><span class="w">    </span><span class="c1"># eax = esi + (eax * 2)</span>
+<span class="w">    </span><span class="nf">inc</span><span class="w"> </span><span class="o">%</span><span class="nb">rdi</span>
+<span class="w">    </span><span class="nf">movb</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rdi</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="w">    </span><span class="nf">cmpb</span><span class="w"> </span><span class="kc">$</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="w">    </span><span class="nf">jne</span><span class="w"> </span><span class="nv">looppp</span>
+<span class="w">    </span><span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span><span class="p">,</span><span class="o">%</span><span class="nb">rsp</span>
+<span class="w">    </span><span class="nf">popq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="w">    </span><span class="nf">ret</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Le fameux <code class="docutils literal notranslate"><span class="pre">lea</span></code> ! Pour rappel, les parenthèses ne font pas de déréférencement ! Le processeur ne fait que le calcul d’adresse et écrit le résultat dans le registre de destination. Autrement dit, <code class="docutils literal notranslate"><span class="pre">lea</span> <span class="pre">(%r2,%r3,i),</span> <span class="pre">%r1</span></code> permet de faire des opérations de type : <code class="docutils literal notranslate"><span class="pre">r1</span> <span class="pre">=</span> <span class="pre">r2</span> <span class="pre">+</span> <span class="pre">r3*i</span></code>, où <code class="docutils literal notranslate"><span class="pre">i</span></code> ne peut être égal qu’à 1, 2, 4 ou 8.</p></li>
+</ul>
+</section>
+</section>
+<section id="resultats-de-performance">
+<h2>Résultats de performance<a class="headerlink" href="#resultats-de-performance" title="Lien vers cette rubrique">#</a></h2>
+<section id="grands-nombres-1-000-000">
+<h3>Grands nombres (&gt;1 000 000)<a class="headerlink" href="#grands-nombres-1-000-000" title="Lien vers cette rubrique">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>❯ ./my_atou 10000000 1
+Starting stress test with 10000000 iterations...
+
+
+Test completed successfully! All implementations gave matching results.
+
+Timing results:
+glibc:       1.620747 seconds (avg: 0.000000162)
+naive:       1.519484 seconds (avg: 0.000000152)
+better_loop: 1.510028 seconds (avg: 0.000000151)
+no_mul:      1.500172 seconds (avg: 0.000000150)
+lea:         1.498446 seconds (avg: 0.000000150)
+</pre></div>
+</div>
+</section>
+<section id="tous-les-nombres">
+<h3>Tous les nombres<a class="headerlink" href="#tous-les-nombres" title="Lien vers cette rubrique">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>❯ ./my_atou 10000000 0
+Starting stress test with 10000000 iterations...
+
+
+Test completed successfully! All implementations gave matching results.
+
+Timing results:
+glibc:       1.622808 seconds (avg: 0.000000162)
+naive:       1.527342 seconds (avg: 0.000000153)
+better_loop: 1.516223 seconds (avg: 0.000000152)
+no_mul:      1.506818 seconds (avg: 0.000000151)
+lea:         1.506587 seconds (avg: 0.000000151)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="conclusions">
+<h2>Conclusions<a class="headerlink" href="#conclusions" title="Lien vers cette rubrique">#</a></h2>
+<ol class="arabic simple">
+<li><p>La différence est très petite (&lt; 6%). Au moins, nous sommes plus rapides que <code class="docutils literal notranslate"><span class="pre">atoi()</span></code> qui est bien plus complexe, ce qui montre que notre approche est valide.</p></li>
+<li><p>L’implémentation avec <code class="docutils literal notranslate"><span class="pre">lea</span></code> semble être la meilleure, mais en réalité j’ai eu un test plus court où elle ne l’était pas, exemple :</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>❯ ./my_atoi 10000 0
+Démarrage du test de stress avec 10000 itérations...
+
+Test complété avec succès ! Toutes les implémentations ont donné des résultats identiques.
+
+Résultats temporels :
+glibc :       0,002512 secondes (moy : 0,000000251)
+naive :       0,002374 secondes (moy : 0,000000237)
+better_loop : 0,002405 secondes (moy : 0,000000240)
+no_mul :      0,002294 secondes (moy : 0,000000229)
+lea :         0,002327 secondes (moy : 0,000000233)
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Nos processeurs modernes ont de nombreuses optimisations :</p>
+<ul>
+<li><p>Prédiction de branchement</p></li>
+<li><p>Pipeline d’instructions</p></li>
+<li><p>Préchargement du cache</p></li>
+</ul>
+</li>
+</ul>
+<p>Toutes ces optimisations rendent même la gestion de plusieurs caractères à la fois équivalente en performance. En fait, on peut faire ce qu’on appelle du déroulage de boucle où on récupère 8 octets depuis la mémoire et on teste 8 caractères à la fois. Cela complexifie énormément le programme et on ne gagne pas grand-chose, puisque de toute façon les prochains caractères sont préchargés en cache.</p>
+<blockquote>
+<div><p>« Premature optimization is the root of all evil » - Donald Knuth</p>
+</div></blockquote>
+<p>Parfois, la solution la plus simple ou naïve est suffisante, pas la peine de chercher à faire passer votre programme en ludicrous speed.</p>
+<center>
+<img src=./_static/images/gifs/spaceballs-ludicrous.gif alt="Ludicrous Speed"/>
+</center>
+<p>Mais j’admets que c’est plus amusant ainsi, donc amusez-vous bien.</p>
+<center>
+<img src="./_static/images/gifs/malcom-hal.gif" alt="Boule de neige effect"/>
+</center>
+</section>
+<section id="appendix">
+<h2>Appendix<a class="headerlink" href="#appendix" title="Lien vers cette rubrique">#</a></h2>
+<ul>
+<li><p>Les sources sont par <a class="reference download internal" download="" href="_downloads/4d32fe6f8e2b4313f7f6e5677a00b47d/my_atou.zip"><span class="xref download myst">ici</span></a>. Il suffit de <code class="docutils literal notranslate"><span class="pre">make</span></code>.</p>
+<ul class="simple">
+<li><p>Dans le fichier <code class="docutils literal notranslate"><span class="pre">my_atou.s</span></code> vous verrez que j’ai utilisé souvent <code class="docutils literal notranslate"><span class="pre">1:</span></code> ou <code class="docutils literal notranslate"><span class="pre">2:</span></code> comme label. Ce sont des labels locaux (comme <code class="docutils literal notranslate"><span class="pre">/loop</span></code> en m68k), petite différence ici, il faut spécifier dans quelle direction le <code class="docutils literal notranslate"><span class="pre">jmp</span></code> doit chercher le label (b pour backward et f pour forward) d’où les <code class="docutils literal notranslate"><span class="pre">jne</span> <span class="pre">1b</span></code> pour revenir au label <code class="docutils literal notranslate"><span class="pre">1:</span></code> de la boucle (le plus proche) [<a href="https://docs.oracle.com/cd/E19120-01/open.solaris/817-5477/esqaq/index.html" target="_blank">ref</a>].</p></li>
+<li><p>Vous trouverez un my_atou qui vérifie si les caractères sont des chiffres, pour rappel <code class="docutils literal notranslate"><span class="pre">ja</span> <span class="pre">3f</span></code> veut dire saute au label <code class="docutils literal notranslate"><span class="pre">3:</span></code> présent dans ce code si la valeur non signée est supérieur:</p></li>
+</ul>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="nl">my_atou:</span>
+
+<span class="nf">push</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rsp</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">%</span><span class="nb">rax</span>
+<span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rsi</span><span class="p">,</span><span class="o">%</span><span class="nb">rsi</span>
+
+<span class="nf">movb</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rdi</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+
+<span class="err">1:</span>
+<span class="nf">cmpb</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x30</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="nf">jb</span><span class="w"> </span><span class="mi">3</span><span class="nv">f</span>
+<span class="nf">cmpb</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x39</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="nf">ja</span><span class="w"> </span><span class="mi">3</span><span class="nv">f</span>
+
+<span class="nf">subb</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x30</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="nf">movl</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ecx</span>
+<span class="nf">sal</span><span class="w"> </span><span class="kc">$</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span><span class="w">    </span>
+<span class="nf">sal</span><span class="w"> </span><span class="kc">$</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ecx</span>
+<span class="nf">addl</span><span class="w"> </span><span class="o">%</span><span class="nb">ecx</span><span class="w"> </span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+<span class="nf">addl</span><span class="w"> </span><span class="o">%</span><span class="nb">esi</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span><span class="w">  </span>
+
+<span class="nf">inc</span><span class="w"> </span><span class="o">%</span><span class="nb">rdi</span>
+<span class="nf">movb</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rdi</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="nf">testb</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span><span class="p">,</span><span class="o">%</span><span class="nv">sil</span>
+<span class="nf">jnz</span><span class="w"> </span><span class="mb">1b</span>
+
+<span class="err">2:</span>
+<span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span><span class="p">,</span><span class="o">%</span><span class="nb">rsp</span>
+<span class="nf">popq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="nf">ret</span>
+
+<span class="err">3:</span>
+<span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span>
+<span class="nf">jmp</span><span class="w"> </span><span class="mi">2</span><span class="nv">b</span>
+</pre></div>
+</div>
+</li>
+<li><p>On peut remplacer <code class="docutils literal notranslate"><span class="pre">subb</span> <span class="pre">$48,</span> <span class="pre">%sil</span></code> par <code class="docutils literal notranslate"><span class="pre">andb</span> <span class="pre">$0x0F,</span> <span class="pre">%sil</span></code>. Cette technique fonctionne comme un modulo pour les caractères ASCII des chiffres décimaux (0-9) car leur valeur hexadécimale suit le pattern <code class="docutils literal notranslate"><span class="pre">0x3n</span></code>.</p>
+<ul class="simple">
+<li><p>0x30 == “0”</p></li>
+<li><p>0x31 == “1”</p></li>
+<li><p>…</p></li>
+<li><p>0x39 == “9”</p></li>
+</ul>
+</li>
+<li><p>Ainsi on poura s’amuser à faire entrer des chaines de caractères du type « abcf » qui donnera le nombre 1236. Cependant, pour les caractères ayant A,B,C,D,E,F comme dernier hexadécimal, l’opération les conservera et ils correspondent à des valeurs non décimales (10-15), ce qui produira des résultats incorrects lors de l’addition avec <code class="docutils literal notranslate"><span class="pre">%eax</span></code>.</p></li>
+</ul>
+<div class="highlight-nasm notranslate"><div class="highlight"><pre><span></span><span class="nl">my_atou_better_loop:</span>
+<span class="nf">push</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rsp</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">%</span><span class="nb">rax</span>
+<span class="nf">xorq</span><span class="w"> </span><span class="o">%</span><span class="nb">rsi</span><span class="p">,</span><span class="o">%</span><span class="nb">rsi</span><span class="w"> </span>
+<span class="nf">movl</span><span class="w"> </span><span class="kc">$</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">ecx</span><span class="w"> </span>
+
+<span class="nf">movb</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rdi</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span><span class="w"> </span>
+
+<span class="err">1:</span>
+<span class="nf">andb</span><span class="w"> </span><span class="kc">$</span><span class="mh">0x0F</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="nf">mul</span><span class="w"> </span><span class="o">%</span><span class="nb">ecx</span>
+<span class="nf">addl</span><span class="w"> </span><span class="o">%</span><span class="nb">esi</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nb">eax</span>
+<span class="nf">inc</span><span class="w"> </span><span class="o">%</span><span class="nb">rdi</span>
+<span class="nf">movb</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="nb">rdi</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="nf">cmpb</span><span class="w"> </span><span class="kc">$</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="nv">sil</span>
+<span class="nf">jne</span><span class="w"> </span><span class="mb">1b</span>
+
+<span class="nf">movq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span><span class="p">,</span><span class="o">%</span><span class="nb">rsp</span>
+<span class="nf">popq</span><span class="w"> </span><span class="o">%</span><span class="nb">rbp</span>
+<span class="nf">ret</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Instructions-x86_64.html"
+       title="page précédente">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">précédent</p>
+        <p class="prev-next-title">Basic Instructions</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Tape3.html"
+       title="page suivante">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">suivant</p>
+        <p class="prev-next-title">Tape3</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenu
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vue-d-ensemble-des-implementations">Vue d’ensemble des implémentations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-naive">1. Implémentation naïve</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-avec-une-meilleure-boucle">2. Implémentation avec une meilleure boucle</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-sans-multiplication">3. Implémentation sans multiplication</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-avec-lea-load-effective-address">4. Implémentation avec LEA (Load Effective Address)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resultats-de-performance">Résultats de performance</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grands-nombres-1-000-000">Grands nombres (&gt;1 000 000)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tous-les-nombres">Tous les nombres</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">Conclusions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">Appendix</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Par Mazigh
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Mazigh.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

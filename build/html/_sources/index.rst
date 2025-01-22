@@ -27,6 +27,8 @@ Ce document propose une introduction à la programmation en assembleur x86_64 en
    :maxdepth: 1
    :caption: Travaux pratiques
 
+   Instructions-x86_64
+   Atou-Analysis
    Tape3
 
 .. Indices and tables

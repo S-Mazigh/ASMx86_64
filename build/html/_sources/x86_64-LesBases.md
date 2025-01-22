@@ -93,7 +93,7 @@ Références:
 </ul>
 </blockquote>
 
-### Pointer Register (RIP)
+### Pointer Register RIP
 
 - Le pointer register contient l'**adresse** mémoire ou la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d'exécuter l'instruction <a href="https://sourceware.org/binutils/docs/as/i386_002dVariations.html" target="_blank"><code class=" clickable">movabs</code></a> qui est à l'adresse `0x5129` la valeur de `%rip` est l'adresse de l'instruction suivante `mov %eax, %ebx` à l'adresse `0x5133`.
 
@@ -309,7 +309,7 @@ Références:
 Références:
 <ul>
 <li><a href="https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags" target="_blank">https://fr.wikibooks.org/wiki/Programmation_Assembleur/x86/Les_flags</a></li>
-<li><a href="https://www.wikiwand.com/en/FLAGS_register" target="_blank">https://www.wikiwand.com/en/FLAGS_register</a></li>
+<li><a href="https://en.wikipedia.org/wiki/FLAGS_register" target="_blank">https://en.wikipedia.org/wiki/FLAGS_register</a></li>
 </ul>
 </blockquote>
 
