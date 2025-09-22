@@ -1,0 +1,6 @@
+sphinx
+myst-parser
+sphinx-book-theme
+sphinx.ext.autodoc
+sphinx.ext.napoleon
+sphinx.ext.mathjax

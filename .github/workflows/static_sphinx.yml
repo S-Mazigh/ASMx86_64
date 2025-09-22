@@ -1,12 +1,12 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# Workflow for building and deploying Sphinx documentation to GitHub Pages
+name: Deploy Sphinx Documentation to Pages
 
 on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows manual triggering of the workflow
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -16,28 +16,51 @@ permissions:
   id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
+  build-and-deploy:
+    name: Build and Deploy Documentation
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Setup Pages
+
+      # Step 2: Set up Python
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # Step 3: Install Sphinx and dependencies
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install sphinx myst-parser sphinx-book-theme
+
+      # Step 4: Build the Sphinx documentation
+      - name: Build Documentation
+        run: |
+          make html
+
+      # Step 5: Configure GitHub Pages
+      - name: Configure Pages
         uses: actions/configure-pages@v4
-      - name: Upload artifact
+
+      # Step 6: Upload the built documentation as an artifact
+      - name: Upload Documentation Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
           path: "./build/html"
+
+      # Step 7: Deploy the documentation to GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

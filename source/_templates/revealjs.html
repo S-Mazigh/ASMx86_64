@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>reveal.js</title>
+
+  <link rel="stylesheet" href="../_static/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../_static/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="../_static/revealjs/dist/theme/black.css">
+
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="../_static/revealjs/plugin/highlight/monokai.css">
+
+  <style>
+    .figure-container-small {
+      max-width: 100em;
+    }
+
+    figcaption {
+      font-size: 18px;
+      text-align: center;
+    }
+
+    figure {
+      margin: 0px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      {% block content %}{{ body }}{% endblock %}
+    </div>
+  </div>
+
+  <script src="../_static/revealjs/dist/reveal.js"></script>
+  <!-- <script src="../_static/revealjs/plugin/notes/notes.js"></script>
+		<script src="../_static/revealjs/plugin/markdown/markdown.js"></script>
+		<script src="../_static/revealjs/plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script> -->
+  <script>
+    Reveal.initialize({
+      margin: 0,
+      theme: "night.css",
+      minScale: 0.8,
+      maxScale: 1.1,
+      disableLayout: false
+    });
+  </script>
+</body>
+
+</html>
