@@ -133,4 +133,4 @@ Il existe des instructions d'extension de signe specialement pour le registre `a
 ### Notes pour le mode 64 bits
 - Les opérations 32 bits sur les registres étends implicitement leur valeur à 64 bits avec des zéros. Par exemple, charger une valeur de 32-bits dans `%rax` va forcer les 32 bits de poids fort à zero même si la valeur est négative.
 - `movslq`/`movsxd` sont nécessaire pour l'extension de signe 32→64 bits.
-- `movq` ne peut pas être utilisée avec une valeur immédiates de 8 octets (64 bits). Utilisez `movabs` pour cela, par contre elle ne peut pas accèder directement à la mémoire, elle prend comme prend opérand que des registres et immédiats.
+- (À revérifier avec les nouvelles verions de gcc)`movq` ne peut pas être utilisée avec une valeur immédiates de 8 octets (64 bits). Utilisez `movabs` pour cela, par contre elle ne peut pas accèder directement à la mémoire, elle prend comme opérand que des registres et immédiats.
