@@ -9,10 +9,60 @@ index: true
 
 La compilation d'un programme C est un processus en plusieurs étapes, chacune transformant le code d'un format à un autre.
 
-```
-[.c] ---> [.i] ---> [.s] ---> [.o] ---+---> [ELF]
-                                          |
-                                 [.so] --+
+```{mermaid}
+flowchart TD
+    subgraph source["Fichiers Source"]
+        A1[fichier1.c]
+        A2[fichier2.c]
+        A3[fichier3.c]
+    end
+    
+    subgraph preproc["Prétraitement"]
+        B1[fichier1.i]
+        B2[fichier2.i]
+        B3[fichier3.i]
+    end
+    
+    subgraph compil["Compilation: C -> ASM"]
+        C1[fichier1.s]
+        C2[fichier2.s]
+        C3[fichier3.s]
+    end
+    
+    subgraph assem["Assembleur: ASM -> BIN"]
+        D1[fichier1.o]
+        D2[fichier2.o]
+        D3[fichier3.o]
+    end
+    
+    subgraph link["ÉDITEUR DE LIENS"]
+        E[programme ELF]
+        F[Bibliothèques externes]
+    end
+    
+    A1 --> B1
+    A2 --> B2
+    A3 --> B3
+    
+    B1 --> C1
+    B2 --> C2
+    B3 --> C3
+    
+    C1 --> D1
+    C2 --> D2
+    C3 --> D3
+    
+    D1 --> E
+    D2 --> E
+    D3 --> E
+    F --> E
+	
+	style source fill:#e1f5ff,stroke:#666,stroke-width:2px
+    style preproc fill:#fff4e1,stroke:#666,stroke-width:2px
+    style compil fill:#f0e1ff,stroke:#666,stroke-width:2px
+    style assem fill:#e1ffe1,stroke:#666,stroke-width:2px
+    style link fill:#ffe1e1,stroke:#666,stroke-width:2px
+
 ```
 
 ### Étape 1 : Preprocessing (Prétraitement)

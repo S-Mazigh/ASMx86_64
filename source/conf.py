@@ -17,6 +17,7 @@ release = '0.3'
 # Add sphinx-book-theme to extensions
 extensions = [
     'myst_parser',
+    'sphinxcontrib.mermaid',
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.mathjax',
