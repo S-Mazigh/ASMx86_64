@@ -120,23 +120,20 @@ L'assembleur :
 
 On a tendance à bien structurer notre code et à le séparer en plusieurs fichiers pour mieux s'y retrouver lors de la relecture, que ce soit nous ou une autre personne. Il se peut même qu'on fasse appel à du code que nous n'avons pas écrit nous-mêmes, la libc étant le meilleur exemple (longue vie à printf !).
 
-Notre exécutable doit inclure tous nos différents fichiers et aussi faire référence aux bibliothèques auxquelles on fait appel. Tout cela est géré par l'éditeur de liens `ld` qui :
-- Résout les symboles externes
-- Combine les fichiers objets
-- Lie les bibliothèques dynamiques (libc, ...) au fichier
-- Génère l'exécutable final
+L'éditeur de liens `ld` (invoqué par `gcc`) a pour mission de rassembler tous ces morceaux de code. 
 
-Je vais réécrire la section sur le Linkage pour inclure ces informations importantes :
+> **Important** : Les deux commandes ci-dessus ne sont **pas équivalentes**. GCC configure beaucoup de choses en arrière-plan, afin de simplifier le processus.
+> 
+> Par exemple, le vrai point d'entrée d'un exécutable est `_start`, pas `main`. GCC inclut automatiquement les fichiers de démarrage qui contiennent `_start` et qui appellent ensuite votre fonction `main`. 
+> 
+> Si vous utilisez `ld` directement, vous devrez fournir beaucoups d'éléments manuellement (dont la libc `-lc`).
 
-### Étape 4 : Linkage (Édition des liens)
+Pour voir ce que GCC fait réellement en coulisses :
+```bash
+gcc -v -o executable fichier.o
+```
 
-**Commande** : 
-- Via GCC : `gcc fichier.o -o executable`
-- Direct : `ld fichier.o -o executable`
-
-On a tendance à bien structurer notre code et à le séparer en plusieurs fichiers pour mieux s'y retrouver lors de la relecture, que ce soit nous ou une autre personne. Il se peut même qu'on fasse appel à du code que nous n'avons pas écrit nous-mêmes, la libc étant le meilleur exemple (longue vie à printf !).
-
-L'éditeur de liens `ld` (invoqué par `gcc`) a pour mission de rassembler tous ces morceaux de code. Il existe deux façons principales de lier ces différentes parties :
+Il existe deux façons principales de lier ces différentes parties :
 
 1. **La liaison statique** : 
 - Toutes les bibliothèques sont directement copiées dans l'exécutable final
@@ -164,13 +161,13 @@ L'éditeur de liens effectue donc plusieurs tâches cruciales :
 **Exemple pratique** :
 ```bash
 # Création d'une bibliothèque partagée
-gcc -shared -fPIC ma_lib.c -o libma_lib.so
+gcc -shared -fPIC my_lib.c -o libmy_lib.so
 
 # Compilation avec liaison dynamique (par défaut)
-gcc mon_prog.c -L. -lma_lib -o prog
+gcc my_prog.c -L. -lmy_lib -o prog
 
 # Compilation avec liaison statique
-gcc mon_prog.c -static -L. -lma_lib -o prog_static
+gcc my_prog.c -static -L. -lmy_lib -o prog_static
 ```
 
 Cette étape finale du processus de compilation est cruciale car elle détermine non seulement comment notre programme va s'exécuter, mais aussi comment il va interagir avec le reste du système.
