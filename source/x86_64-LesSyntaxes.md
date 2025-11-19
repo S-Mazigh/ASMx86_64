@@ -131,6 +131,6 @@ Il existe des instructions d'extension de signe specialement pour le registre `a
 - Le compilateur peut ajouter des instructions `nop` (qui font rien) pour optimiser l'alignement en mémoire et l'utilisation du cache d'instructions.
 
 ### Notes pour le mode 64 bits
-- Les opérations 32 bits sur les registres étends implicitement leur valeur à 64 bits avec des zéros. Par exemple, charger une valeur de 32-bits dans `%rax` va forcer les 32 bits de poids fort à zero même si la valeur est négative.
+- Les opérations 32 bits sur les registres étends implicitement leur valeur à 64 bits avec des zéros. Par exemple, charger une valeur de 32-bits dans `%rax` va forcer les 32 bits de poids fort à zéro même si la valeur est négative.
 - `movslq`/`movsxd` sont nécessaire pour l'extension de signe 32→64 bits.
-- (À revérifier avec les nouvelles verions de gcc)`movq` ne peut pas être utilisée avec une valeur immédiates de 8 octets (64 bits). Utilisez `movabs` pour cela, par contre elle ne peut pas accèder directement à la mémoire, elle prend comme opérand que des registres et immédiats.
+- Vous pouvez écrire `movq` pour charger une valeur immédiate de 8 octets (64 bits) dans un registre. Par contre, si vous dumpez le binaire obtenu via `objdump` vous verez que l'instruction s'est changée en `movabs`. C'est une particularité de la syntaxe AT&T, `movabs` est utilisée lors du chargement d'immédiats de 8 octets à la place de `movq`. C'est pour faire la différence entre le `mov` qui va charger des immédiats de 4 octets ou moins dans un register 8 octets en rajoutant des zéros, du `mov` qui charge réellement un immédiat de 8 octets.

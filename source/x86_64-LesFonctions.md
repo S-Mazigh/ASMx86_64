@@ -378,6 +378,17 @@ Références:
   - Autrement, sa valeur non signée sera **égale** ou **supérieure** à celle de **-4095**, avec comme maximum celle de **-1** (que des 1).
 - Pour voir les différents syscalls disponible sur le kernel linux pour l'architecture x86-64, regardez <a href="https://github.com/torvalds/linux/blob/master/arch/x86/entry/syscalls/syscall_64.tbl" target="_blank">cette page github</a>. Et pour avoir une idée sur les arguments de chaque syscall il existe <a href="https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/" target="_blank">cette page de blog</a> très bien écrite, mais malheureusement elle n'est plus à jour. Vous pouvez aussi vous référez à <a href="https://x64.syscall.sh/" target="_blank">https://x64.syscall.sh/</a>.
 
+> **Tip**: Pour trouver le numéro d'un syscall sans accès à internet, vous pouvez soit utiliser les macros `__NR_syscallname` définies dans le header `<sys/syscall.h>`. Par exemple, le numéro du syscall *open* est définie comme `__NR_open`. Par contre, il faut faire attention à bien utiliser l'extension `.S` pour votre fichier assembleur pour qu'`as` gére les `#include`. Si vous n'arrivez pas à utiliser ses macros, on peut récuperer leur définition avec un petit pipe via gcc:
+> ```bash
+> # -E pour demander à gcc de s'arrêter au preprocessing,
+> #-dM pour qu'il montre les définition de macros, 
+> # -x c pour dire que c'est du C,
+> # et - pour qu'il lise le stdin.
+> echo "#include <sys/syscall.h>" | gcc -E -dM -x c - | grep "^#define __NR_open"
+> # vous pouvez rajouter -w à grep pour avoir que le match parfait
+> echo "#include <sys/syscall.h>" | gcc -E -dM -x c - | grep -w "^#define __NR_open"
+> ```
+
 
 <blockquote class="small-text">
 Références:
