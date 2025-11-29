@@ -39,7 +39,9 @@ Dans ce qui suit je vais utiliser le terme tâche pour mieux définir les thread
 > - Ce qu'on appelle le kernel est une partie du système d'exploitation. C'est tout le code de l'OS qui est exécuté en mode privilégié qui permet de gérer les interruptions du CPU et d'accéder au matériel des systèmes. Ce code est présent chez tous les processus d'un système, à la manière des bibliothèques partagées, où la pagination et son concept de monde virtuel fait en sorte qu'il existe une seule copie du kernel dans la mémoire physique.
 > - Pour faire simple, quand une interruption est levée par le CPU ou que le processus fait un syscall, ce dernier se retrouve à devoir exécuter le code du kernel pour gérer cette interruption ou ce syscall. Le kernel est omniprésent dans son système, il intervient quand il faut pour répondre à une demande et veille toujours à son bon fonctionnement.
 
-> Pour ceux qui veulent savoir comment les adresses kernel sont traduites alors qu'elles sont au delà des 48-bits. Comprennez que les adresses utilisateurs ne mettent jamais à 1 le 48éme bit (d'où le 7 dans l'adresse finale et non F). Ce dernier par contre est toujours à 1 dans les adresses kernel, et avec cette unique changement on explorera un tout autre bloc de 128 TebiBytes différent de celui du UserSpace (Les 4 FFFF supérieurs ne sont jamais lus par le matériel). 
+:::{note}
+Pour ceux qui veulent savoir comment les adresses kernel sont traduites alors qu'elles sont au delà des 48-bits. Comprennez que les adresses utilisateurs ne mettent jamais à 1 le 48éme bit (d'où le 7 dans l'adresse finale et non F). Ce dernier par contre est toujours à 1 dans les adresses kernel, et avec cette unique changement on explorera un tout autre bloc de 128 TebiBytes différent de celui du UserSpace (Les 4 FFFF supérieurs ne sont jamais lus par le matériel).
+:::
 
 ## Le changement de contexte (changement de tâche)
 

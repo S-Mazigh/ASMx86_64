@@ -225,7 +225,7 @@ Références:
 
 ### enter et leave
 
-- L'architecture x86_64 propose deux instructions <a href="https://www.felixcloutier.com/x86/enter" target="_blank"><code class=" clickable">enter</code></a> et <a href="https://www.felixcloutier.com/x86/leave" target="_blank"><code class=" clickable">leave</code></a> pour gérer le prologue et l'épilogue d'une fonction.
+- L'architecture x86_64 propose deux instructions <a href="https://www.felixcloutier.com/x86/enter" target="_blank"><code class=" docutils literal notranslate">enter</code></a> et <a href="https://www.felixcloutier.com/x86/leave" target="_blank"><code class=" docutils literal notranslate">leave</code></a> pour gérer le prologue et l'épilogue d'une fonction.
 - L'instruction `enter` prend deux immédiats comme opérant, le premier (de 16-bits) spécifiant la taille à allouer dans la pile pour les registres à sauvegarder et les variables locales. Le deuxième est utilisé pour les fonctions imbriquées (une fonction définie à l'intérieur d'une autre) qui doivent avoir accès aux variables locales de leur fonction mére. 
 - En utilisation simple, `enter` tente de remplacer la suite de trois instructions: `push %rbp`, `movq  %rsp, %rbp`, `sub  imm16, %rsp`. Mais, comme l'explique si bien <a href="https://stackoverflow.com/questions/5959890/enter-vs-push-ebp-mov-ebp-esp-sub-esp-imm-and-leave-vs-mov-esp-ebp" target="_blank">ce post sur stackoverflow</a>, `enter` est qu'un vestige du passé maintenue uniquement pour la rétrocompatibilité et est en réalité moins performant en temps d'exécution que les trois instructions qu'il tente de remplacer.
 - Pour ce qui de l'instruction `leave` elle est équivalente à la suite d'instruction `movq %rbp, %rsp`, `popq %rbp`. Elle est toujours valable, mais les compilateurs l'utilisent de moins en moins. Elle reste une instruction vieillissante, qui n'est pas aussi optimisée que `mov` et `pop` réunies. La différence reste négligeable mais les developpeurs ont fait le choix de ne plus trop l'utiliser, même si elle permet d'avoir une plus petite empreinte mémoire.
@@ -352,7 +352,7 @@ Références:
 </blockquote>
 
 ## Syscalls en assembleur
-- Dans les instructions du programme **safe** vous avez découvert l'instruction <a href="https://www.felixcloutier.com/x86/syscall" target="_blank"><code class=" clickable">syscall</code></a>. Si vous lisez la description de l'instruction dans le manuel d'intel, vous trouverez la phrase *"Fast call to privilege level 0 system procedures."*. Ils la décrivent comment étant rapide, cela est en rapport à l'ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l'interruption à chaque fois.
+- Dans les instructions du programme **safe** vous avez découvert l'instruction <a href="https://www.felixcloutier.com/x86/syscall" target="_blank"><code class=" docutils literal notranslate">syscall</code></a>. Si vous lisez la description de l'instruction dans le manuel d'intel, vous trouverez la phrase *"Fast call to privilege level 0 system procedures."*. Ils la décrivent comment étant rapide, cela est en rapport à l'ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l'interruption à chaque fois.
 - Sinon pour faire court, c'est l'instruction assembleur utilisée pour faire appel à un syscall défini par l'OS qui va s'exécuter en mode Kernel (d'où le privilege level 0).
 - Vous remarquerez que plusieurs registres sont initialisés avant d'instruction syscall.
 <center><div  class="figure-container"><figure>
@@ -367,7 +367,7 @@ Références:
    jae errorSyscall
 ```
 
-- L'instruction <a href="https://www.felixcloutier.com/x86/jcc" target="_blank"><code class=" clickable">jae</code></a> vérifie si la valeur **non signée** dans `%rax` est supérieure ou égale à la valeur **non-signée** de `-4095`.
+- L'instruction <a href="https://www.felixcloutier.com/x86/jcc" target="_blank"><code class=" docutils literal notranslate">jae</code></a> vérifie si la valeur **non signée** dans `%rax` est supérieure ou égale à la valeur **non-signée** de `-4095`.
 - En 64-bits (**0b** veut dire nombre binaire):
   -  **-4095**  = 0b**1**111111111111111111111111111111111111111111111111111**00000000000**1 = 184467440737095**47521**
   -  **-1**     = 0b**1**111111111111111111111111111111111111111111111111111**11111111111**1 = 184467440737095**51615**
@@ -378,17 +378,18 @@ Références:
   - Autrement, sa valeur non signée sera **égale** ou **supérieure** à celle de **-4095**, avec comme maximum celle de **-1** (que des 1).
 - Pour voir les différents syscalls disponible sur le kernel linux pour l'architecture x86-64, regardez <a href="https://github.com/torvalds/linux/blob/master/arch/x86/entry/syscalls/syscall_64.tbl" target="_blank">cette page github</a>. Et pour avoir une idée sur les arguments de chaque syscall il existe <a href="https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/" target="_blank">cette page de blog</a> très bien écrite, mais malheureusement elle n'est plus à jour. Vous pouvez aussi vous référez à <a href="https://x64.syscall.sh/" target="_blank">https://x64.syscall.sh/</a>.
 
-> **Tip**: Pour trouver le numéro d'un syscall sans accès à internet, vous pouvez soit utiliser les macros `__NR_syscallname` définies dans le header `<sys/syscall.h>`. Par exemple, le numéro du syscall *open* est définie comme `__NR_open`. Par contre, il faut faire attention à bien utiliser l'extension `.S` pour votre fichier assembleur pour qu'`as` gére les `#include`. Si vous n'arrivez pas à utiliser ses macros, on peut récuperer leur définition avec un petit pipe via gcc:
-> ```bash
-> # -E pour demander à gcc de s'arrêter au preprocessing,
-> #-dM pour qu'il montre les définition de macros, 
-> # -x c pour dire que c'est du C,
-> # et - pour qu'il lise le stdin.
-> echo "#include <sys/syscall.h>" | gcc -E -dM -x c - | grep "^#define __NR_open"
-> # vous pouvez rajouter -w à grep pour avoir que le match parfait
-> echo "#include <sys/syscall.h>" | gcc -E -dM -x c - | grep -w "^#define __NR_open"
-> ```
-
+:::{tip}
+Pour trouver le numéro d'un syscall sans accès à internet, vous pouvez soit utiliser les macros `__NR_syscallname` définies dans le header `<sys/syscall.h>`. Par exemple, le numéro du syscall *open* est définie comme `__NR_open`. Par contre, il faut faire attention à bien utiliser l'extension `.S` pour votre fichier assembleur pour qu'`as` gére les `#include`. Si vous n'arrivez pas à utiliser ses macros, on peut récuperer leur définition avec un petit pipe via gcc:
+```bash
+# -E pour demander à gcc de s'arrêter au preprocessing,
+#-dM pour qu'il montre les définition de macros, 
+# -x c pour dire que c'est du C,
+# et - pour qu'il lise le stdin.
+echo "#include <sys/syscall.h>" | gcc -E -dM -x c - | grep "^#define __NR_open"
+# vous pouvez rajouter -w à grep pour avoir que le match parfait
+echo "#include <sys/syscall.h>" | gcc -E -dM -x c - | grep -w "^#define __NR_open"
+```
+:::
 
 <blockquote class="small-text">
 Références:

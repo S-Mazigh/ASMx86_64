@@ -1,4 +1,8 @@
 /* Styles */
+ .bd-page-width {
+    max-width: 95rem!important;
+  }
+
 .slideshow-iframe {
   width: 100%;
   height: 600px;

@@ -7,9 +7,9 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'ASMx86_64'
-copyright = '2024, Mazigh'
-author = 'Mazigh'
-release = '0.3'
+copyright = '2024-2025, s-mazigh'
+author = 's-mazigh'
+release = '0.25.12'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -22,7 +22,28 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.mathjax',
     'sphinx_book_theme',
+    'sphinx_togglebutton'
 ]
+
+myst_enable_extensions = [
+    # "amsmath",
+    "attrs_inline",
+    "colon_fence",
+    "deflist",
+    # "dollarmath",
+    # "fieldlist",
+    # "html_admonition",
+    "html_image",
+    # "linkify",
+    "replacements",
+    "smartquotes",
+    "strikethrough",
+    # "substitution",
+    "tasklist",
+]
+
+# In order for sphinx to generate refs for headers up to level 3
+myst_heading_anchors = 3
 
 # find a way to template the slides instead of having the full header in each file
 templates_path = ['_templates']
@@ -44,9 +65,9 @@ html_css_files = [
 
 # Configure the theme
 html_theme_options = {
-    # "repository_url": "your-repo-url",  # Optional: your GitHub repository URL
-    # "use_repository_button": True,      # Optional: adds a link to your repository
-    # "use_issues_button": True,          # Optional: adds a link to your repository's issues
+    "repository_url": "https://github.com/S-Mazigh/ASMx86_64",  # Optional: your GitHub repository URL
+    "use_repository_button": True,      # Optional: adds a link to your repository
+    "use_issues_button": True,          # Optional: adds a link to your repository's issues
     # "use_edit_page_button": True,       # Optional: adds an edit button to pages
     # "path_to_docs": "docs",             # Optional: path to your docs relative to repository root
     "show_navbar_depth": 2,             # Controls depth of navigation in sidebar
@@ -54,4 +75,5 @@ html_theme_options = {
 
 # Other useful configurations
 html_title = "ASMx86_64"
-# html_logo = "_static/logo.png"  # Optional: path to your logo
+html_logo = "_static/athlon.png"  # Optional: path to your logo
+html_favicon = "_static/athlon.png"  # Optional: path to your logo

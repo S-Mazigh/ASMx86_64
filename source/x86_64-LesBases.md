@@ -22,14 +22,14 @@ index: true
 
 - En x86_64 les registres généralistes ont une taille maximale de 64-bits (8 octets). Il existe 16 registres dans cette famille, dont certain ont une utilisation spécifique.
 - Les registres sont : 
-  - **rax**, **rbx**, **rcx**, **rdx**: version 64-bits des registres: A, B, C, D.
-  - **rbp**, **rsp**: version 64-bits des registres de gestion de la pile: BP(base pointer) et SP (stack pointer).
-  - **rsi**, **rdi**: version 64-bits des registres pour la copie  de données: SI(source index) et DI(destination index).
-  - **r8**,**r9**,**r10**,**r11**,**r12**,**r13**,**r14**,**r15**: registres 64-bits introduit avec l'architecture x86_64 (inexistant en architecture x86 (32-bits)).
+  - **RAX**, **RBX**, **RCX**, **RDX**: version 64-bits des registres: A, B, C, D.
+  - **RBP**, **RSP**: version 64-bits des registres de gestion de la pile: BP(base pointer) et SP (stack pointer).
+  - **RSI**, **RDI**: version 64-bits des registres pour la copie  de données: SI(source index) et DI(destination index).
+  - **R8**,**R9**,**R10**,**R11**,**R12**,**R13**,**R14**,**R15**: registres 64-bits introduit avec l'architecture x86_64 (inexistant en architecture x86 32-bits).
 
-- Les registres hérités de l'architecture x86 **(A,B,C,D)** peuvent être accédés de différentes manières, on peut faire en sorte d'accéder que certains octets des registres. 
+- Ces registres peuvent être accédés de différentes manières, on peut faire en sorte d'accéder que certains octets des registres. 
 
-- Comme le montrent les figures et code suivants, chaque nom permet de spécifier les octets à lire ou à écrire (sachez qu'il y existe une différence de comportement pour les versions 32-bits et 64-bits, même si à premiere vue elles paraissent equivalentes):
+- Pour commencer, on va examiner les registres traditionnels **(A,B,C,D)**. Comme le montrent les figures et code suivants, chaque nom permet de spécifier les octets à lire ou à écrire.
 
 ```nasm
 ; source:
@@ -65,13 +65,18 @@ main:
 frameborder="0" scrolling="no"></iframe>
 </center>
 
-- Les autres registres hérités **(SI,DI,SP,BP)** ne permettent pas d'accéder leur deuxième octet. 
+> - On remarque que les deux instructions `movl $0x41, %eax` et `movq $0x51, %rax` se comportent exactement de la même manière dans ce cas de figure. Tout en ayant des tailles différentes: la version avec `%eax` utilisant 2 octets de moins.
+> - Pour des raisons de performances de calculs en 32-bits (comme expliqué <a href="https://stackoverflow.com/questions/11177137/why-do-x86-64-instructions-on-32-bit-registers-zero-the-upper-part-of-the-full-6" target="_blank">ici</a>) amd a fait en sorte de forcer les 32-bits de poids fort à zéro.
+> - **Retenez juste que les instructions sur les 32-bits de poids faible forcent implicitement les 32-bits de poids fort d'un registre 64-bits à zéro.**
+
+- Les autres registres hérités **(SI,DI,SP,BP)** ne permettent pas d'accéder à leur deuxième octet comme les registres **(A,B,C,D)**. 
 
 <center><div  class="figure-container-small"><figure>
     <img src="./_static/images/register-sp.png" class="figure">
     <figcaption>Les différentes manières d'accéder au registre <strong>%rsp</strong>.</figcaption>
 </figure></div></center>
-- Pour les nouveaux registres de l'architecture x86_64 **(r8,r9,r10,r11,r12,r13,r14,r15)** on utilise plutôt des suffixes pour spécifier la taille à lire ou à écrire.
+
+- Pour les nouveaux registres de l'architecture x86_64 **(R8,R9,R10,R11,R12,R13,R14,R15)** on utilise plutôt des suffixes pour spécifier la taille à lire ou à écrire.
 
 
 <center><div  class="figure-container-small">
@@ -81,10 +86,6 @@ frameborder="0" scrolling="no"></iframe>
 </figure>
 </div></center>
 
-> - On remarque que les deux instructions `movl $0x41, %eax` et `movq $0x51, %rax` se comportent exactement de la même maniére dans ce cas de figure, tout en ayant des tailles différentes: la version avec `%eax` utilisant 2 octets de moins.
-> - Pour des raisons de performances de calculs en 32-bits (comme expliqué <a href="https://stackoverflow.com/questions/11177137/why-do-x86-64-instructions-on-32-bit-registers-zero-the-upper-part-of-the-full-6" target="_blank">ici</a>) amd a fait en sorte de forcer les 32-bits de poids fort à zéro.
-> - **Retenez juste que les instructions sur les 32-bits de poids faible forcent implicitement les 32-bits de poids fort d'un registre 64-bits à zéro.**
-
 <blockquote class="small-text">
 Références:
 <ul>
@@ -93,9 +94,9 @@ Références:
 </ul>
 </blockquote>
 
-### Pointer Register RIP
+### Le Registre RIP
 
-- Le pointer register contient l'**adresse** mémoire ou la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d'exécuter l'instruction <a href="https://sourceware.org/binutils/docs/as/i386_002dVariations.html" target="_blank"><code class=" clickable">movabs</code></a> qui est à l'adresse `0x5129` la valeur de `%rip` est l'adresse de l'instruction suivante `mov %eax, %ebx` à l'adresse `0x5133`.
+- Le pointer register **RIP** contient l'**adresse** mémoire où la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d'exécuter l'instruction <a href="https://sourceware.org/binutils/docs/as/i386_002dVariations.html" target="_blank"><code class=" docutils literal notranslate">movabs</code></a> qui est à l'adresse `0x5129` la valeur de `%rip` est l'adresse de l'instruction suivante `mov %eax, %ebx` à l'adresse `0x5133`.
 
 <center><div  class="figure-container"><figure>
     <img src="./_static/images/rip-1.png" class="figure2">
@@ -103,7 +104,7 @@ Références:
     <figcaption>La valeur du <strong>%rip</strong> est calculée lors de l'exécution d'une instruction.</figcaption>
 </figure></div></center>
 
-- Il faut que vous sachiez que les instructions ont des tailles différentes. elles varient de `1 octets` jusqu'à `15 octets`. Vu qu'en mémoire les données sont stockés par octets, durant la lecture d'un octet de l'instruction le CPU sait s'il doit interpréter les prochains octets comme faisant partie de cette même instruction grâce aux octets qu'il a déja décodés.
+- Il faut que vous sachiez que les instructions ont des tailles différentes. Elles varient de `1 octets` jusqu'à `15 octets`. Étant donné qu'en mémoire les données sont stockés par octets. Durant la lecture d'un octet de l'instruction le CPU sait s'il doit interpréter le prochain octet comme faisant partie de cette même instruction grâce aux octets qu'il a déja décodés.
 
 - Les instructions d'appel et de branchement `jmp`, `call`, `ret`, ... ne font que modifier la valeur de ce fameux registre `%rip`, en d'autres termes elles changent l'adresse de la prochaine instruction.
 
@@ -214,10 +215,12 @@ Références:
 </tbody></table></center>
 
 
-> - Quand vous appelez une fonction il **ne faut pas** vous attendre à ce que les registres en **vert** aient gardé leur valeur. Autrement dit, si votre programme assembleur utilise le registre `%rdx` il faut qu'il soit sauvegardé (`pushq %rdx`) avant l'appel `call my_func` et puis restauré après l'appel (`popq %rdx`).
-> - Par contre si une fonction veut utiliser un des registres en **rouge**, elle doit le sauvegarder avant sa modification et le restaurer avant le retour (`ret`).
+:::{important}
+- Quand vous appelez une fonction il **ne faut pas** vous attendre à ce que les registres en **vert** aient gardé leur valeur. Autrement dit, si votre programme assembleur utilise le registre `%rdx` il faut qu'il soit sauvegardé (`pushq %rdx`) avant l'appel `call my_func` et puis restauré après l'appel (`popq %rdx`).
+- Par contre si une fonction veut utiliser un des registres en **rouge**, elle doit le sauvegarder avant sa modification et le restaurer avant le retour (`ret`).
+:::
 
-Vous n'avez pas à apprendre quel registre il faut sauvegardé. Le document sur l'ABI AMD64 présente dans un tableau plus complet dans la section **3.2.3 Parameter Passing** citant l'utilisation de chaque registre. Les sources latex officielles sont sur [gitlab](https://gitlab.com/x86-psABIs/x86-64-ABI), vous trouverez un lien pour télécharger le pdf dans le README.
+Le document sur l'ABI AMD64 (section **3.2.3 Parameter Passing**)  présente dans un tableau plus complet sur l'utilisation de chaque registre. Les sources latex officielles sont sur [gitlab](https://gitlab.com/x86-psABIs/x86-64-ABI), vous trouverez un lien pour télécharger le pdf dans le README.
 
 ```nasm
 my_func:
@@ -251,8 +254,6 @@ main:
    
 ```
 
-
-
 <blockquote class="small-text">
 Références:
 <ul>
@@ -261,18 +262,23 @@ Références:
 </ul>
 </blockquote>
 
-## Les flags en x86_64
+## Les flags et le registre RFLAGS en x86_64
 
-- Lors de l'exécution de certaines instructions, il est intéressant de garder certaines informations sur le résultat de ces dernières, pour ainsi pouvoir rendre certaines instructions inter-dépendantes. Par exemple, si on veut additionner des nombres de taille supérieure à 64-bits, disons 128-bits il est primordiale de savoir si l'addition des 64-bits de poids faible a générée une retenue pour le 65-bits ou pas pour avoir un résultat correct (<a href="https://www.felixcloutier.com/x86/adc" target="_blank"><code class=" clickable">adc</code></a>). Il existe plein d'autres cas autre que les jump, où l'on veut avoir des informations sur le résultat de l'instruction précédente.
-- En x86_64, on a à notre disposition le registre **RFLAGS** pour stocker et accéder aux informations décrivant la nature du résultat d'une instruction. En x86(32 bits), le registre se dénommait **EFLAGS** et à l'âge de l'architecture 16-bits **FLAGS**. Vous pouvez voir comment ce registre fut étendue avec le changements d'architecture dans la figure ci-dessous.
-  - En pratique, le registre RFLAGS décrit aussi des restrictions d'exécution, ainsi une instruction va changer son comportement, voir lever une exception dépendant des restrictions actives.
+- Lors de l'exécution de certaines instructions, il est intéressant de garder certaines informations sur le résultat de ces dernières, pour rendre certaines instructions inter-dépendantes. Par exemple, si on veut additionner des nombres de taille supérieure à 64-bits, disons 128-bits il est primordial de savoir si l'addition des 64-bits de poids faible a généré une retenue pour le 65ème bit pour avoir un résultat correct (<a href="https://www.felixcloutier.com/x86/adc" target="_blank"><code class=" docutils literal notranslate">adc</code></a>). Il existe plein d'autres cas autre que les jump, où l'on veut avoir des informations sur le résultat de l'instruction précédente.
+
+### Le registre RFLAGS : structure et évolution
+
+- En x86_64, on a à notre disposition le registre **RFLAGS** pour stocker et accéder aux informations décrivant la nature du résultat d'une instruction. En x86(32 bits), le registre se nommait **EFLAGS** et à l'âge de l'architecture 16-bits **FLAGS**. Vous pouvez voir comment ce registre fut étendue avec le changements d'architecture dans la figure ci-dessous.
+  - En pratique, le registre RFLAGS décrit aussi des restrictions d'exécution, ainsi une instruction va changer son comportement, voir lever une exception si des restrictions sont actives.
 
 <center><div  class="figure-container"><figure>
     <img src="./_static/images/RFLAGS.png" alt="RFLAGS" class="figure">
-    <figcaption>Registres RFLAGS avec tous les FLAGS connus.</figcaption>
+    <figcaption>Structure complète du registre RFLAGS.</figcaption>
 </figure></div></center>
 
-- Lors du développement de l'architecture, les ingénieurs ont dû choisir quelles informations garder sur le résultat d'une instruction. Pour optimiser un maximum tout en gardant l'utilisation simple, ils se sont limiter à un seul registre, où chaque **bit** annonce la présence ou l'absence d'un flag décrivant un état. Les bits vides sont réservés et intel ou amd les utilisent comme ils veulent.
+- Lors du développement de l'architecture, les ingénieurs ont dû choisir quelles informations garder sur le résultat d'une instruction. Pour optimiser un maximum la mémoire, tout en gardant l'utilisation simple, ils se sont limité à un seul registre. Chaque **bit** du registre indique la présence ou l'absence d'un flag relié à un état. Les bits vides sont réservés, Intel et AMD les utilisent comme ils veulent.
+
+#### Les différents types de flags
 
 - Les flags sont divisés en **3** groupes:
   - <span style="color: rgba(91, 163, 233);">Status Flags:</span> 
@@ -281,29 +287,37 @@ Références:
     - **AF**(Auxiliary Carry Flag): **1** s'il y a eu une retenue depuis le bit 3 vers le bit 4, sinon **0**.
     - **ZF**(Zero Flag): **1** si le résultat est nul, sinon **0**.
     - **SF**(Sign Flag): **1** si le résultat est négatif, sinon **0**.
-    - **OF**(Overflow Flag): **1** si le résultat en signé a débordé (changement de signe inattendu) au-delà de la taille du registre destination, sinon **0**.
+    - **OF**(Overflow Flag): **1** si le résultat d'une opération signée dépasse la capacité du registre (changement de signe inattendu), sinon **0**.
   - <span style="color: rgba(200, 80, 200);">Control Flags:</span>
     - **IF**(Interrupt Flag): **1** si les interruptions sont actives, **0** si désactivées.
-    - **DF**(Direction Flag): **1** pour que les adresses soient décrementées lors des instructions iteratives (<a href="https://www.felixcloutier.com/x86/rep:repe:repz:repne:repnz" target="_blank"><code class=" clickable">rep</code></a>), **0** pour incrémenter les adresses.
+    - **DF**(Direction Flag): **1** pour que les adresses soient décrementées lors des instructions iteratives (<a href="https://www.felixcloutier.com/x86/rep:repe:repz:repne:repnz" target="_blank"><code class=" docutils literal notranslate">rep</code></a>), **0** pour les incrémenter.
     - **TF**(Trap Flag): **1**  pour appeler une fonction après chaque instruction permettant d'avoir une exécution pas à pas (debug), **0** pour une exécution classique.
-    - **MD**(Mode Flag).
   - <span style="color: rgba(233, 100, 100);">System Flags:</span>
     - **IOPL**(I/O privilege level).
     - ...
 
-- La mise à jour des flags nécessite des tests et des écritures, cela prend du temps, pour ne pas en perdre inutilement, ils ont fait en sorte que certaines instructions ne touchent pas aux flags (le `mov` par exemple), et même que les instructions mettant à jour les flags, ne touchent pas à tous les flags, seulement ceux nécessaires, entre autres l'instruction `add` ne met à jour que les **status flags**.
+#### Mécanismes de mise à jour des flags
+- La mise à jour des flags nécessite des tests et des écritures, cela prend du temps. Pour ne pas en perdre inutilement, les ingénieurs ont fait en sorte que certaines instructions ne touchent pas aux flags (le `mov` par exemple). Et même les instructions mettant à jour les flags, ne touchent pas à tous les flags, seulement ceux nécessaires. Entre autres, l'instruction `add` ne met à jour que les **status flags**.
    - En général, on dit que les instructions qui ne font **que** **déplacer** des données ne modifient pas les flags. Par contre, celles qui **effectuent** des **calculs** mettent à jour les flags nécessaires.
-   - Il existe certaines exceptions d'instructions qui calculent mais ne mettent pas à jour les flags, parmi elles : <a href="https://www.felixcloutier.com/x86/not" target="_blank"><code class=" clickable">not</code></a> et <a href="https://www.felixcloutier.com/x86/lea" target="_blank"><code class=" clickable">lea</code></a>.
+   - Il existe certaines exceptions d'instructions qui calculent mais ne mettent pas à jour les flags, parmi elles : <a href="https://www.felixcloutier.com/x86/not" target="_blank"><code class=" docutils literal notranslate">not</code></a> et <a href="https://www.felixcloutier.com/x86/lea" target="_blank"><code class=" docutils literal notranslate">lea</code></a>.
 
+#### Instructions de manipulation des flags
 - Il est possible d'accéder au registre **RFLAGS** via des instructions spéciales : 
-  - <a href="https://www.felixcloutier.com/x86/lahf" target="_blank"><code class=" clickable">lahf</code></a> enregistre les 8-bits de poids faibles de **FLAGS** dans **ah**. <a href="https://www.felixcloutier.com/x86/sahf" target="_blank"><code class=" clickable">sahf</code></a> récupère les valeurs de **SF**, **ZF**, **AF**, **PF**, et **CF** (les 8-bits de poids faible) depuis **ah**.
-  - <a href="https://www.felixcloutier.com/x86/clc" target="_blank"><code class=" clickable">clc</code></a> (mettre CF à 0), <a href="https://www.felixcloutier.com/x86/stc" target="_blank"><code class=" clickable">stc</code></a> (mettre CF à 1), <a href="https://www.felixcloutier.com/x86/cmc" target="_blank"><code class=" clickable">cmc</code></a> (inverser CF), <a href="https://www.felixcloutier.com/x86/cli" target="_blank"><code class=" clickable">cli</code></a> (mettre IF à 0), <a href="https://www.felixcloutier.com/x86/sti" target="_blank"><code class=" clickable">sti</code></a> (mettre IF à 1), <a href="https://www.felixcloutier.com/x86/cld" target="_blank"><code class=" clickable">cld</code></a> (mettre DF à 0), <a href="https://www.felixcloutier.com/x86/std" target="_blank"><code class=" clickable">std</code></a> (mettre DF à 1).
-  - <a href="https://www.felixcloutier.com/x86/pushf:pushfd:pushfq" target="_blank"><code class=" clickable">pushf</code></a>/<a href="https://www.felixcloutier.com/x86/popf:popfd:popfq" target="_blank"><code class=" clickable">popf</code></a> empile/dépile le registre **FLAGS**, `pushfd`/`popfd` empile/dépile le registre **EFLAGS**, `pushfq`/`popfq` empile/dépile le registre **RFLAGS**.
-    - Les instructions ont le même opcode, tout dépend du mode dans lequel le CPU est.
+  - <a href="https://www.felixcloutier.com/x86/lahf" target="_blank"><code class=" docutils literal notranslate">lahf</code></a> enregistre les 8-bits de poids faibles de **FLAGS** dans **ah**. <a href="https://www.felixcloutier.com/x86/sahf" target="_blank"><code class=" docutils literal notranslate">sahf</code></a> récupère les valeurs de **SF**, **ZF**, **AF**, **PF**, et **CF** (les 8-bits de poids faible) depuis **ah**.
+  - <a href="https://www.felixcloutier.com/x86/clc" target="_blank"><code class=" docutils literal notranslate">clc</code></a> (mettre CF à 0), <a href="https://www.felixcloutier.com/x86/stc" target="_blank"><code class=" docutils literal notranslate">stc</code></a> (mettre CF à 1), <a href="https://www.felixcloutier.com/x86/cmc" target="_blank"><code class=" docutils literal notranslate">cmc</code></a> (inverser CF), <a href="https://www.felixcloutier.com/x86/cli" target="_blank"><code class=" docutils literal notranslate">cli</code></a> (mettre IF à 0), <a href="https://www.felixcloutier.com/x86/sti" target="_blank"><code class=" docutils literal notranslate">sti</code></a> (mettre IF à 1), <a href="https://www.felixcloutier.com/x86/cld" target="_blank"><code class=" docutils literal notranslate">cld</code></a> (mettre DF à 0), <a href="https://www.felixcloutier.com/x86/std" target="_blank"><code class=" docutils literal notranslate">std</code></a> (mettre DF à 1).
 
 - L'instruction `cmp i1, i2` fait une soustraction `i2 - i1` sans sauvegarder le résultat dans l'opérant destination et met à jour les flags **CF**, **OF**, **SF**, **ZF**, **AF**, et **PF**.
-- L'instruction `test i1, i2` fait un bit-wise AND `i2 & i1` et met à jour les flags **PF**, **SF**, **ZF**. Elle permet de tester si un registre est nul `testq %rax, %rax`, elle est plus compacte que `cmp $0, %rax`.
-- Les instructions de la famille <a href="https://www.felixcloutier.com/x86/jcc" target="_blank"><code class=" clickable">jcc</code></a> vérifient les flags pour charger l'adresse spécifiée dans le registre **rip** ou pas (**rip** pointe vers l'instruction suivante).
+- L'instruction `test i1, i2` fait un bit-wise AND `i2 & i1` et met à jour les flags **PF**, **SF**, **ZF**. Entre autres, elle permet de tester si un registre est nul `testq %rax, %rax`, en étant plus compacte que `cmp $0, %rax`.
+- Les instructions de la famille <a href="https://www.felixcloutier.com/x86/jcc" target="_blank"><code class=" docutils literal notranslate">jcc</code></a> vérifient les flags pour charger l'adresse spécifiée dans le registre **rip** ou pas (**rip** pointe vers l'instruction suivante).
+
+:::{admonition} pushf et popf
+:class: dropdown
+<a href="https://www.felixcloutier.com/x86/pushf:pushfd:pushfq" target="_blank"><code class=" docutils literal notranslate">pushf</code>/<a href="https://www.felixcloutier.com/x86/popf:popfd:popfq" target="_blank"><code class=" docutils literal notranslate">popf</code></a> empile/dépile le registre **RFLAGS** sur/depuis la pile d'une certaine manière. Les descriptions de `pushf` et `popf` expliquent plus en détails les restrictions de ces instructions. En se limitant à l'architecture 64-bits, on a:
+- Les flags `VM` et `RF` ne sont jamais push, ils sont toujours forcés à zéro. 
+ - Par défaut, l'instruction (mnemonic) `pushfq` empile les 8 octets de **RFLAGS**. Et on écrit `pushf` pour empiler que les 2 octets **FLAGS**. Il est impossible d'empiler que les 4 octets **EFLAGS**. Même si les instructions ont le même opcode `0x9C`, le préfixe `0x66` permet de passer en mode 16-bits.
+   - Malheureusement, un différent assembleur peut ne pas séparer les deux mnemonics `pushf` et `pushfq`.
+- Pour ce qui est de `popf`, le cpu va mettre à jour **RFLAGS** en rapport à son mode actuel [Table 4-16](https://www.felixcloutier.com/x86/popf:popfd:popfq#tbl-4-16).
+:::
 
 <blockquote class="small-text">
 Références:
@@ -317,13 +331,13 @@ Références:
 
 ## Les modes d'adressage
 
-Commençons par le commencement : l'adressage, c'est tout simplement la façon dont on dit au processeur "hé, va chercher/mettre cette donnée à tel endroit !". C'est comme donner des indications à quelqu'un pour trouver un livre dans une immense bibliothèque.
+Commençons par le commencement : l'adressage, c'est tout simplement la façon dont on dit au processeur "hé, va chercher/mettre cette donnée à tel endroit !".
 
 ### Modes Directs
 
 #### 1. Mode d'adressage immédiat
 
-Le mode le plus simple, c'est l'adressage immédiat. Imagine que tu dis directement "le nombre c'est 42". Pas besoin de chercher ailleurs, la valeur est directement dans l'instruction. C'est comme écrire une constante dans votre code.
+Le mode le plus simple, c'est l'adressage immédiat. Imaginez que vous dites directement "le nombre c'est 42". Pas besoin de chercher ailleurs, la valeur est directement dans l'instruction. C'est comme écrire une constante dans du code C ou autre.
 
 
 ```nasm
@@ -334,7 +348,7 @@ addq $10, %rbx    ; Ajoute 10 à rbx
 
 #### 2. Mode d'adressage par registre
 
-L'adressage par registre utilise directement les registres du processeur. C'est la méthode la plus rapide pour manipuler des données.
+L'adressage par registre utilise directement les registres du processeur pour stocker et manipuler les données. C'est le mode d'accès le plus rapide, car les registres sont intégrés au cœur du CPU. Ils constituent un espace de stockage limité mais immédiatement accessible, similaire à des variables globales en C, mais en nombre fixe et restreint.
 
 
 ```nasm
@@ -345,7 +359,7 @@ xorq %rax, %rax    ; Mise à zéro rapide de rax
 
 #### 3. Mode d'adressage mémoire direct
 
-Maintenant, parlons de l'adressage mémoire direct, ce mode utilise une adresse mémoire fixe. C'est comme si tu donnais l'adresse exacte d'une maison. Tu dis au processeur "va chercher ce qu'il y a à l'adresse 0x1234". C'est utile pour accéder à des variables globales ou des constantes dont on connait l'adresse à la compilation (pas de `malloc`).
+Maintenant, parlons de l'adressage mémoire direct, ce mode utilise une adresse mémoire fixe. Vous dites au processeur "va chercher ce qu'il y a à l'adresse 0x1234". C'est utile pour accéder à des variables globales ou des constantes dont on connait l'adresse à la compilation (pas de `malloc`).
 
 
 ```nasm
@@ -354,21 +368,14 @@ movq value, %rax      ; Charge depuis l'adresse 'value'
 movq %rbx, target     ; Stocke dans l'adresse 'target'
 ```
 
-L'adressage mémoire direct utilise une adresse mémoire fixe. Pour les appels absolus, le préfixe `*` est nécessaire. Ainsi, vous comprendrez pourquoi le code machine ne stocke pas l'adresse absolue de votre label dans un `jmp` sans `*`, mais le deplacement vers ce dernier depuis l'adresse actuelle dans **rip**.
 
-```nasm
-; AT&T
-call *absolute_address    ; Appel absolu
-call relative_address     ; Appel relatif (défaut)
-```
-
-### Modes Indirects
+### 4. Modes Indirects
 
 Les choses deviennent plus intéressantes avec l'adressage indirect. Ici l'adresse qu'on cherche à accéder n'est pas directement accessible, soit une lecteur ou un calcul sont nécessaires.
 
 #### 1. Mode d'adressage indirect par registre
 
-L'adressage indirect utilise un registre comme pointeur vers la mémoire. Au lieu de dire "va à telle adresse", tu dis "va à l'adresse qui est stockée dans ce registre". C'est la base de la manipulation des pointeurs.
+L'adressage indirect peut utiliser un registre comme pointeur vers la mémoire. Au lieu de dire "va à telle adresse", on dit "va à l'adresse qui est stockée dans ce registre". C'est la base de la manipulation des pointeurs.
 
 
 ```nasm
@@ -404,6 +411,19 @@ movq symbol(%rip), %rax  ; Accède au symbole de manière relative
 
 ```
 
+
+:::{important}
+En syntaxe AT&T, pour les instructions de contrôle de flux (`jmp`, `call`), le préfixe `*` distingue l'adressage absolu de l'adressage relatif :
+```nasm
+; AT&T
+jmp label        ; Adressage relatif à rip
+jmp *label       ; Adressage absolu : utilise l'adresse fixe de 'label'
+call *%rax       ; Appel indirect : utilise l'adresse contenue dans rax
+```
+
+Sans `*`, le code machine encode un **déplacement relatif** depuis rip (plus compact, position-independent). Avec `*`, il encode une **adresse absolue** (nécessaire pour les sauts indirects).
+:::
+
 #### 4. Mode d'adressage base + index + échelle + déplacement
 
 Le mode le plus complet, permettant des calculs d'adresse complexes.
@@ -422,10 +442,12 @@ movq (%rbx,%rcx), %rax       ; déplacement=0 (omis), base=rbx, index=rcx, éche
                              ; Adresse = rbx + (rcx*1)
 ```
 
-> **Notes sur la performance:**
-> - Les modes impliquant des accès mémoire sont généralement plus lents
-> - L'utilisation de l'échelle peut ajouter des cycles supplémentaires
-> - Les registres sont toujours les plus rapides
+:::{admonition} Notes sur la performance
+:class: note
+- Les modes impliquant des accès mémoire sont généralement plus lents
+- L'utilisation de l'échelle peut ajouter des cycles supplémentaires
+- Les registres sont toujours les mémoires les plus rapides à lire et à écrire.
+:::
 
 <blockquote class="small-text">
 Références:
@@ -433,48 +455,3 @@ Références:
 <li><a href="https://sourceware.org/binutils/docs/as/i386_002dMemory.html
 " target="_blank">https://sourceware.org/binutils/docs/as/i386_002dMemory.html</a>
 </blockquote>
-
-## Instructions MOVS et préfixes REP
-
-<a href="https://www.felixcloutier.com/x86/movs:movsb:movsw:movsd:movsq" target="_blank"> <code class=" clickable">movsb/movsw/movsd/movsq</code> </a> permet de copier une donnée d'une taille donnée (b:1 octet, w: 2 octets, d: 4 octets, q: 8 octets) depuis l'adresse spécifiée par le registre <strong>rsi</strong> vers l'adresse spécifiée par le registre <strong>rdi</strong>. Après chaque opération, ces registres sont automatiquement mis à jour pour pointer vers l'adresse suivante.
-La direction de cette mise à jour est contrôlée par le flag de direction (**DF**) dans le registre **RFLAGS**. L'instruction <a href="https://www.felixcloutier.com/x86/cld" target="_blank"> <code class=" clickable">cld</code> </a> (Clear Direction Flag) configure le système pour incrémenter **rsi** et **rdi**, permettant une copie vers l'avant. À l'inverse, <a href="https://www.felixcloutier.com/x86/std" target="_blank"> <code class=" clickable">std</code> </a>  (Set Direction Flag) les fait décrémenter pour une copie vers l'arrière.
-
-Le préfixe <a href="https://www.felixcloutier.com/x86/rep:repe:repz:repne:repnz" target="_blank"> <code class=" clickable">rep</code> </a> transforme une simple instruction de copie en une puissante opération de copie en bloc. Il utilise le registre **rcx** comme compteur et répète l'instruction autant de fois que spécifié. Par exemple, `rep movsb` copiera exactement **rcx** octets de la source vers la destination.
-
-Il existe également des variantes plus sophistiquées : REPE/REPZ et REPNE/REPNZ. Ces préfixes **ajoutent** une condition (le **rcx** est toujours utilisé comme compteur) supplémentaire à la répétition. REPE/REPZ continue tant que le flag zéro est actif, tandis que REPNE/REPNZ poursuit tant qu'il est inactif.
-
-
-```nasm
-section .text
-global memory_copy
-memory_copy:
-    ; Les paramètres suivent la convention System V AMD64 :
-    ; rdi contient l'adresse de destination
-    ; rsi contient l'adresse source
-    ; rdx contient le nombre d'octets à copier
-    
-    mov rcx, rdx        ; Préparation du compteur
-    cld                 ; Configuration pour copie vers l'avant
-    rep movsb          ; Exécution de la copie
-    ret
-```
-
-Pour des copies de grande taille, il peut être plus efficace d'utiliser `movsd` ou `movsq` qui copient respectivement 4 ou 8 octets par opération. Voici une version optimisée qui traite les données par blocs de 4 octets :
-
-```nasm
-section .text
-global memory_copy_optimized
-memory_copy_optimized:
-    mov rcx, rdx
-    shr rcx, 2         ; Division par 4 pour utiliser movsd (4 octets)
-    cld
-    rep movsd          ; Copie principale par blocs de 4 octets
-    
-    mov rcx, rdx
-    and rcx, 3         ; Récupération du reste (0,1,2 ou 3)
-    rep movsb          ; Copie des octets restants
-    ret
-```
-
-> **Note sur la performance:**
-> Bien que ces instructions soient optimisées au niveau du processeur, leur efficacité dépend du contexte. Pour de très petites copies (quelques octets), une simple séquence de `mov` peut s'avérer plus rapide. Pour de très grandes copies, les fonctions système comme memcpy, qui peuvent utiliser des instructions SIMD (Single Instruction Multiple Data) ou des optimisations spécifiques au processeur, sont souvent préférables.
