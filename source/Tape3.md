@@ -76,12 +76,10 @@ Welcome to phoenix/stack-zero, brought to you by https://exploit.education
 Well done, the 'changeme' variable has been changed!
 ```
 
-<center><div class="figure-container-small">
-<figure class="figure"> 
-<img src="./_static/images/phoenix/stack-zero.png"/>
-</figure>
-<figcaption>Disposition de la structure en mémoire.</figcaption>
-</div></center>
+```{figure} ./_static/images/phoenix/stack-zero.png
+:align: center
+Disposition de la structure en mémoire.
+```
 
 > Remarquez que la valeur de **changme** est inversée, vu qu'on écrit depuis l'adresse basse à l'adresse haute, et que l'architecture amd64 suit le schéma **little-endian**.
 

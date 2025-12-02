@@ -15,12 +15,11 @@ Quelques notes sur le cours de système d'exploitation.
 - Maintenant, un OS classique que l'on va utiliser dans nos machines de tous les jours doit pouvoir gérer plusieurs tâches en même temps, sinon il est tout bonnement impossible d'avoir un système interactif. Riens que votre interface utilisateur représente plusieurs tâches qui doivent cohabiter et s'échanger des données. Et ce pauvre OS doit faire vivre tout ce joli monde tout en faisant attention à ne pas les laisser mourrir de fin (*starvation*) en leur n'accordant pas les ressources nécessaires.
 - Dans un OS, on parle principalement de processus. On peut voir un processus comme un espace mémoire contenant du code et des données. Quand l'OS veut faire exécuter un certain processus, il aiguille le CPU vers le bon code (espace mémoire) pour faire le travail qui impliquera surement des lectures et des écritures dans cette espace mémoire qu'on nomme processus.
 
-<center><div class="figure-container">
-<figure class="figure-2"> 
-<img src="./_static/images/Virtual-Memory.png"/>
-</figure>
-<figcaption>Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bit sont reellement utilisés.<a href="https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout" target="_blank"> [Kernel Docs]</a></figcaption>
-</div></center>
+:::{figure} ./_static/images/Virtual-Memory.png
+:alt: Diagrame mémoire virtuelle
+:align: center
+Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bit sont reellement utilisés. [Kernel Docs](https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout)
+:::
 
 
 - La figure simplifie les différents blocs du Kernel en un seul pour ne pas complexifier encore plus la figure. Retenez juste que dans le le bloc kernel existe une pile pour ce processus utilisée lors de l'exécution de code  kernel pour ce même processus.

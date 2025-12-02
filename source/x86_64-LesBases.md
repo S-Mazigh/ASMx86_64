@@ -71,20 +71,21 @@ frameborder="0" scrolling="no"></iframe>
 
 - Les autres registres hérités **(SI,DI,SP,BP)** ne permettent pas d'accéder à leur deuxième octet comme les registres **(A,B,C,D)**. 
 
-<center><div  class="figure-container-small"><figure>
-    <img src="./_static/images/register-sp.png" class="figure">
-    <figcaption>Les différentes manières d'accéder au registre <strong>%rsp</strong>.</figcaption>
-</figure></div></center>
+
+```{figure} ./_static/images/register-sp.png
+:alt: Schéma montrant les différentes manières de lire le registre **RSP**.
+:align: center
+Les différentes manières d'accéder au registre **RSP**.
+```
 
 - Pour les nouveaux registres de l'architecture x86_64 **(R8,R9,R10,R11,R12,R13,R14,R15)** on utilise plutôt des suffixes pour spécifier la taille à lire ou à écrire.
 
 
-<center><div  class="figure-container-small">
-<figure>
-    <img src="./_static/images/register-8.png" alt="Register 8 calling convention" class="figure">
-    <figcaption>Registre 8 de l'architecture x86_64.</figcaption>
-</figure>
-</div></center>
+```{figure} ./_static/images/register-8.png
+:alt: Schéma montrant les différentes manières de lire le registre **R8**.
+:align: center
+Les différentes manières d'accéder au registre **R8**.
+```
 
 <blockquote class="small-text">
 Références:
@@ -98,11 +99,15 @@ Références:
 
 - Le pointer register **RIP** contient l'**adresse** mémoire où la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d'exécuter l'instruction <a href="https://sourceware.org/binutils/docs/as/i386_002dVariations.html" target="_blank"><code class=" docutils literal notranslate">movabs</code></a> qui est à l'adresse `0x5129` la valeur de `%rip` est l'adresse de l'instruction suivante `mov %eax, %ebx` à l'adresse `0x5133`.
 
-<center><div  class="figure-container"><figure>
-    <img src="./_static/images/rip-1.png" class="figure2">
-  <img src="./_static/images/rip-2.png" class="figure2">
-    <figcaption>La valeur du <strong>%rip</strong> est calculée lors de l'exécution d'une instruction.</figcaption>
-</figure></div></center>
+```{figure} ./_static/images/rip-1.png
+:alt: Capture d'écran de GDB montrant la valeur de **RIP** pointant vers la prochaine instruction à exécuter.
+:align: center
+```
+```{figure} ./_static/images/rip-2.png
+:alt: Capture d'écran de GDB montrant la valeur de **RIP** actuelle.
+:align: center
+La valeur du **RIP** est calculée lors de l'exécution d'une instruction.
+```
 
 - Il faut que vous sachiez que les instructions ont des tailles différentes. Elles varient de `1 octets` jusqu'à `15 octets`. Étant donné qu'en mémoire les données sont stockés par octets. Durant la lecture d'un octet de l'instruction le CPU sait s'il doit interpréter le prochain octet comme faisant partie de cette même instruction grâce aux octets qu'il a déja décodés.
 
@@ -271,10 +276,11 @@ Références:
 - En x86_64, on a à notre disposition le registre **RFLAGS** pour stocker et accéder aux informations décrivant la nature du résultat d'une instruction. En x86(32 bits), le registre se nommait **EFLAGS** et à l'âge de l'architecture 16-bits **FLAGS**. Vous pouvez voir comment ce registre fut étendue avec le changements d'architecture dans la figure ci-dessous.
   - En pratique, le registre RFLAGS décrit aussi des restrictions d'exécution, ainsi une instruction va changer son comportement, voir lever une exception si des restrictions sont actives.
 
-<center><div  class="figure-container"><figure>
-    <img src="./_static/images/RFLAGS.png" alt="RFLAGS" class="figure">
-    <figcaption>Structure complète du registre RFLAGS.</figcaption>
-</figure></div></center>
+:::{figure} ./_static/images/RFLAGS.png
+:alt: Les flags de RFLAGS
+:align: center
+Structure complète du registre RFLAGS.
+:::
 
 - Lors du développement de l'architecture, les ingénieurs ont dû choisir quelles informations garder sur le résultat d'une instruction. Pour optimiser un maximum la mémoire, tout en gardant l'utilisation simple, ils se sont limité à un seul registre. Chaque **bit** du registre indique la présence ou l'absence d'un flag relié à un état. Les bits vides sont réservés, Intel et AMD les utilisent comme ils veulent.
 

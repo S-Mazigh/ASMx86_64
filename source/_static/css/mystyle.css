@@ -95,7 +95,7 @@ code.language-plaintext.highlighter-rouge {
   max-width: 70em;
 }
 
-figcaption {
+/* figcaption {
   border-top: 1px solid var(--pst-color-text-base);
   font-size: 18 px;
   text-align: center;
@@ -103,7 +103,7 @@ figcaption {
 
 figure {
   margin: 0px;
-}
+} */
 
 .figure,
 .figure2 {

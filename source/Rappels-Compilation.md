@@ -172,11 +172,13 @@ On a tendance à bien structurer notre code et à le séparer en plusieurs fichi
 
 L'éditeur de liens `ld` (invoqué par `gcc`) a pour mission de rassembler tous ces morceaux de code. 
 
-> **Important** : Les deux commandes ci-dessus ne sont **pas équivalentes**. GCC configure beaucoup de choses en arrière-plan, afin de simplifier le processus.
-> 
-> Par exemple, le vrai point d'entrée d'un exécutable est `_start`, pas `main`. GCC inclut automatiquement les fichiers de démarrage qui contiennent `_start` et qui appellent ensuite votre fonction `main`. 
-> 
-> Si vous utilisez `ld` directement, vous devrez fournir beaucoups d'éléments manuellement (dont la libc `-lc`).
+:::{Attention}
+Les deux commandes ci-dessus ne sont **pas équivalentes**. GCC configure beaucoup de choses en arrière-plan, afin de simplifier le processus.
+
+Par exemple, le vrai point d'entrée d'un exécutable est `_start`, pas `main`. GCC inclut automatiquement les fichiers de démarrage qui contiennent `_start` et qui appellent ensuite votre fonction `main`. 
+
+Si vous utilisez `ld` directement, vous devrez fournir beaucoups d'éléments manuellement (dont la libc `-lc`).
+:::
 
 Pour voir ce que GCC fait réellement en coulisses :
 ```bash
