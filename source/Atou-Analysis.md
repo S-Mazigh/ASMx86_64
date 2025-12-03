@@ -191,7 +191,8 @@ Mais j'admets que c'est plus amusant ainsi, donc amusez-vous bien.
 - Les sources sont par [ici](../resources/my_atou.zip). Il suffit de `make`.
     - Dans le fichier `my_atou.s` vous verrez que j'ai utilisé souvent `1:` ou `2:` comme label. Ce sont des labels un peu spéciaux où il faut spécifier dans quelle direction le `jmp` doit chercher le label (b pour backward et f pour forward). D'où les `jne 1b` pour revenir au label `1:` de la boucle (le plus proche) \[<a href="https://docs.oracle.com/cd/E19120-01/open.solaris/817-5477/esqaq/index.html" target="_blank">ref</a>\].
     - Vous trouverez un my_atou qui vérifie si les caractères sont des chiffres, pour rappel `ja 3f` veut dire saute au label `3:` présent dans ce code si la valeur non signée est supérieur:
-    ```nasm
+
+```nasm
     my_atou:
 
     push %rbp
@@ -227,7 +228,7 @@ Mais j'admets que c'est plus amusant ainsi, donc amusez-vous bien.
     3:
     xorq %rax, %rax
     jmp 2b
-    ```
+```
 
 - On peut remplacer `subb $48, %sil` par `andb $0x0F, %sil`. Cette technique fonctionne comme un modulo pour les caractères ASCII des chiffres décimaux (0-9) car leur valeur hexadécimale suit le pattern `0x3n`.
     - 0x30 == '0'

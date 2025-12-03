@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'ASMx86_64'
-copyright = '2024-2025, s-mazigh'
+copyright = '2024-2025'
 author = 's-mazigh'
 release = '0.25.12'
 
@@ -22,7 +22,9 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.mathjax',
     'sphinx_book_theme',
-    'sphinx_togglebutton'
+    'sphinx_togglebutton',
+    'sphinx_subfigure',
+    'sphinx_design'
 ]
 
 myst_enable_extensions = [
@@ -30,7 +32,7 @@ myst_enable_extensions = [
     "attrs_inline",
     "colon_fence",
     "deflist",
-    # "dollarmath",
+    "dollarmath",
     # "fieldlist",
     # "html_admonition",
     "html_image",
@@ -41,6 +43,23 @@ myst_enable_extensions = [
     # "substitution",
     "tasklist",
 ]
+
+# Améliorer la recherche
+html_search_language = 'fr'
+
+# Ajouter un footer avec dernière mise à jour
+html_last_updated_fmt = '%d/%m/%Y'
+
+# Numérotation automatique des figures
+numfig = True
+numfig_format = {
+    'figure': 'Figure %s',
+    'table': 'Tableau %s',
+    'code-block': 'Listing %s'
+}
+
+# Index plus détaillé
+html_domain_indices = True
 
 # In order for sphinx to generate refs for headers up to level 3
 myst_heading_anchors = 3

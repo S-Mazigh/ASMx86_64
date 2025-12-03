@@ -149,3 +149,11 @@ ul.toc ul {
 .small-text * {
   font-size: small;
 }
+
+#asmx86-64 h1 {
+  display: none;
+}
+
+.logo__image {
+  height: 200px!important;
+}

@@ -18,7 +18,7 @@ Quelques notes sur le cours de système d'exploitation.
 :::{figure} ./_static/images/Virtual-Memory.png
 :alt: Diagrame mémoire virtuelle
 :align: center
-Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bit sont reellement utilisés. [Kernel Docs](https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout)
+Mémoire virtuelle d'un processus dans le kernel linux sous x86_64. Notez que seulement 48-bits sont reellement utilisés. [Kernel Docs](https://www.kernel.org/doc/html/v5.8/x86/x86_64/mm.html?highlight=memory%20layout)
 :::
 
 
