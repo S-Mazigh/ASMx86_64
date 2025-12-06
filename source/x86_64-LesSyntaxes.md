@@ -25,7 +25,7 @@ La principale différence entre les syntaxes AT&T et Intel réside dans l'ordre 
    - AT&T : `lcall` et `ljmp`
    - Intel : `call far` et `jump far`
 
-> Sur AT&T les saut et appels absolu doivent être préfixés par '\*', Sans '\*', l'assembleur x86_64 utilise l'adressage relatif au [**RIP**](x86_64-LesBases.md#le-registre-rip).
+> Sur AT&T les saut et appels absolu doivent être préfixés par '\*', Sans '\*', l'assembleur x86_64 utilise l'adressage relatif au [`%rip`](x86_64-LesBases.md#le-registre-rip).
 
 Exemple:
 ```nasm

@@ -1,5 +1,5 @@
 ---
-title: Your Page Title 
+title: LesBases
 index: true
 ---
 
@@ -22,10 +22,10 @@ index: true
 
 - En x86_64 les registres généralistes ont une taille maximale de 64-bits (8 octets). Il existe 16 registres dans cette famille, dont certain ont une utilisation spécifique.
 - Les registres sont : 
-  - **RAX**, **RBX**, **RCX**, **RDX**: version 64-bits des registres: A, B, C, D.
-  - **RBP**, **RSP**: version 64-bits des registres de gestion de la pile: BP(base pointer) et SP (stack pointer).
-  - **RSI**, **RDI**: version 64-bits des registres pour la copie  de données: SI(source index) et DI(destination index).
-  - **R8**,**R9**,**R10**,**R11**,**R12**,**R13**,**R14**,**R15**: registres 64-bits introduit avec l'architecture x86_64 (inexistant en architecture x86 32-bits).
+  - `%rax`, `%rbx`, `%rcx`, `%rdx`: version 64-bits des registres: A, B, C, D.
+  - `%rdp`, `%rsp`: version 64-bits des registres de gestion de la pile: BP(base pointer) et SP (stack pointer).
+  - `%rsi`, `%rdi`: version 64-bits des registres pour la copie  de données: SI(source index) et DI(destination index).
+  - `%r8`,`%r9`,`%r10`,`%r11`,`%r12`,`%r13`,`%r14`,`%r15`: registres 64-bits introduit avec l'architecture x86_64 (inexistant en architecture x86 32-bits).
 
 - Ces registres peuvent être accédés de différentes manières, on peut faire en sorte d'accéder que certains octets des registres. 
 
@@ -73,18 +73,18 @@ frameborder="0" scrolling="no"></iframe>
 
 
 ```{figure} ./_static/images/register-sp.png
-:alt: Schéma montrant les différentes manières de lire le registre **RSP**.
+:alt: Schéma montrant les différentes manières de lire le registre `%rsp`.
 :align: center
-Les différentes manières d'accéder au registre **RSP**.
+Les différentes manières d'accéder au registre `%rsp`.
 ```
 
-- Pour les nouveaux registres de l'architecture x86_64 **(R8,R9,R10,R11,R12,R13,R14,R15)** on utilise plutôt des suffixes pour spécifier la taille à lire ou à écrire.
+- Pour les nouveaux registres de l'architecture x86_64 `[%r8,r15]` on utilise plutôt des suffixes pour spécifier la taille à lire ou à écrire.
 
 
 ```{figure} ./_static/images/register-8.png
-:alt: Schéma montrant les différentes manières de lire le registre **R8**.
+:alt: Schéma montrant les différentes manières de lire le registre `%r8`.
 :align: center
-Les différentes manières d'accéder au registre **R8**.
+Les différentes manières d'accéder au registre `%r8`.
 ```
 
 <blockquote class="small-text">
@@ -97,16 +97,16 @@ Références:
 
 ### Le Registre RIP
 
-- Le pointer register **RIP** contient l'**adresse** mémoire où la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d'exécuter l'instruction <a href="https://sourceware.org/binutils/docs/as/i386_002dVariations.html" target="_blank"><code class=" docutils literal notranslate">movabs</code></a> qui est à l'adresse `0x5129` la valeur de `%rip` est l'adresse de l'instruction suivante `mov %eax, %ebx` à l'adresse `0x5133`.
+- Le pointer register `%rip` contient l'**adresse** mémoire où la prochaine instruction à exécuter est située. Comme vous pouvez le voir dans les captures suivantes, quand le CPU fini d'exécuter l'instruction <a href="https://sourceware.org/binutils/docs/as/i386_002dVariations.html" target="_blank"><code class=" docutils literal notranslate">movabs</code></a> qui est à l'adresse `0x5129` la valeur de `%rip` est l'adresse de l'instruction suivante `mov %eax, %ebx` à l'adresse `0x5133`.
 
 ```{figure} ./_static/images/rip-1.png
-:alt: Capture d'écran de GDB montrant la valeur de **RIP** pointant vers la prochaine instruction à exécuter.
+:alt: Capture d'écran de GDB montrant la valeur de `%rip` pointant vers la prochaine instruction à exécuter.
 :align: center
 ```
 ```{figure} ./_static/images/rip-2.png
-:alt: Capture d'écran de GDB montrant la valeur de **RIP** actuelle.
+:alt: Capture d'écran de GDB montrant la valeur de `%rip` actuelle.
 :align: center
-La valeur du **RIP** est calculée lors de l'exécution d'une instruction.
+La valeur du `%rip` est calculée lors de l'exécution d'une instruction.
 ```
 
 - Il faut que vous sachiez que les instructions ont des tailles différentes. Elles varient de `1 octets` jusqu'à `15 octets`. Étant donné qu'en mémoire les données sont stockés par octets. Durant la lecture d'un octet de l'instruction le CPU sait s'il doit interpréter le prochain octet comme faisant partie de cette même instruction grâce aux octets qu'il a déja décodés.

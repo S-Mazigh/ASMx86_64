@@ -178,30 +178,43 @@ Références:
 </blockquote>
 
 ## Syscalls en assembleur
-- Dans les instructions du programme **safe** vous avez découvert l'instruction <a href="https://www.felixcloutier.com/x86/syscall" target="_blank"><code class=" docutils literal notranslate">syscall</code></a>. Si vous lisez la description de l'instruction dans le manuel d'intel, vous trouverez la phrase *"Fast call to privilege level 0 system procedures."*. Ils la décrivent comment étant rapide, cela est en rapport à l'ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l'interruption à chaque fois.
+- Si vous lisez la description de l'instruction <a href="https://www.felixcloutier.com/x86/syscall" target="_blank"><code class=" docutils literal notranslate">syscall</code></a> dans le manuel d'intel, vous trouverez la phrase *"Fast call to privilege level 0 system procedures."*. Ils la décrivent comment étant rapide, cela est en rapport à l'ancienne implémentation ou le syscall était une interruption lambda et le CPU devait vérifier le type de l'interruption à chaque fois.
 - Sinon pour faire court, c'est l'instruction assembleur utilisée pour faire appel à un syscall défini par l'OS qui va s'exécuter en mode Kernel (d'où le privilege level 0).
-- Vous remarquerez que plusieurs registres sont initialisés avant d'instruction syscall.
+- Vous remarquerez que plusieurs registres sont initialisés avant l'instruction syscall. Je cite l'abi:
+> User-level applications use as integer registers for passing the sequence `%rdi`, `%rsi`, `%rdx`, `%rcx`, `%r8` and `%r9`. The kernel interface uses `%rdi`, `%rsi`, `%rdx`, `%r10`, `%r8` and `%r9`.
+
+Notez l'utilisation de `%r10` à la place de `%rcx` pour passer en mode kernel (appel système).
+
 <center><div  class="figure-container"><figure>
-<img src="./_static/images/syscalls.png" class="figure2">
+<img src="./_static/images/syscalls.svg" class="figure2">
 <figcaption>Illustration expliquant l'utilisation d'un syscall</figcaption>
 </figure></div></center>
 
-- Le syscall retournera une valeur de retour dans `%rax` comme le font toutes les autres fonctions. En cas d'erreur, la valeur de retour est comprise dans l'intervalle **[-4095,-1]**, chacune pouvant être traduite en un code d'erreur de type **errno**. Pour vérifier si le syscall retourne une erreur en assembleur on utilise les deux instructions suivantes:
+- Le syscall conservera tous les registres sauf **3**:
+  - `%rax` contenant la valeur de retour.
+  - `%rcx` contenant l'adresse de retour, i.e l'adresse de l'instruction après `syscall`.
+  - `%r11` sauvegardant les valeurs des flags `%rflags`.
+
+- En cas d'erreur, la valeur de retour dans `%rax` est comprise dans l'intervalle **[-4095,-1]**, chacune pouvant être traduite en un code d'erreur de type **errno**. Pour vérifier si le syscall retourne une erreur en assembleur on utilise les deux instructions suivantes:
 
 ```nasm
    cmp $-4095, %rax
    jae errorSyscall
 ```
 
+:::{admonition} Pourquoi jae ?
+:class: dropdown, tip
 - L'instruction <a href="https://www.felixcloutier.com/x86/jcc" target="_blank"><code class=" docutils literal notranslate">jae</code></a> vérifie si la valeur **non signée** dans `%rax` est supérieure ou égale à la valeur **non-signée** de `-4095`.
 - En 64-bits (**0b** veut dire nombre binaire):
   -  **-4095**  = 0b**1**111111111111111111111111111111111111111111111111111**00000000000**1 = 184467440737095**47521**
   -  **-1**     = 0b**1**111111111111111111111111111111111111111111111111111**11111111111**1 = 184467440737095**51615**
   -  **0**      = 0b**0**000000000000000000000000000000000000000000000000000000000000000 = **0**
 - Les nombres négatifs commencent tous par **1** les rendant supérieurs aux nombre positifs quand on les compare en utilisant leurs valeurs **non signées**. Ajoutant à cela le fait que les representations négatives ont leur valeur **non signée** croître quand on se rapproche de **0**. 
-- Avec ces deux notions, il devient clair que l'instruction `jae` ne saute que si la valeur de `%rax` est en dehors de l'intervale **[-4095,-1]**.
+- Avec ces deux notions, il devient clair que l'instruction `jae` ne saute que si la valeur de `%rax` est dans l'intervale **[-4095,-1]**.
   - Si `%rax` a une valeur non signée **inférieure** à celle de **-4095**, cela voudra dire qu'il est soit **positif**, **0**, ou bien, **négatif** avec une valeur **signée** **inférieur** à **-4095**.
-  - Autrement, sa valeur non signée sera **égale** ou **supérieure** à celle de **-4095**, avec comme maximum celle de **-1** (que des 1).
+  - Autrement, sa valeur non signée sera **égale** ou **supérieure** à celle de **-4095**, avec comme maximum celle de **-1** (que des bits 1).
+:::
+
 - Pour voir les différents syscalls disponible sur le kernel linux pour l'architecture x86-64, regardez <a href="https://github.com/torvalds/linux/blob/master/arch/x86/entry/syscalls/syscall_64.tbl" target="_blank">cette page github</a>. Et pour avoir une idée sur les arguments de chaque syscall il existe <a href="https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/" target="_blank">cette page de blog</a> très bien écrite, mais malheureusement elle n'est plus à jour. Vous pouvez aussi vous référez à <a href="https://x64.syscall.sh/" target="_blank">https://x64.syscall.sh/</a>.
 
 :::{tip}
@@ -221,6 +234,7 @@ echo "#include <sys/syscall.h>" | gcc -E -dM -x c - | grep -w "^#define __NR_ope
 Références:
 <ul>
 <li><a href="https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly" target="_blank">https://stackoverflow.com/questions/38751614/what-are-the-return-values-of-system-calls-in-assembly</a></li>
+<li><a href="https://stackoverflow.com/questions/50571275/why-does-a-syscall-clobber-rcx-and-r11" target="_blank">https://stackoverflow.com/questions/50571275/why-does-a-syscall-clobber-rcx-and-r11</a></li>
 <li><a href="https://gitlab.com/x86-psABIs/x86-64-ABI" target="_blank">https://gitlab.com/x86-psABIs/x86-64-ABI [Appendix A]</a></li>
 </ul>
 </blockquote>

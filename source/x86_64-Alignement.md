@@ -193,7 +193,7 @@ Sur certaines architectures plus anciennes ou strictes, comme avec les versions 
 
 Dans l'ABI System V, l'alignement de 16 octets garantit que les instructions SSE, qui utilisent les registres XMM pour des blocs de 128-bits (16 octets), fonctionnent sans problème (pas de segfault). De plus, les extensions AVX, qui opèrent sur des blocs encore plus grands (256-bits ou 512-bits), renforcent cette nécessité avec un alignement de 32 ou 64 octets dans des cas spécifiques.
 
-Si vous vous demandez pourquoi une fonction semble fonctionner dans certains cas et planter dans d'autres, pensez à vérifier l'alignement de la pile. Des posts comme [why 16B alignment](https://stackoverflow.com/questions/49391001/why-does-the-x86-64-amd64-system-v-abi-mandate-a-16-byte-stack-alignment) ou [ce cas spécifique](https://stackoverflow.com/questions/51070716/glibc-scanf-segmentation-faults-when-called-from-a-function-that-doesnt-align-r) sur `scanf` montrent bien que des erreurs subtiles peuvent survenir à cause de ce détail souvent négligé.
+Si vous vous demandez pourquoi une fonction semble fonctionner dans certains cas et planter dans d'autres, pensez à vérifier l'alignement de la pile. Des posts comme [why 16B alignment](https://stackoverflow.com/questions/49391001/why-does-the-x86-64-amd64-system-v-abi-mandate-a-16-byte-stack-alignment) ou [ce cas spécifique](https://stackoverflow.com/questions/51070716/glibc-scanf-segmentation-faults-when-called-from-a-function-that-doesnt-align-r) sur `scanf` montrent bien que des erreurs subtiles peuvent survenir.
 
 <blockquote class="small-text">
 Références:
