@@ -21,7 +21,7 @@ ASMx86_64
    .. raw:: html
 
       <p style="font-size: 1.1rem;">
-         Ce document propose une introduction à la programmation en assembleur x86_64 en utilisant la syntaxe AT&T.
+         Ce document propose une introduction à la programmation en assembleur x86_64 en utilisant la syntaxe AT&T sous GNU-Linux (ABI System V).
       </p>
 
 
